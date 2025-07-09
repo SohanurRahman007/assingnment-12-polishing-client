@@ -58,29 +58,36 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("CurrentUser-->", currentUser?.email);
-      if (currentUser?.email) {
+      if (currentUser) {
         setUser(currentUser);
 
-        // Get JWT token
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/jwt`,
-          {
-            email: currentUser?.email,
-          },
-          { withCredentials: true }
-        );
+        const userInfo = {
+          name: currentUser.displayName,
+          email: currentUser.email,
+          photo: currentUser.photoURL,
+          role: "member",
+        };
+
+        try {
+          // ✅ Save user info to DB
+          await axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo);
+
+          // ✅ Get JWT token and store in localStorage
+          const res = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {
+            email: currentUser.email,
+          });
+          localStorage.setItem("fitshpere-token", res.data.token);
+        } catch (err) {
+          console.error("Error saving user or token:", err);
+        }
       } else {
-        setUser(currentUser);
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        });
+        setUser(null);
+        localStorage.removeItem("fitshpere-token");
       }
       setLoading(false);
     });
-    return () => {
-      return unsubscribe();
-    };
+
+    return () => unsubscribe();
   }, []);
 
   const authInfo = {

@@ -1,40 +1,47 @@
-import { createBrowserRouter } from 'react-router'
-import Home from '../pages/Home/Home'
-import ErrorPage from '../pages/ErrorPage'
-import Login from '../pages/Login/Login'
-import SignUp from '../pages/SignUp/SignUp'
-import PlantDetails from '../pages/PlantDetails/PlantDetails'
-import PrivateRoute from './PrivateRoute'
-import DashboardLayout from '../layouts/DashboardLayout'
-import AddPlant from '../pages/Dashboard/Seller/AddPlant'
-import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
-import Profile from '../pages/Dashboard/Common/Profile'
-import Statistics from '../pages/Dashboard/Common/Statistics'
-import MainLayout from '../layouts/MainLayout'
-import MyInventory from '../pages/Dashboard/Seller/MyInventory'
-import ManageOrders from '../pages/Dashboard/Seller/ManageOrders'
-import MyOrders from '../pages/Dashboard/Customer/MyOrders'
+import { createBrowserRouter } from "react-router-dom";
+import Home from "../pages/Home/Home";
+import ErrorPage from "../pages/ErrorPage";
+import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MainLayout from "../layouts/MainLayout";
+
+// Common Dashboard
+import Statistics from "../pages/Dashboard/Common/Statistics";
+import Profile from "../pages/Dashboard/Common/Profile";
+
+// Admin
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import AddClass from "../pages/Dashboard/Admin/AddClass";
+// import Newsletter from "../pages/Dashboard/Admin/Newsletter";
+// import Balance from "../pages/Dashboard/Admin/Balance";
+
+// Trainer
+// import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
+// import MySlots from "../pages/Dashboard/Trainer/MySlots";
+// import AddForum from "../pages/Dashboard/Trainer/AddForum";
+
+// Member
+// import BookedTrainer from "../pages/Dashboard/Member/BookedTrainer";
+// import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
-      },
-      {
-        path: '/plant/:id',
-        element: <PlantDetails />,
       },
     ],
   },
-  { path: '/login', element: <Login /> },
-  { path: '/signup', element: <SignUp /> },
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <SignUp /> },
   {
-    path: '/dashboard',
+    path: "/dashboard",
     element: (
       <PrivateRoute>
         <DashboardLayout />
@@ -43,56 +50,56 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <PrivateRoute>
-            <Statistics />
-          </PrivateRoute>
-        ),
+        element: <Statistics />,
+      },
+
+      // ==================== Admin Routes ====================
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
       },
       {
-        path: 'add-plant',
-        element: (
-          <PrivateRoute>
-            <AddPlant />
-          </PrivateRoute>
-        ),
+        path: "add-class",
+        element: <AddClass />,
       },
+      // {
+      //   path: "newsletter",
+      //   element: <Newsletter />,
+      // },
+      // {
+      //   path: "balance",
+      //   element: <Balance />,
+      // },
+
+      // ==================== Trainer Routes ====================
+      // {
+      //   path: "add-slot",
+      //   element: <AddSlot />,
+      // },
+      // {
+      //   path: "my-slots",
+      //   element: <MySlots />,
+      // },
+      // {
+      //   path: "add-forum",
+      //   element: <AddForum />,
+      // },
+
+      // ==================== Member Routes ====================
+      // {
+      //   path: "booked-trainer",
+      //   element: <BookedTrainer />,
+      // },
+      // {
+      //   path: "activity-log",
+      //   element: <ActivityLog />,
+      // },
+
+      // ==================== Common Routes ====================
       {
-        path: 'my-inventory',
-        element: (
-          <PrivateRoute>
-            <MyInventory />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'manage-users',
-        element: (
-          <PrivateRoute>
-            <ManageUsers />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'profile',
-        element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'my-orders',
-        element: (
-          <PrivateRoute>
-            <MyOrders />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'manage-orders',
-        element: <ManageOrders />,
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
-])
+]);
