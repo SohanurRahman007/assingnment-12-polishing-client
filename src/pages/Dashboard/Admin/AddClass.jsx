@@ -4,45 +4,54 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 
 const AddClass = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
   const axiosSecure = useAxiosSecure();
   const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const imageFile = watch("image")?.[0];
+
+  // Set preview when image is selected
+  if (imageFile && !previewUrl) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewUrl(reader.result);
+    };
+    reader.readAsDataURL(imageFile);
+  }
 
   const imageHostingKey = import.meta.env.VITE_IMGBB_API;
   const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
 
   const onSubmit = async (data) => {
     setUploading(true);
-
-    const imageFile = data.image[0];
+    const image = data.image[0];
     const formData = new FormData();
-    formData.append("image", imageFile);
+    formData.append("image", image);
 
     try {
-      // Upload to imgbb
       const imageRes = await fetch(imageHostingUrl, {
         method: "POST",
         body: formData,
       });
 
-      const imgData = await imageRes.json();
-      if (!imgData.success) throw new Error("Image upload failed");
+      const imgResult = await imageRes.json();
+      if (!imgResult.success) throw new Error("Image upload failed");
 
-      const classData = {
+      const newClass = {
         name: data.name,
-        image: imgData.data.display_url,
+        image: imgResult.data.display_url,
         details: data.details,
         extraInfo: data.extraInfo,
       };
 
-      // Post to DB
-      const res = await axiosSecure.post("/classes", classData);
+      const res = await axiosSecure.post("/classes", newClass);
       if (res.data.insertedId) {
         reset();
+        setPreviewUrl(null);
         toast.success("✅ Class added successfully!");
       }
     } catch (err) {
-      console.error(err);
       toast.error(err.message || "Something went wrong");
     } finally {
       setUploading(false);
@@ -50,68 +59,99 @@ const AddClass = () => {
   };
 
   return (
-    <div className="bg-white max-w-2xl mx-auto p-8 rounded-lg shadow-xl border border-gray-200">
-      <h2 className="text-3xl font-bold text-center text-lime-600 mb-6">
-        Add a New Fitness Class
-      </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Class Name
-          </label>
-          <input
-            {...register("name", { required: true })}
-            type="text"
-            placeholder="e.g. Full Body Burn"
-            className="input input-bordered w-full"
-          />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-4xl mx-auto mt-10 bg-gray-100 p-6 rounded-lg shadow-md"
+    >
+      <fieldset className="grid grid-cols-4 bg-white gap-6 p-6 rounded-md shadow-sm">
+        <div className="space-y-2 col-span-full lg:col-span-1">
+          <p className="text-xl md:text-2xl font-semibold text-lime-600">
+            Add New Class
+          </p>
+          <p className="text-sm text-gray-500">Enter details for your class</p>
         </div>
 
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Class Image
-          </label>
-          <input
-            {...register("image", { required: true })}
-            type="file"
-            accept="image/*"
-            className="file-input file-input-bordered w-full"
-          />
-        </div>
+        <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+          {/* Class Name */}
+          <div className="col-span-full sm:col-span-3">
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Class Name
+            </label>
+            <input
+              {...register("name", { required: true })}
+              id="name"
+              type="text"
+              placeholder="e.g. Cardio Boost"
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+            />
+          </div>
 
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Class Details
-          </label>
-          <textarea
-            {...register("details", { required: true })}
-            rows="4"
-            placeholder="Describe this class (duration, intensity, goals...)"
-            className="textarea textarea-bordered w-full"
-          />
-        </div>
+          {/* Extra Info */}
+          <div className="col-span-full sm:col-span-3">
+            <label
+              htmlFor="extraInfo"
+              className="text-sm font-medium text-gray-700"
+            >
+              Extra Info
+            </label>
+            <input
+              {...register("extraInfo")}
+              id="extraInfo"
+              type="text"
+              placeholder="e.g. Bring water"
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+            />
+          </div>
 
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Additional Notes (optional)
-          </label>
-          <input
-            {...register("extraInfo")}
-            type="text"
-            placeholder="e.g. Bring your own mat"
-            className="input input-bordered w-full"
-          />
-        </div>
+          {/* Details */}
+          <div className="col-span-full">
+            <label
+              htmlFor="details"
+              className="text-sm font-medium text-gray-700"
+            >
+              Class Description
+            </label>
+            <textarea
+              {...register("details", { required: true })}
+              id="details"
+              rows="4"
+              placeholder="Write a short description about the class..."
+              className="textarea textarea-bordered w-full block px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+            />
+          </div>
 
+          {/* Image Upload & Preview */}
+          <div className="col-span-full">
+            <label className="text-sm font-medium text-gray-700 block mb-2">
+              Class Image
+            </label>
+            <div className="flex items-center gap-4">
+              <img
+                src={previewUrl || "https://via.placeholder.com/100?text=Image"}
+                alt="Preview"
+                className="w-16 h-16 rounded-xl border-lime-500 object-cover border shadow-sm"
+              />
+              <input
+                {...register("image", { required: true })}
+                type="file"
+                accept="image/*"
+                className="file-input file-input-bordered block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 max-w-xs"
+              />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div className="mt-6 text-center">
         <button
           type="submit"
-          className="btn btn-success w-full"
+          className="px-6 py-2 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer sm:w-1/2"
           disabled={uploading}
         >
           {uploading ? "Uploading..." : "Add Class"}
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
