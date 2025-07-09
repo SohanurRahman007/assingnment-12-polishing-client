@@ -75,7 +75,7 @@ const Login = () => {
                 type="email"
                 placeholder="Email Address"
                 {...register("email", { required: "Email is required" })}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg focus:outline-lime-500"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
               />
               {errors.email && (
                 <p className="text-sm text-red-500 mt-1">
@@ -90,7 +90,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 {...register("password", { required: "Password is required" })}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg focus:outline-lime-500"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
               />
               <span
                 onClick={() => setShowPassword((prev) => !prev)}
