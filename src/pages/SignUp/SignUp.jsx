@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
@@ -71,6 +72,9 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <Helmet>
+        <title>Register | FitSphere</title>
+      </Helmet>
       <div className="w-full max-w-sm mx-auto overflow-hidden bg-white  rounded-lg shadow-md">
         <div className="px-6 py-4 bg-white">
           <div className="flex justify-center mx-auto">
@@ -81,7 +85,7 @@ const SignUp = () => {
             />
           </div>
 
-          <h3 className="mt-3 text-xl font-medium text-center text-gray-600">
+          <h3 className="mt-3 text-xl font-semibold text-center text-lime-500">
             Create Your Account
           </h3>
           <p className="mt-1 text-center text-gray-500">
@@ -146,7 +150,7 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className="w-full flex justify-center items-center px-6 py-2 text-sm font-medium text-white bg-lime-500 rounded-md hover:bg-lime-600 transition"
+              className="w-full flex justify-center items-center px-6 py-2 text-sm font-medium text-white bg-lime-500 rounded-md hover:bg-lime-600 transition cursor-pointer"
             >
               {loading ? (
                 <TbFidgetSpinner className="animate-spin" />
@@ -164,7 +168,7 @@ const SignUp = () => {
 
           <button
             onClick={handleGoogleSignIn}
-            className="flex items-center justify-center gap-2 border border-gray-300 w-full py-2 rounded-md hover:bg-gray-100 transition"
+            className="flex items-center justify-center gap-2 border border-gray-300 w-full py-2 rounded-md hover:bg-gray-100 transition cursor-pointer"
           >
             <FcGoogle size={20} />
             <span className="text-sm text-gray-600">Continue with Google</span>

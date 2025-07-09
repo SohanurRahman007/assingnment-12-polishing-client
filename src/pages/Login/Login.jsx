@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useState } from "react";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, resetPassword } = useAuth();
@@ -52,6 +53,9 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <Helmet>
+        <title>Login | FitSphere</title>
+      </Helmet>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-4">
           <div className="flex justify-center">
@@ -126,10 +130,15 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <div className="flex items-center gap-3 mt-4">
+            <hr className="flex-1 border-gray-300" />
+            <p className="text-sm text-gray-500">OR</p>
+            <hr className="flex-1 border-gray-300" />
+          </div>
         </div>
 
         {/* Divider */}
-        <div className="px-6 pt-2 pb-6 bg-gray-50">
+        <div className="px-6 bg-gray-50">
           <button
             onClick={signInWithGoogle}
             className="flex justify-center items-center gap-3 border w-full py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
@@ -138,7 +147,7 @@ const Login = () => {
             <span>Continue with Google</span>
           </button>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
+          <p className="mt-4 text-center text-sm text-gray-600 mb-4">
             Don’t have an account?{" "}
             <Link
               to="/signup"
