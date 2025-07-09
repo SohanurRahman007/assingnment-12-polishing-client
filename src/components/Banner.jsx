@@ -8,7 +8,7 @@ const slides = [
     id: 1,
     title: "Track Your Progress",
     description: "Monitor workouts, goals, and body stats in one place.",
-    image: "https://i.ibb.co/xq2xszc7/fit-slider-3.jpg",
+    image: "https://i.ibb.co/35VKtbyS/fit-slider-6.jpg",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const slides = [
     id: 4,
     title: "Set Real Goals",
     description: "Custom goal tracking made simple and powerful.",
-    image: "https://i.ibb.co/sp2PvB7m/fit-slider-1.jpg",
+    image: "https://i.ibb.co/KpV1tv7b/fit-slider-5.webp",
   },
 ];
 
