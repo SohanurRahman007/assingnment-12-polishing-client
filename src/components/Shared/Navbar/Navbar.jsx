@@ -1,84 +1,129 @@
-import Container from '../Container'
-import { AiOutlineMenu } from 'react-icons/ai'
-import { useState } from 'react'
-import { Link } from 'react-router'
-import useAuth from '../../../hooks/useAuth'
-import avatarImg from '../../../assets/images/placeholder.jpg'
-import logo from '../../../assets/images/logo-flat.png'
+import Container from "../Container";
+import { AiOutlineMenu } from "react-icons/ai";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import avatarImg from "../../../assets/images/placeholder.jpg";
+import logo from "../../../assets/images/logo-flat.png";
+import { FiLogOut } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
+
 const Navbar = () => {
-  const { user, logOut } = useAuth()
-  const [isOpen, setIsOpen] = useState(false)
+  const { user, logOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const baseLinkStyle = `relative px-4 py-2 transition-all duration-200 font-medium`;
+  const activeClass = `text-lime-500 border-b-2 border-lime-500`;
+
+  const navLinkStyle = ({ isActive }) =>
+    `${baseLinkStyle} ${
+      isActive ? activeClass : "text-gray-700 hover:text-lime-500"
+    }`;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className='fixed w-full bg-white z-10 shadow-sm'>
-      <div className='py-4 border-b-[1px]'>
+    <div className="fixed w-full bg-white z-20 shadow-sm">
+      <div className="py-4 border-b border-lime-300">
         <Container>
-          <div className='flex flex-row  items-center justify-between gap-3 md:gap-0'>
+          <div className="flex flex-row items-center justify-between gap-4">
             {/* Logo */}
-            <Link to='/'>
-              <img src={logo} alt='logo' width='100' height='100' />
+            <Link to="/" className="flex items-center gap-2">
+              <img src={logo} alt="logo" className="w-[40px] h-[30px]" />
+              <span className="text-xl font-bold text-lime-500 hidden md:inline">
+                Fit<span className="text-gray-800">Sphere</span>
+              </span>
             </Link>
-            {/* Dropdown Menu */}
-            <div className='relative'>
-              <div className='flex flex-row items-center gap-3'>
-                {/* Dropdown btn */}
+
+            {/* Center Links */}
+            <div className="hidden md:flex gap-6 items-center">
+              <NavLink to="/" className={navLinkStyle}>
+                Home
+              </NavLink>
+              <NavLink to="/trainers" className={navLinkStyle}>
+                Trainers
+              </NavLink>
+              <NavLink to="/classes" className={navLinkStyle}>
+                Classes
+              </NavLink>
+              <NavLink to="/forum" className={navLinkStyle}>
+                Forum
+              </NavLink>
+            </div>
+
+            {/* Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <div className="flex items-center gap-3">
                 <div
                   onClick={() => setIsOpen(!isOpen)}
-                  className='p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
+                  className="p-2 border border-neutral-200 flex items-center gap-2 rounded-xl cursor-pointer hover:shadow-md hover:shadow-lime-400 transition"
                 >
                   <AiOutlineMenu />
-                  <div className='hidden md:block'>
-                    {/* Avatar */}
-                    <img
-                      className='rounded-full'
-                      referrerPolicy='no-referrer'
-                      src={user && user.photoURL ? user.photoURL : avatarImg}
-                      alt='profile'
-                      height='30'
-                      width='30'
-                    />
-                  </div>
+                  <img
+                    className="rounded-full w-8 h-8 object-cover"
+                    referrerPolicy="no-referrer"
+                    src={user?.photoURL || avatarImg}
+                    alt="profile"
+                  />
                 </div>
               </div>
-              {isOpen && (
-                <div className='absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm'>
-                  <div className='flex flex-col cursor-pointer'>
-                    <Link
-                      to='/'
-                      className='block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                    >
-                      Home
-                    </Link>
 
+              {/* Dropdown Menu */}
+              {isOpen && (
+                <div className="absolute right-0 top-12 bg-white rounded-xl shadow-md w-40 overflow-hidden text-sm z-50">
+                  <div className="flex  flex-col">
+                    {/* Hidden Links for Mobile */}
+                    <div className="flex flex-col md:hidden">
+                      <NavLink to="/" className={navLinkStyle}>
+                        Home
+                      </NavLink>
+                      <NavLink to="/trainers" className={navLinkStyle}>
+                        Trainers
+                      </NavLink>
+                      <NavLink to="/classes" className={navLinkStyle}>
+                        Classes
+                      </NavLink>
+                      <NavLink to="/forum" className={navLinkStyle}>
+                        Forum
+                      </NavLink>
+                    </div>
                     {user ? (
                       <>
-                        <Link
-                          to='/dashboard'
-                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                        >
+                        <NavLink to="/dashboard" className={navLinkStyle}>
                           Dashboard
-                        </Link>
-                        <div
+                        </NavLink>
+                        <NavLink to="/profile" className={navLinkStyle}>
+                          <div className="flex items-center gap-2">
+                            <FaUser />
+                            Profile
+                          </div>
+                        </NavLink>
+                        <button
                           onClick={logOut}
-                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
+                          className="px-4 py-2 hover:bg-neutral-100 transition font-semibold flex items-center gap-2"
                         >
+                          <FiLogOut className="text-gray-600" />
                           Logout
-                        </div>
+                        </button>
                       </>
                     ) : (
                       <>
-                        <Link
-                          to='/login'
-                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                        >
+                        <NavLink to="/login" className={navLinkStyle}>
                           Login
-                        </Link>
-                        <Link
-                          to='/signup'
-                          className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                        >
+                        </NavLink>
+                        <NavLink to="/signup" className={navLinkStyle}>
                           Sign Up
-                        </Link>
+                        </NavLink>
                       </>
                     )}
                   </div>
@@ -89,7 +134,7 @@ const Navbar = () => {
         </Container>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
