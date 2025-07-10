@@ -1,0 +1,37 @@
+// pages/AllTrainersPage.jsx
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
+const AllTrainersPage = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data: trainers = [] } = useQuery({
+    queryKey: ["trainers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/trainers");
+      return res.data;
+    },
+  });
+
+  return (
+    <div className="grid md:grid-cols-3 gap-6 p-6">
+      {trainers.map((trainer) => (
+        <div key={trainer?._id} className="bg-white p-4 rounded shadow">
+          <img src={trainer?.image} alt={trainer?.name} className="rounded" />
+          <h3 className="text-xl font-bold mt-2">{trainer?.name}</h3>
+          <p>{trainer?.experience}</p>
+          <p>Slots: {trainer?.slots?.length || 0}</p>
+          <Link
+            to={`/trainers/${trainer?._id}`}
+            className="text-blue-500 mt-2 block"
+          >
+            Know More →
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default AllTrainersPage;

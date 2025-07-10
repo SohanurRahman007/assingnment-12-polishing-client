@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
+import ClassesPage from "../pages/ClassesPage/ClassesPage";
 
 // Common Dashboard
 import Statistics from "../pages/Dashboard/Common/Statistics";
@@ -14,6 +15,7 @@ import Profile from "../pages/Dashboard/Common/Profile";
 // Admin
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AddClass from "../pages/Dashboard/Admin/AddClass";
+import RoleRoute from "./RoleRoute";
 // import Newsletter from "../pages/Dashboard/Admin/Newsletter";
 // import Balance from "../pages/Dashboard/Admin/Balance";
 
@@ -36,6 +38,26 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      // {
+      //   path: "classes",
+      //   element: <ClassesPage />,
+      // },
+      // {
+      //   path: "/trainers",
+      //   element: <AllTrainersPage />,
+      // },
+      // {
+      //   path: "/trainers/:id",
+      //   element: <TrainerDetailsPage />,
+      // },
+      // {
+      //   path: "/booking/:id",
+      //   element: (
+      //     <PrivateRoute>
+      //       <BookingPage />
+      //     </PrivateRoute>
+      //   ),
+      // },
     ],
   },
   { path: "/login", element: <Login /> },
@@ -60,7 +82,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-class",
-        element: <AddClass />,
+        element: (
+          <RoleRoute allowedRole="admin">
+            <AddClass />
+          </RoleRoute>
+        ),
       },
       // {
       //   path: "newsletter",
