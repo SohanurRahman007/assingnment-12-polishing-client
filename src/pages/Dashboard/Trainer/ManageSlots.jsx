@@ -41,9 +41,12 @@ const ManageSlots = () => {
       <h2 className="text-2xl font-semibold text-lime-500 mb-6">
         Manage My Slots
       </h2>
-      <div className="overflow-x-auto">
-        <table className="table w-full border border-lime-500 rounded-xl text-center">
-          <thead className="bg-lime-200 text-lime-800">
+      <div className="overflow-x-auto rounded-xl">
+        <table
+          className="table w-full border border-lime-500 rounded-xl
+         text-center"
+        >
+          <thead className=" text-lime-800">
             <tr>
               <th>#</th>
               <th>Slot Name</th>
@@ -56,7 +59,7 @@ const ManageSlots = () => {
           </thead>
           <tbody>
             {slots.map((slot, index) => (
-              <tr key={slot._id} className="hover:bg-gray-100">
+              <tr key={slot._id} className="hover:bg-white">
                 <td>{index + 1}</td>
                 <td>{slot.slotName}</td>
                 <td>{slot.slotTime}</td>

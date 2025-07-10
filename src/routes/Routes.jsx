@@ -23,6 +23,7 @@ import RoleRoute from "./RoleRoute";
 // Trainer
 import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
 import ManageSlots from "../pages/Dashboard/Trainer/ManageSlots";
+import AddForum from "../pages/Dashboard/AddForum";
 // import AddForum from "../pages/Dashboard/Trainer/AddForum";
 
 // Member
@@ -113,12 +114,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-slots",
-        element: <ManageSlots />,
+        element: (
+          <RoleRoute allowedRole="trainer">
+            <ManageSlots />
+          </RoleRoute>
+        ),
       },
-      // {
-      //   path: "add-forum",
-      //   element: <AddForum />,
-      // },
+      {
+        path: "add-forum",
+        element: <AddForum />,
+      },
 
       // ==================== Member Routes ====================
       // {
