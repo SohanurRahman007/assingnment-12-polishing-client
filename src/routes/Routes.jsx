@@ -16,14 +16,13 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AddClass from "../pages/Dashboard/Admin/AddClass";
 import RoleRoute from "./RoleRoute";
-import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
 // import AllTrainersPage from "../pages/AllTainerPage/AllTainerPage";
 // import Newsletter from "../pages/Dashboard/Admin/Newsletter";
 // import Balance from "../pages/Dashboard/Admin/Balance";
 
 // Trainer
-// import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
-// import MySlots from "../pages/Dashboard/Trainer/MySlots";
+import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
+import ManageSlots from "../pages/Dashboard/Trainer/ManageSlots";
 // import AddForum from "../pages/Dashboard/Trainer/AddForum";
 
 // Member
@@ -106,12 +105,16 @@ export const router = createBrowserRouter([
       // ==================== Trainer Routes ====================
       {
         path: "add-slot",
-        element: <AddSlot />,
+        element: (
+          <RoleRoute allowedRole="trainer">
+            <AddSlot />
+          </RoleRoute>
+        ),
       },
-      // {
-      //   path: "my-slots",
-      //   element: <MySlots />,
-      // },
+      {
+        path: "manage-slots",
+        element: <ManageSlots />,
+      },
       // {
       //   path: "add-forum",
       //   element: <AddForum />,

@@ -86,7 +86,7 @@ const AddSlot = () => {
             <input
               readOnly
               value={user.displayName || ""}
-              className="w-full px-4 py-2 mt-1 bg-gray-200 border border-gray-300 rounded-md"
+              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
             />
           </div>
 
@@ -98,7 +98,7 @@ const AddSlot = () => {
             <input
               readOnly
               value={user.email}
-              className="w-full px-4 py-2 mt-1 bg-gray-200 border border-gray-300 rounded-md"
+              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
             />
           </div>
 
@@ -110,7 +110,7 @@ const AddSlot = () => {
             <input
               {...register("slotName", { required: true })}
               placeholder="e.g. Morning Slot"
-              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:outline-lime-500"
+              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
             />
             {errors.slotName && (
               <p className="text-sm text-red-500">Slot name is required</p>
@@ -122,7 +122,7 @@ const AddSlot = () => {
             <label className="text-sm font-medium text-gray-700">
               Slot Time
             </label>
-            <div className="border border-gray-300 rounded-md bg-white px-3 py-1">
+            <div className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500">
               <TimePicker
                 onChange={setTime}
                 value={time}

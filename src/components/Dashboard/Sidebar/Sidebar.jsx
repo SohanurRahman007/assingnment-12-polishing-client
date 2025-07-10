@@ -99,8 +99,8 @@ const Sidebar = () => {
                 <>
                   <MenuItem
                     icon={FaChalkboardTeacher}
-                    label="My Slots"
-                    address="/dashboard/my-slots"
+                    label="Manage Slots"
+                    address="/dashboard/manage-slots"
                   />
                   <MenuItem
                     icon={FaDumbbell}
