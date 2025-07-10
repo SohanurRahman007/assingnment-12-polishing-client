@@ -48,8 +48,10 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">Manage Users</h2>
+    <div className="p-6 bg-gray-100 rounded-xl">
+      <h2 className="text-xl md:text-2xl text-lime-500 font-bold mb-4">
+        Manage Users
+      </h2>
       <table className="w-full border border-gray-300 rounded-md">
         <thead>
           <tr className="bg-gray-200 text-center">
@@ -65,7 +67,10 @@ const ManageUsers = () => {
             const selectedRole = selectedRoles[user._id] || user.role;
 
             return (
-              <tr key={user._id} className="text-center border border-gray-300">
+              <tr
+                key={user._id}
+                className="text-center border border-gray-300 bg-white"
+              >
                 <td className="p-2">{user.name}</td>
                 <td className="p-2">{user.email}</td>
                 <td className="p-2">
@@ -88,7 +93,7 @@ const ManageUsers = () => {
                       updatingUserId === user._id || selectedRole === user.role
                     }
                     onClick={() => handleConfirmRoleChange(user._id)}
-                    className="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
+                    className="px-3 py-1 bg-lime-500 text-white rounded disabled:opacity-50 cursor-pointer"
                   >
                     Confirm
                   </button>
@@ -99,8 +104,8 @@ const ManageUsers = () => {
                     }
                     className={`px-3 py-1 rounded ${
                       user.active === false
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
+                        ? "bg-lime-500 text-white cursor-pointer"
+                        : "bg-red-400 text-white cursor-pointer"
                     }`}
                   >
                     {user.active === false ? "Activate" : "Deactivate"}

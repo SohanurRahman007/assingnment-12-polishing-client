@@ -16,6 +16,8 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AddClass from "../pages/Dashboard/Admin/AddClass";
 import RoleRoute from "./RoleRoute";
+import AddSlot from "../pages/Dashboard/Trainer/AddSlot";
+// import AllTrainersPage from "../pages/AllTainerPage/AllTainerPage";
 // import Newsletter from "../pages/Dashboard/Admin/Newsletter";
 // import Balance from "../pages/Dashboard/Admin/Balance";
 
@@ -38,17 +40,21 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      // {
-      //   path: "classes",
-      //   element: <ClassesPage />,
-      // },
+      {
+        path: "classes",
+        element: <ClassesPage />,
+      },
       // {
       //   path: "/trainers",
       //   element: <AllTrainersPage />,
       // },
       // {
       //   path: "/trainers/:id",
-      //   element: <TrainerDetailsPage />,
+      //   element: (
+      //     <PrivateRoute>
+      //       <TrainerDetailsPage />
+      //     </PrivateRoute>
+      //   ),
       // },
       // {
       //   path: "/booking/:id",
@@ -98,10 +104,10 @@ export const router = createBrowserRouter([
       // },
 
       // ==================== Trainer Routes ====================
-      // {
-      //   path: "add-slot",
-      //   element: <AddSlot />,
-      // },
+      {
+        path: "add-slot",
+        element: <AddSlot />,
+      },
       // {
       //   path: "my-slots",
       //   element: <MySlots />,
