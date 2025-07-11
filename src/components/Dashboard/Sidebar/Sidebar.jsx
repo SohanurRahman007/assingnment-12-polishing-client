@@ -92,6 +92,17 @@ const Sidebar = () => {
                     label="Add Class"
                     address="/dashboard/add-class"
                   />
+                  <MenuItem
+                    icon={FaBookReader}
+                    label="Add Forum"
+                    address="/dashboard/add-forum"
+                  />
+
+                  <MenuItem
+                    icon={FaBookReader}
+                    label="Applied for Trainer"
+                    address="/dashboard/applied-trainers"
+                  />
                 </>
               )}
 
@@ -126,6 +137,11 @@ const Sidebar = () => {
                     icon={BsGraphUp}
                     label="Activity Log"
                     address="/dashboard/activity-log"
+                  />
+                  <MenuItem
+                    icon={BsGraphUp}
+                    label="Be A Trainer"
+                    address="/dashboard/be-a-trainer"
                   />
                 </>
               )}

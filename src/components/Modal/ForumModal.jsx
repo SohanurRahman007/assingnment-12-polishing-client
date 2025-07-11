@@ -5,6 +5,8 @@ import Badge from "../Badge/Badge";
 const ForumModal = ({ isOpen, closeModal, forum }) => {
   if (!forum) return null;
 
+  console.log(forum);
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={closeModal}>
@@ -64,6 +66,22 @@ const ForumModal = ({ isOpen, closeModal, forum }) => {
                   <p className="text-gray-700 whitespace-pre-line leading-relaxed">
                     {forum.content}
                   </p>
+                </div>
+
+                {/* Votes Section */}
+                <div className="mt-6 flex gap-6 text-sm text-gray-600 font-medium">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-600 font-bold">
+                      {forum.upvotes || 0}
+                    </span>
+                    <span>Upvotes</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-500 font-bold">
+                      {forum.downvotes || 0}
+                    </span>
+                    <span>Downvotes</span>
+                  </div>
                 </div>
 
                 {/* Footer */}

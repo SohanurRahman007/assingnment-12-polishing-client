@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import ForumCard from "../../components/ForumCard/ForumCard";
 import Container from "../../components/Shared/Container";
 import { Helmet } from "react-helmet-async";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 // import ForumCard from "../../components/Forum/ForumCard";
 
 const ForumsPage = () => {
@@ -15,7 +16,11 @@ const ForumsPage = () => {
   const [page, setPage] = useState(1);
   const limit = 6;
 
-  const { data = {}, refetch } = useQuery({
+  const {
+    data = {},
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["forums", page],
     queryFn: async () => {
       const res = await axiosSecure.get(`/forums?page=${page}&limit=${limit}`);
@@ -23,7 +28,9 @@ const ForumsPage = () => {
     },
   });
 
-  console.log(data.forums);
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   const handleVote = async (id, type) => {
     if (!user) return toast.error("You must be logged in to vote.");
