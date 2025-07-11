@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 // import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddForum = () => {
   const { user } = useAuth();
@@ -51,7 +51,7 @@ const AddForum = () => {
           <p className="text-xl md:text-2xl font-semibold text-lime-600">
             Add New Forum
           </p>
-          <p className=" text-gray-600">
+          <p className=" text-gray-600 text-sm">
             Write your forum post details here. Admin and Trainer posts will be
             tagged accordingly.
           </p>
