@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
       {
         path: "add-class",
         element: (
-          <RoleRoute allowedRole="admin">
+          <RoleRoute allowedRoles="admin">
             <AddClass />
           </RoleRoute>
         ),
@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
       {
         path: "add-slot",
         element: (
-          <RoleRoute allowedRole="trainer">
+          <RoleRoute allowedRoles="trainer">
             <AddSlot />
           </RoleRoute>
         ),
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
       {
         path: "manage-slots",
         element: (
-          <RoleRoute allowedRole="trainer">
+          <RoleRoute allowedRoles="trainer">
             <ManageSlots />
           </RoleRoute>
         ),

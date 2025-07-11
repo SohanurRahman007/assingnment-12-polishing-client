@@ -23,6 +23,7 @@ const AddForum = () => {
     const forumData = {
       userId: user?.uid,
       userName: user?.displayName,
+      userPhoto: user?.photoURL,
       userEmail: user?.email,
       userRole: user?.role || "member",
       title: data.title,
