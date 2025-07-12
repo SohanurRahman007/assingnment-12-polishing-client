@@ -20,6 +20,8 @@ const ManageUsers = () => {
     },
   });
 
+  console.log(trainers);
+
   const removeTrainerMutation = useMutation({
     mutationFn: async (email) => {
       const res = await axiosSecure.patch(`/trainers/remove-role/${email}`);
