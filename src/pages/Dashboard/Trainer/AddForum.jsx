@@ -1,90 +1,146 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
-const AppliedTrainers = () => {
+const AddForum = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const { data: trainers = [], isLoading } = useQuery({
-    queryKey: ["applied-trainers"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/applied-trainers");
-      return res.data;
-    },
-  });
+  const [submitting, setSubmitting] = useState(false);
 
-  if (isLoading) return <LoadingSpinner />;
+  const onSubmit = async (data) => {
+    setSubmitting(true);
+    const forumData = {
+      userId: user?.uid,
+      userName: user?.displayName,
+      userEmail: user?.email,
+      userRole: user?.role || "member",
+      title: data.title,
+      content: data.content,
+      createdAt: new Date().toISOString(),
+    };
 
-  if (trainers.length === 0)
-    return (
-      <p className="text-center py-10 text-gray-500 dark:text-gray-400">
-        No trainer applications found.
-      </p>
-    );
+    try {
+      const res = await axiosSecure.post("/forums", forumData);
+      if (res.data.insertedId) {
+        toast.success("Forum post added successfully!");
+        reset();
+      }
+    } catch (error) {
+      toast.error("Failed to add forum post.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold text-lime-600 mb-6">
-        Trainer Applications
-      </h2>
+      <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
+        {/* Left info column */}
+        <div className="space-y-2 col-span-full lg:col-span-1">
+          <p className="text-xl font-semibold text-lime-600">Add New Forum</p>
+          <p className="text-xs text-gray-600">
+            Write your forum post details here. Admin and Trainer posts will be
+            tagged accordingly.
+          </p>
+        </div>
 
-      <div className="space-y-6">
-        {trainers.map((t) => (
-          <div
-            key={t._id}
-            className="bg-white rounded-md shadow-sm p-6 border border-gray-300 dark:border-gray-700"
-          >
-            <div className="grid grid-cols-4 gap-6">
-              {/* Left info column */}
-              <div className="col-span-full lg:col-span-1 flex flex-col items-center">
-                <img
-                  src={t.profileImage || "/default-avatar.png"}
-                  alt={t.name}
-                  className="w-24 h-24 rounded-full border border-lime-600 object-cover mb-4"
-                />
-                <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  {t.name}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Status:{" "}
-                  <span className="capitalize font-medium text-lime-600">
-                    {t.status}
-                  </span>
-                </p>
-              </div>
-
-              {/* Right details column */}
-              <div className="col-span-full lg:col-span-3">
-                <p>
-                  <strong>Skills:</strong> {(t.skills || []).join(", ")}
-                </p>
-                <p>
-                  <strong>Available Days:</strong>{" "}
-                  {(t.availableDays || []).join(", ")}
-                </p>
-                <p>
-                  <strong>Available Time:</strong> {t.availableTime || "N/A"}
-                </p>
-                <p>
-                  <strong>Email:</strong> {t.email}
-                </p>
-
-                <div className="mt-4 text-right">
-                  <Link
-                    to={`/dashboard/applied-trainer-details/${t._id}`}
-                    className="inline-block bg-lime-600 hover:bg-lime-700 text-white font-semibold px-4 py-2 rounded-md transition"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </div>
+        {/* Form inputs */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3"
+        >
+          {/* User Name (read only) */}
+          <div className="col-span-full sm:col-span-3">
+            <label htmlFor="userName" className="text-sm font-medium">
+              User Name
+            </label>
+            <input
+              id="userName"
+              type="text"
+              readOnly
+              value={user?.displayName || ""}
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 cursor-not-allowed"
+            />
           </div>
-        ))}
-      </div>
+
+          {/* Email (read only) */}
+          <div className="col-span-full sm:col-span-3">
+            <label htmlFor="email" className="text-sm font-medium">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              readOnly
+              value={user?.email || ""}
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 cursor-not-allowed"
+            />
+          </div>
+
+          {/* Forum Title */}
+          <div className="col-span-full">
+            <label htmlFor="title" className="text-sm font-medium">
+              Title
+            </label>
+            <input
+              id="title"
+              {...register("title", { required: "Title is required" })}
+              placeholder="Enter forum title"
+              className={`block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 ${
+                errors.title ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
+
+          {/* Forum Content */}
+          <div className="col-span-full">
+            <label htmlFor="content" className="text-sm font-medium">
+              Content
+            </label>
+            <textarea
+              id="content"
+              {...register("content", { required: "Content is required" })}
+              rows={5}
+              placeholder="Write your forum content here..."
+              className={`block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 ${
+                errors.content ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.content && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.content.message}
+              </p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div className="col-span-full text-right">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-md transition"
+            >
+              {submitting ? "Submitting..." : "Add Forum Post"}
+            </button>
+          </div>
+        </form>
+      </fieldset>
     </div>
   );
 };
 
-export default AppliedTrainers;
+export default AddForum;

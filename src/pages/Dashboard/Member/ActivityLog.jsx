@@ -1,76 +1,86 @@
 import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
 // import useAuth from "../../hooks/useAuth";
-import { Eye } from "lucide-react";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
-// import RejectionModal from "./RejectionModal";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import RejectionModal from "../../components/Shared/RejectionModal";
 import useAuth from "../../../hooks/useAuth";
-import RejectionModal from "../../../components/Modal/RejectionModal";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import FeedbackModal from "../../../components/Modal/FeedbackModal";
 
 const ActivityLog = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [showModal, setShowModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState("");
 
-  const { data: statuses = [] } = useQuery({
-    queryKey: ["appliedStatus", user?.email],
+  const openModal = (msg) => {
+    setSelectedMessage(msg);
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setSelectedMessage("");
+    setShowModal(false);
+  };
+
+  const { data: rejected = [], isLoading } = useQuery({
+    queryKey: ["rejectedTrainers", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/applied-trainers/status/${user.email}`
+        `/rejected-trainers?email=${user?.email}`
       );
       return res.data;
     },
     enabled: !!user?.email,
   });
 
-  console.log(statuses);
+  if (isLoading) return <p className="text-center py-10">Loading...</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Trainer Application Activity</h2>
-      <div className="space-y-4">
-        {statuses.map((item, idx) => (
-          <div
-            key={idx}
-            className="border p-4 rounded-md bg-white shadow flex items-center justify-between"
-          >
-            <div>
-              <p>
-                <span className="font-medium">Status:</span>{" "}
-                <span
-                  className={`font-semibold ${
-                    item.status === "pending"
-                      ? "text-yellow-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  {item.status}
-                </span>
-              </p>
-              <p>
-                <span className="font-medium">Applied At:</span>{" "}
-                {new Date(item.appliedAt).toLocaleDateString()}
-              </p>
-            </div>
+    <div className="max-w-5xl mx-auto p-6">
+      <h2 className="text-2xl font-semibold mb-6 text-red-500">
+        ❌ Rejected Trainer Applications
+      </h2>
 
-            {item.status === "rejected" && (
+      {rejected.length === 0 ? (
+        <p>No rejected applications yet.</p>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-6">
+          {rejected.map((trainer) => (
+            <div
+              key={trainer._id}
+              className="bg-white rounded-lg shadow p-4 space-y-2 border-l-4 border-red-400"
+            >
+              <div className="flex items-center gap-4">
+                <img
+                  src={trainer.profileImage}
+                  alt={trainer.name}
+                  className="w-14 h-14 rounded-full"
+                />
+                <div>
+                  <h3 className="font-bold">{trainer.name}</h3>
+                  <p className="text-sm text-gray-500">{trainer.email}</p>
+                </div>
+              </div>
+              <p>
+                <span className="font-medium">Skills:</span>{" "}
+                {trainer.skills?.join(", ") || "N/A"}
+              </p>
               <button
-                onClick={() => setSelectedMessage(item.feedback)}
-                className="text-blue-600 hover:underline flex items-center gap-1"
+                onClick={() => openModal(trainer.feedback)}
+                className="text-sm text-lime-600 underline hover:text-lime-800"
               >
-                <Eye size={20} />
                 View Feedback
               </button>
-            )}
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Modal */}
-      <RejectionModal
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showModal}
+        onClose={closeModal}
         message={selectedMessage}
-        setMessage={setSelectedMessage}
       />
     </div>
   );

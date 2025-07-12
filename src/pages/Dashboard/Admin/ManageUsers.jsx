@@ -1,121 +1,119 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import { AlertTriangle, Trash2 } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import RemoveConfirmationModal from "../../../components/Modal/RemoveConfirmationModal";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
+  const queryClient = useQueryClient();
+  const [selectedTrainer, setSelectedTrainer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data: trainers = [], isLoading } = useQuery({
+    queryKey: ["allTrainers"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
-      return res.data;
+      return res.data.filter((user) => user.role === "trainer");
     },
   });
 
-  const [updatingUserId, setUpdatingUserId] = useState(null);
-  const [selectedRoles, setSelectedRoles] = useState({});
+  const removeTrainerMutation = useMutation({
+    mutationFn: async (email) => {
+      const res = await axiosSecure.patch(`/trainers/remove-role/${email}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Trainer removed successfully!");
+      queryClient.invalidateQueries(["allTrainers"]);
+    },
+    onError: () => {
+      toast.error("Failed to remove trainer.");
+    },
+  });
 
-  const handleSelectRole = (userId, newRole) => {
-    setSelectedRoles((prev) => ({ ...prev, [userId]: newRole }));
+  const openModal = (trainer) => {
+    setSelectedTrainer(trainer);
+    setIsModalOpen(true);
   };
 
-  const handleConfirmRoleChange = async (userId) => {
-    setUpdatingUserId(userId);
-    try {
-      const newRole = selectedRoles[userId];
-      await axiosSecure.patch(`/users/${userId}`, { role: newRole });
-      toast.success("✅ Role updated successfully");
-      refetch();
-    } catch (error) {
-      toast.error("❌ Failed to update role");
-    } finally {
-      setUpdatingUserId(null);
+  const confirmRemoveTrainer = () => {
+    if (selectedTrainer) {
+      removeTrainerMutation.mutate(selectedTrainer.email);
     }
+    setIsModalOpen(false);
   };
 
-  const handleDeactivate = async (userId, isActive) => {
-    setUpdatingUserId(userId);
-    try {
-      await axiosSecure.patch(`/users/${userId}`, { active: !isActive });
-      toast.success(isActive ? "User deactivated" : "User activated");
-      refetch();
-    } catch (error) {
-      toast.error("Failed to update status");
-    } finally {
-      setUpdatingUserId(null);
-    }
-  };
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="p-6 bg-gray-100 rounded-xl">
-      <h2 className="text-xl md:text-2xl text-lime-500 font-bold mb-4">
-        Manage Users
-      </h2>
-      <table className="w-full border border-gray-300 rounded-md">
-        <thead>
-          <tr className="bg-gray-200 text-center">
-            <th className="p-2 border border-gray-300">Name</th>
-            <th className="p-2 border border-gray-300">Email</th>
-            <th className="p-2 border border-gray-300">Role</th>
-            <th className="p-2 border border-gray-300">Status</th>
-            <th className="p-2 border border-gray-300">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => {
-            const selectedRole = selectedRoles[user._id] || user.role;
+    <div className="max-w-6xl mx-auto p-4">
+      <h2 className="text-3xl font-bold text-lime-700 mb-6">Manage Trainers</h2>
 
-            return (
-              <tr
-                key={user._id}
-                className="text-center border border-gray-300 bg-white"
-              >
-                <td className="p-2">{user.name}</td>
-                <td className="p-2">{user.email}</td>
-                <td className="p-2">
-                  <select
-                    value={selectedRole}
-                    onChange={(e) => handleSelectRole(user._id, e.target.value)}
-                    className="border border-gray-300 rounded px-2 py-1"
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="trainer">Trainer</option>
-                    <option value="member">Member</option>
-                  </select>
-                </td>
-                <td className="p-2">
-                  {user.active === false ? "Deactivated" : "Active"}
-                </td>
-                <td className="p-2 flex justify-center gap-2 flex-wrap">
-                  <button
-                    disabled={
-                      updatingUserId === user._id || selectedRole === user.role
-                    }
-                    onClick={() => handleConfirmRoleChange(user._id)}
-                    className="px-3 py-1 bg-lime-500 text-white rounded disabled:opacity-50 cursor-pointer"
-                  >
-                    Confirm
-                  </button>
-                  <button
-                    disabled={updatingUserId === user._id}
-                    onClick={() =>
-                      handleDeactivate(user._id, user.active !== false)
-                    }
-                    className={`px-3 py-1 rounded ${
-                      user.active === false
-                        ? "bg-lime-500 text-white cursor-pointer"
-                        : "bg-red-400 text-white cursor-pointer"
-                    }`}
-                  >
-                    {user.active === false ? "Activate" : "Deactivate"}
-                  </button>
-                </td>
+      {trainers.length === 0 ? (
+        <div className="flex items-center gap-2 text-gray-600">
+          <AlertTriangle className="text-yellow-600" /> No trainers found.
+        </div>
+      ) : (
+        <div className="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 text-sm">
+            <thead className="bg-lime-100 text-lime-900 uppercase tracking-wider text-xs font-semibold">
+              <tr>
+                <th className="px-6 py-3 text-left">#</th>
+                <th className="px-6 py-3 text-left">Photo</th>
+                <th className="px-6 py-3 text-left">Name</th>
+                <th className="px-6 py-3 text-left">Email</th>
+                <th className="px-6 py-3 text-left">Role</th>
+                <th className="px-6 py-3 text-left">Action</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody className="divide-y divide-gray-100 bg-white">
+              {trainers.map((trainer, index) => (
+                <tr
+                  key={trainer._id}
+                  className="hover:bg-lime-50/50 transition duration-200"
+                >
+                  <td className="px-6 py-3 font-medium text-gray-700">
+                    {index + 1}
+                  </td>
+                  <td className="px-6 py-3">
+                    <img
+                      src={trainer.photo}
+                      alt={trainer.name}
+                      className="w-10 h-10 rounded-full object-cover border"
+                    />
+                  </td>
+                  <td className="px-6 py-3">{trainer.name}</td>
+                  <td className="px-6 py-3">{trainer.email}</td>
+                  <td className="px-6 py-3 capitalize text-green-700 font-semibold">
+                    {trainer.role}
+                  </td>
+                  <td className="px-6 py-3">
+                    <button
+                      onClick={() => openModal(trainer)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      <RemoveConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmRemoveTrainer}
+        trainerName={selectedTrainer?.name}
+        isLoading={removeTrainerMutation.isPending}
+      />
     </div>
   );
 };

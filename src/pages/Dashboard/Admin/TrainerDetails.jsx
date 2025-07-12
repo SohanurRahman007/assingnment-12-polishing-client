@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import RejectionModal from "../../../components/Modal/RejectionModal";
+// import RejectionModal from "../../../components/Shared/RejectionModal";
 
 const TrainerDetails = () => {
   const { id } = useParams();
@@ -42,8 +44,12 @@ const TrainerDetails = () => {
       await axiosSecure.post(`/reject-trainer/${id}`, { feedback });
       toast.success("Trainer rejected.");
       setRejectModalOpen(false);
+
+      // ✅ Refresh both lists and this single detail view
       queryClient.invalidateQueries(["appliedTrainers"]);
-      navigate("/dashboard/applied-trainers");
+      queryClient.invalidateQueries(["appliedTrainer", id]);
+
+      navigate("/dashboard/applied-trainers"); // optional: redirect
     } catch (error) {
       toast.error("Failed to reject trainer.");
     }
@@ -59,7 +65,7 @@ const TrainerDetails = () => {
         className="bg-white rounded-lg p-6 shadow col-span-full lg:col-span-1"
       >
         <h2 className="text-2xl font-bold text-lime-600 mb-2">Trainer Info</h2>
-        <p className="text-sm  text-gray-600">
+        <p className="text-sm text-gray-600">
           Review and manage the trainer’s application. You can confirm or reject
           based on the provided information.
         </p>
@@ -73,7 +79,7 @@ const TrainerDetails = () => {
         className="col-span-full lg:col-span-3 bg-white rounded-lg shadow-lg overflow-hidden"
       >
         <img
-          className="w-full h-50 object-cover"
+          className="w-full h-52 object-cover"
           src={trainer.profileImage}
           alt={trainer.name}
         />
@@ -94,6 +100,7 @@ const TrainerDetails = () => {
             {trainer.name}
           </h1>
         </div>
+
         <div className="px-6 py-5 space-y-2 text-gray-700 text-sm">
           <p>
             <span className="font-medium">Email:</span> {trainer.email}
@@ -119,65 +126,31 @@ const TrainerDetails = () => {
           </p>
         </div>
 
-        {/* Buttons */}
-        <div className="px-6 py-4 flex justify-center gap-4 border-t border-lime-500">
+        {/* Action Buttons */}
+        <div className="px-6 py-4 flex justify-center gap-4 border-t border-gray-200">
           <button
             onClick={handleConfirm}
-            className="bg-lime-600 text-sm hover:bg-lime-700 text-white px-2 py-1 rounded-md font-medium transition cursor-pointer"
+            className="bg-lime-600 text-sm hover:bg-lime-700 text-white px-4 py-2 rounded-md font-medium transition"
           >
             ✅ Confirm
           </button>
           <button
             onClick={() => setRejectModalOpen(true)}
-            className="border text-sm border-red-500 text-red-500 hover:bg-red-50 px-2 py-1 rounded-md font-medium transition cursor-pointer"
+            className="border text-sm border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition"
           >
             ❌ Reject
           </button>
         </div>
       </motion.div>
 
-      {/* Reject Modal */}
-      {rejectModalOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0  bg-opacity-50 z-50 flex items-center justify-center"
-        >
-          <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="bg-gray-200 rounded-lg shadow-lg p-6 w-full max-w-md"
-          >
-            <h3 className="text-lg font-semibold mb-3 text-red-400">
-              Reject Trainer Application
-            </h3>
-            <textarea
-              rows="4"
-              className="w-full rounded p-2 mb-4 text-sm "
-              placeholder="Enter rejection feedback"
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              required
-            />
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setRejectModalOpen(false)}
-                className="px-4 py-2 rounded bg-lime-500 text-gray-100 cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleReject}
-                className="bg-red-500 hover:bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
-                disabled={!feedback.trim()}
-              >
-                Submit Reject
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+      {/* Rejection Modal */}
+      <RejectionModal
+        isOpen={rejectModalOpen}
+        onClose={() => setRejectModalOpen(false)}
+        onSubmit={handleReject}
+        feedback={feedback}
+        setFeedback={setFeedback}
+      />
     </div>
   );
 };
