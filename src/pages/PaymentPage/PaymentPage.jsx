@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import CheckoutForm from "./CheckoutForm";
 import { Helmet } from "react-helmet-async";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 
 const PaymentPage = () => {
   const [params] = useSearchParams();
@@ -25,11 +26,7 @@ const PaymentPage = () => {
   });
 
   if (isLoading) {
-    return (
-      <p className="text-center py-10 font-semibold">
-        Loading payment details...
-      </p>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

@@ -1,17 +1,26 @@
-import { ScaleLoader } from 'react-spinners'
+import { BallTriangle } from "react-loader-spinner";
 
 const LoadingSpinner = ({ smallHeight }) => {
   return (
     <div
-      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
+      className={`${smallHeight ? "h-[250px]" : "h-[70vh]"} 
       flex 
       flex-col 
       justify-center 
-      items-center `}
+      items-center`}
     >
-      <ScaleLoader size={100} color='lime' />
+      <BallTriangle
+        height={100}
+        width={100}
+        radius={5}
+        color="#84cc16" // lime-500 hex color
+        ariaLabel="ball-triangle-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default LoadingSpinner
+export default LoadingSpinner;

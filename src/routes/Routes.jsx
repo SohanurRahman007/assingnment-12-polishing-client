@@ -36,6 +36,7 @@ import AppliedTrainers from "../pages/Dashboard/Admin/AppliedTrainers";
 import TrainerDetails from "../pages/Dashboard/Admin/TrainerDetails";
 import TrainerBookingPage from "../pages/TrainerBookingPage/TrainerBookingPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
+import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 
@@ -124,10 +125,10 @@ export const router = createBrowserRouter([
       //   path: "newsletter",
       //   element: <Newsletter />,
       // },
-      // {
-      //   path: "balance",
-      //   element: <Balance />,
-      // },
+      {
+        path: "balance",
+        element: <AdminBalance />,
+      },
 
       // ==================== Trainer Routes ====================
       {

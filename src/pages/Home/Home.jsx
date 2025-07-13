@@ -3,6 +3,7 @@ import Banner from "../../components/Banner";
 import FeaturedSection from "../../components/FeaturedSection/FeaturedSection";
 import Plants from "../../components/Home/Plants";
 import LatestForumsSection from "../../components/LatestForumsSection/LatestForumsSection";
+import NewsletterSubscribe from "../../components/NewsletterSubscribe/NewsletterSubscribe";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Banner></Banner>
       <LatestForumsSection />
       <FeaturedSection />
+      <NewsletterSubscribe />
       <AboutSection />
     </div>
   );

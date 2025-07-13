@@ -103,6 +103,11 @@ const Sidebar = () => {
                     label="Applied for Trainer"
                     address="/dashboard/applied-trainers"
                   />
+                  <MenuItem
+                    icon={FaBookReader}
+                    label="Balance and Chart"
+                    address="/dashboard/balance"
+                  />
                 </>
               )}
 
