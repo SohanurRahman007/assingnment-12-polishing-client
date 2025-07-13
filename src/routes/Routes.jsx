@@ -156,7 +156,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "be-a-trainer",
-        element: <BeATrainer />,
+        element: (
+          <PrivateRoute>
+            <BeATrainer />
+          </PrivateRoute>
+        ),
       },
 
       // ==================== Common Routes ====================

@@ -18,6 +18,7 @@ import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import Container from "../../components/Shared/Container";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const TrainerDetailsPage = () => {
   const { id } = useParams();
@@ -44,6 +45,9 @@ const TrainerDetailsPage = () => {
   return (
     <Container>
       <div className="py-6">
+        <Helmet>
+          <title>Trainer Details | FitSphere</title>
+        </Helmet>
         <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-center justify-center">
           {/* Left Side: Trainer Info */}
           <motion.div
@@ -118,7 +122,7 @@ const TrainerDetailsPage = () => {
                       href={trainer.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-gray-100 hover:bg-blue-100 transition text-lime-500"
+                      className="p-2 rounded-full bg-gray-100 hover:bg-blue-100 transition text-sky-600"
                       title="Facebook"
                     >
                       <Facebook className="w-4 h-4" />
@@ -198,8 +202,8 @@ const TrainerDetailsPage = () => {
                 Want to inspire others like {trainer.name}?
               </h4>
               <Link
-                to="/become-trainer"
-                className="inline-block px-5 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                to="/dashboard/be-a-trainer"
+                className="inline-block px-5 py-2 text-sm bg-lime-600 text-white rounded-md hover:bg-lime-700 transition"
               >
                 Become a Trainer
               </Link>

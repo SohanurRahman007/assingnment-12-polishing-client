@@ -1,12 +1,51 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
-// import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import Container from "../../components/Shared/Container";
+import { Helmet } from "react-helmet-async";
+
+const packages = [
+  {
+    title: "Basic Membership",
+    price: "$10",
+    duration: "One Time",
+    features: [
+      "Access to gym facilities during regular operating hours.",
+      "Use of cardio and strength training equipment.",
+    ],
+    btnText: "Join Now",
+    btnColor: "bg-lime-500 hover:bg-lime-600 cursor-pointer",
+  },
+  {
+    title: "Standard Membership",
+    price: "$50",
+    duration: "Monthly",
+    features: [
+      "All Basic Membership benefits.",
+      "Access to group fitness classes (yoga, spinning, Zumba).",
+      "Access to locker rooms and showers.",
+    ],
+    btnText: "Join Now",
+    btnColor: "bg-lime-500 hover:bg-lime-600  cursor-pointer",
+  },
+  {
+    title: "Premium Membership",
+    price: "$100",
+    duration: "Lifetime",
+    features: [
+      "All Standard Membership benefits.",
+      "Access to personal training sessions with certified trainers.",
+      "Use of sauna or steam room.",
+      "Discounts on massage therapy or nutrition counseling.",
+    ],
+    btnText: "Join Now",
+    btnColor: "bg-lime-500 hover:bg-lime-600  cursor-pointer",
+  },
+];
 
 const TrainerBookingPage = () => {
-  const { id, slot } = useParams(); // trainer id and slot
+  const { id, slot } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
@@ -17,8 +56,6 @@ const TrainerBookingPage = () => {
       return res.data;
     },
   });
-
-  if (isLoading) return <LoadingSpinner />;
 
   const handleJoin = (packageType, price) => {
     navigate("/payment", {
@@ -32,68 +69,68 @@ const TrainerBookingPage = () => {
     });
   };
 
-  return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold text-lime-600 mb-4">
-        Booking for: {trainer.name}
-      </h2>
-      <p className="mb-2">
-        Selected Slot: <strong>{slot}</strong>
-      </p>
-      <h3 className="text-lg font-semibold mt-4">Select a Package:</h3>
+  if (isLoading) return <LoadingSpinner />;
 
-      <div className="grid md:grid-cols-3 gap-4 mt-4">
-        {[
-          {
-            title: "Basic",
-            price: 10,
-            features: [
-              "Access to gym facilities",
-              "Use of cardio & strength equipment",
-            ],
-          },
-          {
-            title: "Standard",
-            price: 50,
-            features: [
-              "All Basic benefits",
-              "Access to group classes",
-              "Locker rooms & showers",
-            ],
-          },
-          {
-            title: "Premium",
-            price: 100,
-            features: [
-              "All Standard benefits",
-              "Personal training",
-              "Sauna, discounts on therapy",
-            ],
-          },
-        ].map((pkg) => (
-          <div
-            key={pkg.title}
-            className="border rounded-xl shadow p-4 flex flex-col justify-between"
-          >
-            <h4 className="text-xl font-bold text-lime-700">{pkg.title}</h4>
-            <ul className="mt-2 list-disc list-inside text-sm text-gray-600">
-              {pkg.features.map((f, i) => (
-                <li key={i}>{f}</li>
-              ))}
-            </ul>
-            <div className="mt-4">
-              <p className="text-lg font-bold">${pkg.price}</p>
+  return (
+    <Container>
+      <div className="">
+        <Helmet>
+          <title>Book a Session | FitSphere</title>
+        </Helmet>
+        <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
+          Session with <span className="text-lime-600">{trainer.name}</span>
+        </h1>
+        <p className="max-w-xl mx-auto mt-2 text-center text-gray-600">
+          Selected Slot: <strong>{slot}</strong>. Choose a membership plan to
+          continue your journey with expert guidance.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {packages.map((pkg, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col w-full p-4 space-y-2 text-center bg-white border-2 border-gray-200 rounded-lg shadow-md"
+            >
+              {/* Title */}
+              <div>
+                <h2 className="inline-flex items-center justify-center px-3 py-1 font-semibold tracking-tight text-lime-600 uppercase bg-lime-50 rounded-full">
+                  {pkg.title}
+                </h2>
+              </div>
+
+              {/* Price */}
+              <div>
+                <span className="pt-2 text-3xl font-bold text-gray-800 uppercase">
+                  {pkg.price}
+                </span>
+                <span className="block text-sm text-gray-500">
+                  {pkg.duration}
+                </span>
+              </div>
+
+              {/* Features */}
+              <ul className="flex-1 space-y-3 text-gray-600 text-sm text-left">
+                {pkg.features.map((feature, i) => (
+                  <li key={i} className="leading-relaxed">
+                    • {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Button */}
               <button
-                onClick={() => handleJoin(pkg.title, pkg.price)}
-                className="mt-2 bg-lime-600 hover:bg-lime-700 text-white px-4 py-2 rounded w-full"
+                onClick={() =>
+                  handleJoin(pkg.title, Number(pkg.price.replace("$", "")) || 0)
+                }
+                className={`w-full mt-6 px-4 py-2 text-white font-medium uppercase rounded-lg transition duration-300 ${pkg.btnColor}`}
               >
-                Join Now
+                {pkg.btnText}
               </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

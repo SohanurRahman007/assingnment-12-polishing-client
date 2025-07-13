@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Shared/Container";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const AllTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,6 +20,9 @@ const AllTrainers = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>All Trainers | FitSphere</title>
+      </Helmet>
       {/* Animated Title */}
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
