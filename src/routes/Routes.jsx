@@ -35,6 +35,7 @@ import BeATrainer from "../pages/BeATrainer/BeATrainer";
 import AppliedTrainers from "../pages/Dashboard/Admin/AppliedTrainers";
 import TrainerDetails from "../pages/Dashboard/Admin/TrainerDetails";
 import TrainerBookingPage from "../pages/TrainerBookingPage/TrainerBookingPage";
+import PaymentPage from "../pages/PaymentPage/PaymentPage";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 
@@ -70,6 +71,15 @@ export const router = createBrowserRouter([
       {
         path: "forum",
         element: <ForumsPage />,
+      },
+
+      {
+        path: "/payment",
+        element: (
+          <PrivateRoute>
+            <PaymentPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },
