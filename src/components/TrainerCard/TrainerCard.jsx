@@ -12,7 +12,7 @@ const TrainerCard = ({ trainer }) => {
   return (
     <div
       data-aos="fade-up"
-      className="flex flex-col h-full max-w-sm bg-white shadow-md rounded-lg overflow-hidden group"
+      className="flex flex-col h-full  bg-white shadow-md rounded-lg overflow-hidden group"
     >
       {/* Image */}
       <div className="overflow-hidden">
