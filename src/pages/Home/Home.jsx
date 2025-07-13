@@ -1,3 +1,4 @@
+import AboutSection from "../../components/AboutSection/AboutSection";
 import Banner from "../../components/Banner";
 import FeaturedSection from "../../components/FeaturedSection/FeaturedSection";
 import Plants from "../../components/Home/Plants";
@@ -9,6 +10,7 @@ const Home = () => {
       <Banner></Banner>
       <LatestForumsSection />
       <FeaturedSection />
+      <AboutSection />
     </div>
   );
 };

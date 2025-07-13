@@ -85,11 +85,11 @@ const BeATrainer = () => {
               trainer in our platform.
             </p>
           </div>
+
           <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+            {/* Name */}
             <div className="col-span-full sm:col-span-3">
-              <label htmlFor="name" className="text-sm">
-                Full Name
-              </label>
+              <label className="text-sm">Full Name</label>
               <input
                 {...register("name")}
                 type="text"
@@ -98,37 +98,87 @@ const BeATrainer = () => {
                 className="input w-full border-gray-300 focus:outline-lime-500"
               />
             </div>
+
+            {/* Email */}
             <div className="col-span-full sm:col-span-3">
               <label className="text-sm">Email</label>
               <input
                 type="email"
                 value={user?.email}
                 disabled
-                className="input w-full border-gray-300 focus:outline-lime-500"
+                className="input w-full border border-gray-300 focus:outline-lime-500"
               />
             </div>
-            <div className="col-span-full sm:col-span-3">
-              <label htmlFor="age" className="text-sm">
-                Age
-              </label>
-              <input
-                {...register("age")}
-                type="number"
-                placeholder="Your age"
-                required
-                className="input w-full border-gray-300 focus:outline-lime-500"
-              />
+
+            {/* Age, Experience, Time, Days */}
+            <div className="col-span-full">
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-sm mb-1 block">Experience</label>
+                  <input
+                    {...register("experience")}
+                    type="number"
+                    placeholder="Years of Experience"
+                    required
+                    className="input w-full border-gray-300 focus:outline-lime-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm mb-1 block">AvailableTime </label>
+                  <input
+                    {...register("availableTime")}
+                    placeholder="Available Time (e.g. 6-8PM)"
+                    className="input w-full border-gray-300 focus:outline-lime-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm mb-1 block">Available Day </label>
+                  <Select
+                    isMulti
+                    options={daysOptions}
+                    onChange={setAvailableDays}
+                    className="w-full"
+                    classNamePrefix="react-select"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="col-span-full sm:col-span-3">
-              <label htmlFor="availableTime" className="text-sm">
-                Available Time
-              </label>
-              <input
-                {...register("availableTime")}
-                placeholder="e.g. 6-8PM"
-                className="input w-full border-gray-300 focus:outline-lime-500"
-              />
+
+            {/* Social Links */}
+            <div className="col-span-full">
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-sm mb-1 block">Age </label>
+                  <input
+                    {...register("age")}
+                    type="number"
+                    placeholder="Age"
+                    required
+                    className="input w-full border-gray-300 focus:outline-lime-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm mb-1 block">Facebook Link </label>
+                  <input
+                    {...register("facebook")}
+                    type="url"
+                    placeholder="Facebook Profile Link"
+                    className="input w-full border-gray-300 focus:outline-lime-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm mb-1 block">Linkedin Link </label>
+                  <input
+                    {...register("linkedin")}
+                    type="url"
+                    placeholder="LinkedIn Profile Link"
+                    className="input w-full border-gray-300 focus:outline-lime-500"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Skills */}
             <div className="col-span-full">
               <label className="text-sm">Skills</label>
               <div className="flex flex-wrap gap-4">
@@ -137,14 +187,9 @@ const BeATrainer = () => {
                   "Zumba",
                   "Cardio",
                   "Pilates",
-                  "HIIT",
-                  "Strength Training",
+                  "Strength",
                   "CrossFit",
                   "Dance Fitness",
-                  "Kickboxing",
-                  "Spin Class",
-                  "Barre",
-                  "Stretch & Mobility",
                 ].map((skill) => (
                   <label key={skill} className="flex items-center gap-1">
                     <input
@@ -158,17 +203,10 @@ const BeATrainer = () => {
                 ))}
               </div>
             </div>
-            <div className="col-span-full">
-              <label className="text-sm">Available Days</label>
-              <Select
-                isMulti
-                options={daysOptions}
-                onChange={setAvailableDays}
-                className="mt-1"
-              />
-            </div>
-            <div className="col-span-full flex justify-between items-center">
-              <div>
+
+            {/* Upload Image */}
+            <div className="col-span-full flex flex-col sm:flex-row justify-between items-start gap-4">
+              <div className="w-full sm:w-1/2">
                 <label className="text-sm">Upload Photo</label>
                 <input
                   type="file"
@@ -177,15 +215,15 @@ const BeATrainer = () => {
                   className="file-input w-full border-gray-300 focus:outline-lime-500"
                 />
               </div>
-              <div>
+              <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
                 {uploading && (
-                  <p className="text-xs text-yellow-600 mt-2">Uploading...</p>
+                  <p className="text-xs text-yellow-600">Uploading...</p>
                 )}
                 {imageUrl && (
                   <img
                     src={imageUrl}
                     alt="Preview"
-                    className="w-16 h-16 mt-2 rounded-xl object-cover"
+                    className="w-20 h-20 rounded-xl object-cover shadow"
                   />
                 )}
               </div>
@@ -193,6 +231,7 @@ const BeATrainer = () => {
           </div>
         </fieldset>
 
+        {/* Submit Button */}
         <div className="flex justify-end">
           <button
             type="submit"

@@ -12,6 +12,7 @@ import ClassesPage from "../pages/ClassesPage/ClassesPage";
 import Statistics from "../pages/Dashboard/Common/Statistics";
 import Profile from "../pages/Dashboard/Common/Profile";
 import AllTrainers from "../pages/AllTrainerPage/AllTrainers";
+import TrainerDetailsPage from "../pages/TrainerDetailsPage/TrainerDetailsPage";
 
 // Admin
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
@@ -33,6 +34,7 @@ import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 import BeATrainer from "../pages/BeATrainer/BeATrainer";
 import AppliedTrainers from "../pages/Dashboard/Admin/AppliedTrainers";
 import TrainerDetails from "../pages/Dashboard/Admin/TrainerDetails";
+import TrainerBookingPage from "../pages/TrainerBookingPage/TrainerBookingPage";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 
@@ -53,6 +55,16 @@ export const router = createBrowserRouter([
       {
         path: "/trainers",
         element: <AllTrainers />,
+      },
+
+      {
+        path: "/trainer/:id",
+        element: <TrainerDetailsPage />,
+      },
+
+      {
+        path: "/book-trainer/:id/:slot",
+        element: <TrainerBookingPage />,
       },
 
       {
