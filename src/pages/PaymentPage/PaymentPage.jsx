@@ -24,7 +24,7 @@ const PaymentPage = () => {
     },
     enabled: !!trainerId,
   });
-
+  if (!user) return <LoadingSpinner />;
   if (isLoading) {
     return <LoadingSpinner />;
   }

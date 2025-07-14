@@ -36,7 +36,9 @@ import AppliedTrainers from "../pages/Dashboard/Admin/AppliedTrainers";
 import TrainerDetails from "../pages/Dashboard/Admin/TrainerDetails";
 import TrainerBookingPage from "../pages/TrainerBookingPage/TrainerBookingPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
-import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
+import ProfilePage from "../pages/Dashboard/Member/ProfilePage";
+import BookedTrainer from "../pages/Dashboard/Member/BookedTrainer";
+// import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
 
@@ -102,7 +104,11 @@ export const router = createBrowserRouter([
       // ==================== Admin Routes ====================
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <RoleRoute allowedRoles="admin">
+            <ManageUsers />
+          </RoleRoute>
+        ),
       },
       {
         path: "add-class",
@@ -115,7 +121,11 @@ export const router = createBrowserRouter([
 
       {
         path: "applied-trainers",
-        element: <AppliedTrainers />,
+        element: (
+          <RoleRoute allowedRoles="admin">
+            <AppliedTrainers />,
+          </RoleRoute>
+        ),
       },
       {
         path: "applied-trainer-details/:id",
@@ -125,10 +135,10 @@ export const router = createBrowserRouter([
       //   path: "newsletter",
       //   element: <Newsletter />,
       // },
-      {
-        path: "balance",
-        element: <AdminBalance />,
-      },
+      // {
+      //   path: "balance",
+      //   element: <AdminBalance />,
+      // },
 
       // ==================== Trainer Routes ====================
       {
@@ -157,10 +167,10 @@ export const router = createBrowserRouter([
       },
 
       // ==================== Member Routes ====================
-      // {
-      //   path: "booked-trainer",
-      //   element: <BookedTrainer />,
-      // },
+      {
+        path: "booked-trainer",
+        element: <BookedTrainer />,
+      },
       {
         path: "activity-log",
         element: <ActivityLog />,
@@ -172,6 +182,10 @@ export const router = createBrowserRouter([
             <BeATrainer />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "profilePage",
+        element: <ProfilePage />,
       },
 
       // ==================== Common Routes ====================

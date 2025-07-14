@@ -1,8 +1,37 @@
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-// import coverImg from "../../../assets/images/cover-image.jpeg";
-
+import UpdateProfileModal from "../../../components/Modal/UpdateProfileModal";
 const Profile = () => {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // local state for displayed profile
+  const [profile, setProfile] = useState({
+    name: user?.displayName,
+    email: user?.email,
+    photoURL: user?.photoURL,
+  });
+
+  useEffect(() => {
+    if (user) {
+      setProfile({
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      });
+    }
+  }, [user]);
+
+  const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+
+  // Update profile state after modal form submit
+  const handleProfileUpdate = (updatedData) => {
+    setProfile((prev) => ({
+      ...prev,
+      name: updatedData.name,
+      photoURL: updatedData.photoURL,
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center py-10 px-4">
@@ -24,7 +53,8 @@ const Profile = () => {
             <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-lime-500 shadow-md bg-gray-100">
               <img
                 src={
-                  user?.photoURL || "https://i.ibb.co/YD1K9Lg/blank-profile.png"
+                  profile.photoURL ||
+                  "https://i.ibb.co/YD1K9Lg/blank-profile.png"
                 }
                 alt="Profile"
                 className="w-full h-full object-cover"
@@ -34,14 +64,14 @@ const Profile = () => {
             {/* Info */}
             <div className="text-center md:text-left flex-1 space-y-1">
               <h2 className="text-2xl font-bold text-lime-500">
-                {user?.displayName || "Unknown User"}
+                {profile.name || "Unknown User"}
               </h2>
               <span className="text-sm bg-lime-500 py-1 px-2 rounded-xl text-white mt-1 font-medium uppercase tracking-wide">
                 Fitness Member
               </span>
               <p className="text-sm text-gray-600 mt-2">
                 <span className="font-semibold text-gray-800">Email:</span>{" "}
-                {user?.email}
+                {profile.email}
               </p>
               <p className="text-sm text-gray-600">
                 <span className="font-semibold text-gray-800">User ID:</span>{" "}
@@ -52,7 +82,10 @@ const Profile = () => {
 
           {/* Action Buttons */}
           <div className="mt-6 flex flex-col sm:flex-row justify-center md:justify-end gap-4 pb-6">
-            <button className="btn btn-outline outline-lime-500 hover:bg-lime-500 hover:text-white text-lime-500 border-lime-500 btn-success w-full sm:w-auto">
+            <button
+              onClick={handleModalToggle}
+              className="btn btn-outline outline-lime-500 hover:bg-lime-500 hover:text-white text-lime-500 border-lime-500 w-full sm:w-auto"
+            >
               Update Profile
             </button>
             <button className="btn btn-success bg-lime-500 text-white border-none w-full sm:w-auto">
@@ -61,6 +94,15 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <UpdateProfileModal
+          user={user}
+          closeModal={handleModalToggle}
+          onUpdate={handleProfileUpdate}
+        />
+      )}
     </div>
   );
 };

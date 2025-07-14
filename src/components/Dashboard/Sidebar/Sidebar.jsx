@@ -58,8 +58,16 @@ const Sidebar = () => {
         <div>
           <div>
             <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-lime-100 mx-auto">
-              <Link to="/">
-                <img src={logo} alt="logo" width="100" />
+              <Link to="/" className="flex items-center gap-2">
+                <img
+                  src={logo}
+                  alt="logo"
+                  width="100"
+                  className="w-[40px] h-[30px]"
+                />
+                <span className="text-xl font-bold text-lime-500 hidden md:inline">
+                  Fit<span className="text-gray-800">Sphere</span>
+                </span>
               </Link>
             </div>
           </div>
@@ -68,15 +76,15 @@ const Sidebar = () => {
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
               {/* Common Item */}
-              <MenuItem
-                icon={BsGraphUp}
-                label="Dashboard"
-                address="/dashboard"
-              />
 
               {/* Role Based Menus */}
               {role === "admin" && (
                 <>
+                  <MenuItem
+                    icon={BsGraphUp}
+                    label="Dashboard"
+                    address="/dashboard"
+                  />
                   <MenuItem
                     icon={FaUsers}
                     label="Manage Users"
@@ -103,11 +111,11 @@ const Sidebar = () => {
                     label="Applied for Trainer"
                     address="/dashboard/applied-trainers"
                   />
-                  <MenuItem
+                  {/* <MenuItem
                     icon={FaBookReader}
                     label="Balance and Chart"
                     address="/dashboard/balance"
-                  />
+                  /> */}
                 </>
               )}
 
@@ -144,10 +152,15 @@ const Sidebar = () => {
                     address="/dashboard/activity-log"
                   />
                   <MenuItem
+                    icon={FcSettings}
+                    label="Profile Page"
+                    address="/dashboard/profilePage"
+                  />
+                  {/* <MenuItem
                     icon={BsGraphUp}
                     label="Be A Trainer"
                     address="/dashboard/be-a-trainer"
-                  />
+                  /> */}
                 </>
               )}
             </nav>
