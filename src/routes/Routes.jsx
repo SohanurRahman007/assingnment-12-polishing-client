@@ -6,7 +6,6 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
-import ClassesPage from "../pages/ClassesPage/ClassesPage";
 
 // Common Dashboard
 import Statistics from "../pages/Dashboard/Common/Statistics";
@@ -38,6 +37,7 @@ import TrainerBookingPage from "../pages/TrainerBookingPage/TrainerBookingPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ProfilePage from "../pages/Dashboard/Member/ProfilePage";
 import BookedTrainer from "../pages/Dashboard/Member/BookedTrainer";
+import AllClasses from "../pages/AllClasses/AllClasses";
 // import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "classes",
-        element: <ClassesPage />,
+        element: <AllClasses />,
       },
       {
         path: "/trainers",

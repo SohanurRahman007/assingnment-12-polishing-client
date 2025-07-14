@@ -4,6 +4,7 @@ import FeaturedSection from "../../components/FeaturedSection/FeaturedSection";
 import Plants from "../../components/Home/Plants";
 import LatestForumsSection from "../../components/LatestForumsSection/LatestForumsSection";
 import NewsletterSubscribe from "../../components/NewsletterSubscribe/NewsletterSubscribe";
+import TestimonialsCarousel from "../../components/TestimonialsCarousel/TestimonialsCarousel";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Banner></Banner>
       <LatestForumsSection />
       <FeaturedSection />
+      <TestimonialsCarousel />
       <NewsletterSubscribe />
       <AboutSection />
     </div>
