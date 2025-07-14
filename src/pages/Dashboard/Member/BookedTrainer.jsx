@@ -7,8 +7,6 @@ const BookedTrainer = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [bookings, setBookings] = useState([]);
-
-  // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -40,28 +38,45 @@ const BookedTrainer = () => {
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-center">My Booked Trainers</h2>
+    <div className="p-4 max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-lime-600 mb-6">
+        My Booked Trainers
+      </h2>
 
       {bookings.length === 0 ? (
         <p className="text-center text-gray-600">No bookings found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left border border-gray-200">
-            <thead className="bg-gray-100">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 shadow">
+          <table className="min-w-full divide-y divide-gray-200 text-sm bg-white">
+            <thead className="bg-lime-100">
               <tr>
-                <th className="px-4 py-2 border">Trainer</th>
-                <th className="px-4 py-2 border">Slot</th>
-                <th className="px-4 py-2 border">Package</th>
-                <th className="px-4 py-2 border">Price</th>
-                <th className="px-4 py-2 border">Paid At</th>
-                <th className="px-4 py-2 border">Action</th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Trainer
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Slot
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Package
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Price
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Paid At
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-gray-700">
+                  Action
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {bookings.map((booking) => (
-                <tr key={booking._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border flex items-center gap-3">
+                <tr
+                  key={booking._id}
+                  className="hover:bg-lime-50 transition duration-200"
+                >
+                  <td className="px-6 py-4 flex items-center gap-4">
                     <img
                       src={
                         booking.trainerPhoto ||
@@ -70,25 +85,27 @@ const BookedTrainer = () => {
                         )}`
                       }
                       alt={booking.trainerName}
-                      className="w-10 h-10 rounded-full"
+                      className="w-10 h-10 rounded-full border border-gray-300"
                     />
                     <div>
-                      <p className="font-medium">{booking.trainerName}</p>
-                      <p className="text-xs text-gray-500">
-                        {booking.trainerEmail || "no-email@example.com"}
+                      <p className="font-medium text-gray-800">
+                        {booking.trainerName}
                       </p>
+                      {/* <p className="text-xs text-gray-500">
+                        {booking.email || "N/A"}
+                      </p> */}
                     </div>
                   </td>
-                  <td className="px-4 py-2 border">{booking.slot}</td>
-                  <td className="px-4 py-2 border">{booking.pack}</td>
-                  <td className="px-4 py-2 border">${booking.price}</td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-6 py-4 text-gray-700">{booking.slot}</td>
+                  <td className="px-6 py-4 text-gray-700">{booking.pack}</td>
+                  <td className="px-6 py-4 text-gray-700">${booking.price}</td>
+                  <td className="px-6 py-4 text-gray-700">
                     {new Date(booking.paidAt).toLocaleString()}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-6 py-4">
                     <button
                       onClick={() => openReviewModal(booking)}
-                      className="text-sm px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600"
+                      className="px-4 py-1.5 bg-lime-500 hover:bg-lime-600 text-white rounded-md transition duration-200 text-sm"
                     >
                       Review
                     </button>
@@ -106,7 +123,7 @@ const BookedTrainer = () => {
           isOpen={modalOpen}
           trainerData={{
             name: selectedBooking.trainerName,
-            email: selectedBooking.trainerEmail || "no-email@example.com",
+            email: selectedBooking.trainerEmail || "N/A",
             photo:
               selectedBooking.trainerPhoto ||
               `https://ui-avatars.com/api/?name=${encodeURIComponent(
