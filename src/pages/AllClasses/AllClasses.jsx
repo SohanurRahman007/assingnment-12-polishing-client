@@ -91,10 +91,9 @@ const AllClasses = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
         >
-          Explore our diverse range of certified trainers, each bringing their
-          unique expertise to help you reach your fitness goals. Whether you're
-          into yoga, strength training, or dance workouts — we have the right
-          coach for you!
+          Browse class details, meet top trainers, and find the perfect fit for
+          your wellness journey. Whether you're a beginner or a seasoned
+          athlete, there's a class tailored just for you at FitSphere.
         </motion.p>
 
         {/* Search */}
