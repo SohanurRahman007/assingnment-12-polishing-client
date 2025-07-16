@@ -5,8 +5,8 @@ import { NavLink, Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import logo from "../../../assets/images/logo-flat.png";
-import { FiLogOut } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
+import { FiLogOut, FiLayout } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -100,9 +100,15 @@ const Navbar = () => {
                     {user ? (
                       <>
                         <NavLink to="/dashboard" className={navLinkStyle}>
-                          Dashboard
+                          <div className="flex items-center gap-2">
+                            <FiLayout />
+                            Dashboard
+                          </div>
                         </NavLink>
-                        <NavLink to="/profile" className={navLinkStyle}>
+                        <NavLink
+                          to="/dashboard/profile"
+                          className={navLinkStyle}
+                        >
                           <div className="flex items-center gap-2">
                             <FaUser />
                             Profile

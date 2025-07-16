@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Container from "./Shared/Container";
 
 const slides = [
@@ -30,117 +30,84 @@ const slides = [
   },
 ];
 
+const typingTexts = ["FitSphere", "Your Fitness Journey", "Strong Body & Mind"];
+
 const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [typedIndex, setTypedIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const navigate = useNavigate();
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
-
-  // Auto slide every 5s
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
+  // Typing animation
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const fullText = typingTexts[typedIndex];
+      if (charIndex < fullText.length) {
+        setDisplayedText(fullText.slice(0, charIndex + 1));
+        setCharIndex((prev) => prev + 1);
+      } else {
+        setTimeout(() => {
+          setCharIndex(0);
+          setTypedIndex((prev) => (prev + 1) % typingTexts.length);
+        }, 1500);
+      }
+    }, 120);
+    return () => clearTimeout(timeout);
+  }, [charIndex, typedIndex]);
+
   return (
     <Container>
-      <div
-        className="relative w-full h-[80vh] overflow-hidden rounded-xl shadow-md"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <div className="relative w-full h-[80vh] overflow-hidden rounded-xl shadow-xl ">
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.img
             key={slides[currentIndex].id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 w-full h-full"
+            src={slides[currentIndex].image}
+            alt="Slide Image"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+        </AnimatePresence>
+
+        {/* TEXT SECTION */}
+        <div className="relative  h-full flex flex-col justify-center items-start px-6 md:px-20 text-white bg-black/40">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight drop-shadow-xl"
           >
-            <div
-              className="relative w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${slides[currentIndex].image})` }}
-            >
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/50 to-transparent transition-all duration-500" />
+            Welcome to <span className="text-lime-400">{displayedText}</span>
+          </motion.h2>
 
-              {/* Text Content with Motion */}
-              <motion.div
-                initial={{ opacity: 0, y: 60 }}
-                animate={{
-                  opacity: isHovered ? 1 : 0,
-                  y: isHovered ? 0 : 60,
-                }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0 flex flex-col items-start justify-center px-8 md:px-16 text-white"
-              >
-                <motion.h2
-                  className="text-3xl md:text-6xl font-extrabold text-lime-500 drop-shadow-lg"
-                  initial={{ opacity: 0, x: -40 }}
-                  animate={{
-                    opacity: isHovered ? 1 : 0,
-                    x: isHovered ? 0 : -40,
-                  }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {slides[currentIndex].title}
-                </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="mt-4 max-w-2xl text-base md:text-xl text-gray-200"
+          >
+            {slides[currentIndex].description}
+          </motion.p>
 
-                <motion.p
-                  className="text-md md:text-xl mt-4 max-w-2xl text-gray-200"
-                  initial={{ opacity: 0, x: -40 }}
-                  animate={{
-                    opacity: isHovered ? 1 : 0,
-                    x: isHovered ? 0 : -40,
-                  }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {slides[currentIndex].description}
-                </motion.p>
-
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-medium rounded-md transition"
-                >
-                  Explore Now
-                </motion.button>
-              </motion.div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Navigation Buttons */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute bottom-6 right-6 flex gap-3 z-10"
-            >
-              <button
-                onClick={prevSlide}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-lime-500 text-white hover:bg-lime-600 transition"
-              >
-                <FaArrowLeft />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-lime-500 text-white hover:bg-lime-600 transition"
-              >
-                <FaArrowRight />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/classes")}
+            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition"
+          >
+            Explore Now
+          </motion.button>
+        </div>
       </div>
     </Container>
   );

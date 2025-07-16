@@ -2,7 +2,6 @@ import { useState } from "react";
 import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
-import { BsGraphUp } from "react-icons/bs";
 import MenuItem from "./Menu/MenuItem";
 
 import useAuth from "../../../hooks/useAuth";
@@ -10,14 +9,13 @@ import useRole from "../../../hooks/useRole";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo-flat.png";
 
-import {
-  FaUsers,
-  FaChalkboardTeacher,
-  FaDumbbell,
-  FaUserEdit,
-  FaBookReader,
-  FaLayerGroup,
-} from "react-icons/fa";
+// Updated icons
+import { FaUsers, FaChalkboardTeacher, FaUserEdit } from "react-icons/fa";
+import { MdOutlineEmail, MdForum } from "react-icons/md";
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { BsSpeedometer2 } from "react-icons/bs";
+import { RiUserStarLine } from "react-icons/ri";
+import { HiOutlineChartBar } from "react-icons/hi";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -75,13 +73,11 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
-              {/* Common Item */}
-
-              {/* Role Based Menus */}
+              {/* Role-Based Menus */}
               {role === "admin" && (
                 <>
                   <MenuItem
-                    icon={BsGraphUp}
+                    icon={BsSpeedometer2}
                     label="Dashboard"
                     address="/dashboard"
                   />
@@ -91,28 +87,27 @@ const Sidebar = () => {
                     address="/dashboard/manage-users"
                   />
                   <MenuItem
-                    icon={FaLayerGroup}
+                    icon={MdOutlineEmail}
                     label="Newsletter"
                     address="/dashboard/newsletter"
                   />
                   <MenuItem
-                    icon={FaDumbbell}
+                    icon={GiWeightLiftingUp}
                     label="Add Class"
                     address="/dashboard/add-class"
                   />
                   <MenuItem
-                    icon={FaBookReader}
+                    icon={MdForum}
                     label="Add Forum"
                     address="/dashboard/add-forum"
                   />
-
                   <MenuItem
-                    icon={FaBookReader}
+                    icon={RiUserStarLine}
                     label="Applied for Trainer"
                     address="/dashboard/applied-trainers"
                   />
                   <MenuItem
-                    icon={FaBookReader}
+                    icon={HiOutlineChartBar}
                     label="Balance and Chart"
                     address="/dashboard/balance"
                   />
@@ -127,12 +122,12 @@ const Sidebar = () => {
                     address="/dashboard/manage-slots"
                   />
                   <MenuItem
-                    icon={FaDumbbell}
+                    icon={GiWeightLiftingUp}
                     label="Add Slot"
                     address="/dashboard/add-slot"
                   />
                   <MenuItem
-                    icon={FaBookReader}
+                    icon={MdForum}
                     label="Add Forum"
                     address="/dashboard/add-forum"
                   />
@@ -147,35 +142,24 @@ const Sidebar = () => {
                     address="/dashboard/booked-trainer"
                   />
                   <MenuItem
-                    icon={BsGraphUp}
+                    icon={BsSpeedometer2}
                     label="Activity Log"
                     address="/dashboard/activity-log"
                   />
-                  {/* <MenuItem
-                    icon={FcSettings}
-                    label="Profile Page"
-                    address="/dashboard/profilePage"
-                  /> */}
-
                   <MenuItem
                     icon={FcSettings}
                     label="Profile"
                     address="/dashboard/profile"
                   />
-                  {/* <MenuItem
-                    icon={BsGraphUp}
-                    label="Be A Trainer"
-                    address="/dashboard/be-a-trainer"
-                  /> */}
                 </>
               )}
             </nav>
           </div>
         </div>
 
+        {/* Logout Button */}
         <div>
-          <hr />
-
+          <hr className="text-lime-500" />
           <button
             onClick={logOut}
             className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300 hover:text-gray-700 transition-colors duration-300 transform"
