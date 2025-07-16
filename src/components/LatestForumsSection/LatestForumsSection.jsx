@@ -4,6 +4,7 @@ import { useState } from "react";
 import ForumModal from "../Modal/ForumModal";
 import Container from "../Shared/Container";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const LatestForumsSection = () => {
   const axiosSecure = useAxiosSecure();
@@ -31,13 +32,26 @@ const LatestForumsSection = () => {
   return (
     <Container>
       <section className=" mt-10">
-        <h2 className="text-3xl font-bold text-center text-lime-500 ">
-          Latest Community Posts
-        </h2>
-        <p className="text-gray-600 text-center mb-4 text-md mt-1">
-          Discover the latest tips and topics from our fitness community. <br />
-          Join the conversation, stay inspired, and keep moving!
-        </p>
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+        >
+          Latest <span className="text-lime-600">Community Posts</span>
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+        >
+          Discover the latest tips and topics from our fitness community. Join
+          the conversation, stay inspired, <br /> and keep moving!
+        </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {forums.map((forum) => (

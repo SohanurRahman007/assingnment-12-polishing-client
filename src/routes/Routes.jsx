@@ -39,6 +39,8 @@ import ProfilePage from "../pages/Dashboard/Member/ProfilePage";
 import BookedTrainer from "../pages/Dashboard/Member/BookedTrainer";
 import AllClasses from "../pages/AllClasses/AllClasses";
 import { elements } from "chart.js";
+import Newsletter from "../pages/Dashboard/Admin/Newsletter";
+import AdminStatistics from "../components/Dashboard/Statistics/AdminStatistics";
 // import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
@@ -69,7 +71,11 @@ export const router = createBrowserRouter([
 
       {
         path: "/book-trainer/:id/:slot",
-        element: <TrainerBookingPage />,
+        element: (
+          <PrivateRoute>
+            <TrainerBookingPage />
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -131,16 +137,28 @@ export const router = createBrowserRouter([
       },
       {
         path: "applied-trainer-details/:id",
-        element: <TrainerDetails />,
+        element: (
+          <RoleRoute allowedRoles="admin">
+            <TrainerDetails />,
+          </RoleRoute>
+        ),
       },
-      // {
-      //   path: "newsletter",
-      //   element: <Newsletter />,
-      // },
-      // {
-      //   path: "balance",
-      //   element: <AdminBalance />,
-      // },
+      {
+        path: "newsletter",
+        element: (
+          <RoleRoute allowedRoles="admin">
+            <Newsletter />,
+          </RoleRoute>
+        ),
+      },
+      {
+        path: "balance",
+        element: (
+          <RoleRoute allowedRoles="admin">
+            <AdminStatistics />
+          </RoleRoute>
+        ),
+      },
 
       // ==================== Trainer Routes ====================
       {
@@ -186,15 +204,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "profilePage",
-        element: <ProfilePage />,
-      },
-
-      // ==================== Common Routes ====================
-      {
         path: "profile",
         element: <Profile />,
       },
+      // ==================== Common Routes ====================
     ],
   },
 ]);

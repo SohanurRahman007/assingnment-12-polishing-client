@@ -111,11 +111,11 @@ const Sidebar = () => {
                     label="Applied for Trainer"
                     address="/dashboard/applied-trainers"
                   />
-                  {/* <MenuItem
+                  <MenuItem
                     icon={FaBookReader}
                     label="Balance and Chart"
                     address="/dashboard/balance"
-                  /> */}
+                  />
                 </>
               )}
 
@@ -151,11 +151,11 @@ const Sidebar = () => {
                     label="Activity Log"
                     address="/dashboard/activity-log"
                   />
-                  <MenuItem
+                  {/* <MenuItem
                     icon={FcSettings}
                     label="Profile Page"
                     address="/dashboard/profilePage"
-                  />
+                  /> */}
 
                   <MenuItem
                     icon={FcSettings}

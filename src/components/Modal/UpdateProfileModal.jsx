@@ -1,14 +1,16 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { updateProfile } from "firebase/auth";
 
 const imgHostingKey = import.meta.env.VITE_IMGBB_API;
 const imgUploadUrl = `https://api.imgbb.com/1/upload?key=${imgHostingKey}`;
 
-const UpdateProfileModal = ({ user, closeModal, onUpdate }) => {
+const UpdateProfileModal = ({ user, profile, closeModal, onUpdate }) => {
   const axiosSecure = useAxiosSecure();
+  const [status, setStatus] = useState("idle"); // idle | saving | saved
 
   const {
     register,
@@ -17,12 +19,20 @@ const UpdateProfileModal = ({ user, closeModal, onUpdate }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      let imageUrl = user?.photoURL;
+  // ⏬ Pre-fill the form with current data
+  useEffect(() => {
+    reset({
+      name: profile?.name || "",
+    });
+  }, [profile, reset]);
 
-      // Upload image if file is selected
-      const imageFile = data.photo[0];
+  const onSubmit = async (data) => {
+    setStatus("saving");
+
+    try {
+      let imageUrl = profile?.photoURL;
+
+      const imageFile = data.photo?.[0];
       if (imageFile) {
         const formData = new FormData();
         formData.append("image", imageFile);
@@ -31,29 +41,42 @@ const UpdateProfileModal = ({ user, closeModal, onUpdate }) => {
           method: "POST",
           body: formData,
         });
-        const imgData = await imgRes.json();
 
+        const imgData = await imgRes.json();
         if (imgData.success) {
           imageUrl = imgData.data.display_url;
         } else {
-          toast.error("Image upload failed.");
+          toast.error("Image upload failed");
+          setStatus("idle");
           return;
         }
       }
 
-      // Save updated info to DB
-      const res = await axiosSecure.patch(`/users/${user.email}`, {
+      // 1️⃣ Update Firebase
+      await updateProfile(user, {
+        displayName: data.name,
+        photoURL: imageUrl,
+      });
+
+      // 2️⃣ Update MongoDB
+      await axiosSecure.patch(`/users/${user.email}`, {
         name: data.name,
         photoURL: imageUrl,
       });
 
-      toast.success("Profile updated!");
+      // 3️⃣ Notify and return
+      toast.success("Profile updated successfully");
       onUpdate({ name: data.name, photoURL: imageUrl });
-      reset();
-      closeModal();
-    } catch (err) {
-      toast.error("Update failed.");
-      console.error(err);
+      setStatus("saved");
+
+      setTimeout(() => {
+        setStatus("idle");
+        closeModal();
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update profile");
+      setStatus("idle");
     }
   };
 
@@ -68,18 +91,16 @@ const UpdateProfileModal = ({ user, closeModal, onUpdate }) => {
           <AiOutlineClose size={22} />
         </button>
 
-        {/* Modal content */}
         <h2 className="text-xl font-semibold text-lime-600 mb-4">
           Update Profile
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name Field */}
+          {/* Name Input */}
           <div>
             <label className="text-sm font-medium text-gray-700">Name</label>
             <input
               type="text"
-              defaultValue={user?.displayName}
               {...register("name", { required: true })}
               className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500"
             />
@@ -104,9 +125,20 @@ const UpdateProfileModal = ({ user, closeModal, onUpdate }) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-lime-500 text-white py-2 px-4 rounded-md hover:bg-lime-600 transition"
+            disabled={status === "saving"}
+            className={`w-full py-2 px-4 rounded-md text-white transition ${
+              status === "saved"
+                ? "bg-lime-800"
+                : status === "saving"
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-lime-500 hover:bg-lime-600"
+            }`}
           >
-            Save Changes
+            {status === "saving"
+              ? "Saving..."
+              : status === "saved"
+              ? "Saved ✅"
+              : "Save Changes"}
           </button>
         </form>
       </div>

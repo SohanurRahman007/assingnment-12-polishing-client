@@ -31,8 +31,8 @@ const TestimonialsSection = () => {
         className="bg-white py-6 rounded-lg shadow-inner"
       >
         <div className="container px-6 mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-lime-500 mb-2">
-            What Our Members Say
+          <h2 className="text-2xl md:text-4xl font-bold text-lime-600 mb-2 text-center">
+            <span className="text-gray-800">What</span> Our Members Say
           </h2>
           <div className="flex justify-center mb-10">
             <span className="inline-block w-40 h-1 bg-gray-600 rounded-full"></span>
@@ -47,7 +47,7 @@ const TestimonialsSection = () => {
               className="absolute -left-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
               title="Previous"
             >
-              <FaChevronLeft className="text-gray-600" />
+              <FaChevronLeft className="text-lime-600" />
             </button>
 
             <Swiper
@@ -119,7 +119,7 @@ const TestimonialsSection = () => {
               className="absolute -right-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
               title="Next"
             >
-              <FaChevronRight className="text-gray-600" />
+              <FaChevronRight className="text-lime-600" />
             </button>
           </div>
         </div>
