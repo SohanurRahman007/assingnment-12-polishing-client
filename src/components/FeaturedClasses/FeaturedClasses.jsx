@@ -12,7 +12,7 @@ const FeaturedClasses = () => {
     queryKey: ["featured-classes"],
     queryFn: async () => {
       const res = await axiosSecure.get("/classes-with-booking");
-      return res.data.slice(0, 6); // top 6
+      return res.data.slice(0, 6); // top 6 most booked
     },
   });
 
@@ -20,14 +20,14 @@ const FeaturedClasses = () => {
 
   return (
     <Container>
-      <section className="mt-8">
-        <div className="">
+      <section className="mt-12">
+        <div className="text-center mb-10">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+            className="text-3xl md:text-5xl font-bold text-gray-800"
           >
             Featured <span className="text-lime-600">Classes</span>
           </motion.h2>
@@ -37,50 +37,49 @@ const FeaturedClasses = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+            className="max-w-2xl mx-auto mt-4 text-gray-600 text-md md:text-lg"
           >
             Discover our most popular fitness classes, trusted and booked by
-            hundreds of members. These classes offer the best blend of coaching,
-            challenge, and community.
+            hundreds of members.
           </motion.p>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {classes.map((cls) => (
-              <motion.div
-                key={cls._id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-                className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition"
-              >
-                <div className="h-56 overflow-hidden">
-                  <img
-                    src={cls.image}
-                    alt={cls.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5 flex flex-col gap-3">
-                  <h3 className="text-xl font-bold text-gray-800 hover:text-lime-600 transition">
-                    {cls.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm line-clamp-3">
-                    {cls.details}
-                  </p>
-                  <p className="text-sm font-semibold text-lime-600">
-                    Total Bookings: {cls.bookingCount || 0}
-                  </p>
-                  <Link
-                    to="/classes"
-                    className="text-sm text-lime-600 hover:underline mt-2"
-                  >
-                    View All Classes →
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {classes.map((cls) => (
+            <motion.div
+              key={cls._id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition"
+            >
+              <div className="h-56 overflow-hidden">
+                <img
+                  src={cls.image}
+                  alt={cls.name}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 flex flex-col gap-3">
+                <h3 className="text-xl font-semibold text-gray-800 hover:text-lime-600 transition">
+                  {cls.name}
+                </h3>
+                <p className="text-gray-600 text-sm line-clamp-3">
+                  {cls.details}
+                </p>
+                <p className="text-sm font-semibold text-lime-600">
+                  Total Bookings: {cls.bookingCount || 0}
+                </p>
+                <Link
+                  to="/classes"
+                  className="text-sm text-lime-600 hover:underline mt-2"
+                >
+                  View All Classes →
+                </Link>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
     </Container>
