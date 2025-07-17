@@ -10,7 +10,7 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-  const { signIn, signInWithGoogle, loading, user, resetPassword } = useAuth();
+  const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,10 +21,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm();
-
-  const password = watch("password");
 
   const onSubmit = async (data) => {
     try {
@@ -34,17 +31,7 @@ const Login = () => {
       reset();
     } catch (err) {
       toast.error("Invalid email or password");
-    }
-  };
-
-  const handleForgotPassword = async () => {
-    const email = watch("email");
-    if (!email) return toast.error("Please enter your email first");
-    try {
-      await resetPassword(email);
-      toast.success("Password reset email sent");
-    } catch (err) {
-      toast.error(err.message);
+      setLoading(false);
     }
   };
 
@@ -112,15 +99,8 @@ const Login = () => {
             {/* Forgot Password + Submit */}
             <div className="flex items-center justify-between">
               <button
-                type="button"
-                onClick={handleForgotPassword}
-                className="text-sm text-gray-600 hover:underline"
-              >
-                Forgot Password?
-              </button>
-              <button
                 type="submit"
-                className="px-6 py-2 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer"
+                className="px-6 py-2 w-full bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer"
               >
                 {loading ? (
                   <TbFidgetSpinner className="animate-spin m-auto" />

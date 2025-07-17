@@ -38,9 +38,10 @@ import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ProfilePage from "../pages/Dashboard/Member/ProfilePage";
 import BookedTrainer from "../pages/Dashboard/Member/BookedTrainer";
 import AllClasses from "../pages/AllClasses/AllClasses";
-import { elements } from "chart.js";
 import Newsletter from "../pages/Dashboard/Admin/Newsletter";
 import AdminStatistics from "../components/Dashboard/Statistics/AdminStatistics";
+import FAQ from "../pages/faqsPage/faqs";
+import ContactUs from "../pages/ContactUs/ContactUs";
 // import AdminBalance from "../pages/Dashboard/Admin/AdminBalance";
 // import TrainerDetails from "../pages/TrainerDetails/TrainerDetails";
 // import ActivityLog from "../pages/Dashboard/Member/ActivityLog";
@@ -68,7 +69,14 @@ export const router = createBrowserRouter([
         path: "/trainer/:id",
         element: <TrainerDetailsPage />,
       },
-
+      {
+        path: "faq",
+        element: <FAQ />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
       {
         path: "/book-trainer/:id/:slot",
         element: (

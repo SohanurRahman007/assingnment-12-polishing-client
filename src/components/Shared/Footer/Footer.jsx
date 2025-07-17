@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import logo from "../../../assets/images/logo-flat.png";
 import Container from "../Container";
+// import Container from "../Container";
 
 const Footer = () => {
   return (
@@ -56,10 +57,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/community"
-                    className="hover:text-lime-400 transition"
-                  >
+                  <Link to="/forum" className="hover:text-lime-400 transition">
                     Community
                   </Link>
                 </li>
@@ -102,16 +100,36 @@ const Footer = () => {
               <p className="text-sm">Email: support@fitsphere.com</p>
               <p className="text-sm mb-4">Phone: +880-1234-567890</p>
               <div className="flex gap-3 text-lg text-white">
-                <a href="#" className="hover:text-lime-400">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime-400"
+                >
                   <FaFacebookF />
                 </a>
-                <a href="#" className="hover:text-lime-400">
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime-400"
+                >
                   <FaTwitter />
                 </a>
-                <a href="#" className="hover:text-lime-400">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime-400"
+                >
                   <FaInstagram />
                 </a>
-                <a href="#" className="hover:text-lime-400">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime-400"
+                >
                   <FaLinkedinIn />
                 </a>
               </div>

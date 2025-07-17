@@ -9,8 +9,13 @@ import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
-  const { createUser, updateUserProfile, signInWithGoogle, loading } =
-    useAuth();
+  const {
+    createUser,
+    updateUserProfile,
+    signInWithGoogle,
+    loading,
+    setLoading,
+  } = useAuth();
   const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
 
@@ -51,6 +56,7 @@ const SignUp = () => {
       navigate("/");
     } catch (err) {
       toast.error(err.message);
+      setLoading(false);
     }
   };
 
@@ -67,6 +73,7 @@ const SignUp = () => {
       navigate("/");
     } catch (err) {
       toast.error(err.message);
+      setLoading(false);
     }
   };
 
