@@ -75,9 +75,10 @@ const AllClasses = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center mt-10"
       >
-        Explore All <span className="text-lime-600">Fitness Classes</span>
+        <span className="text-gray-800">Explore All</span>
+        Fitness Classes
       </motion.h2>
 
       <motion.p
@@ -85,7 +86,7 @@ const AllClasses = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+        className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
       >
         Explore our wide variety of fitness classes at FitSphere, designed for
         every fitness level and goal. From strength training to yoga, browse
