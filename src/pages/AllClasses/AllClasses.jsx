@@ -159,7 +159,7 @@ const AllClasses = () => {
       <ClassDetailsModal
         isOpen={isModalOpen}
         onClose={closeModal}
-        selectedClass={selectedClass} // This passes the selected class object
+        selectedClass={selectedClass}
       />
     </Container>
   );

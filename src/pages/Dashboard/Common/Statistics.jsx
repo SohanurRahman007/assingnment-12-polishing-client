@@ -17,6 +17,8 @@ const Statistics = () => {
     },
   });
 
+  if (isLoading) return <LoadingSpinner />;
+
   const getTypedText = (role) => {
     switch (role) {
       case "trainer":
@@ -35,8 +37,6 @@ const Statistics = () => {
         return ["Explore the FitSphere dashboard"];
     }
   };
-
-  if (isLoading) <LoadingSpinner />;
 
   const typedTexts = getTypedText(userInfo?.role);
 

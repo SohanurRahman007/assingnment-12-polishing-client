@@ -52,17 +52,16 @@ const ForumsPage = () => {
 
   return (
     <Container>
-      <div className="">
+      <div className="mt-10">
         <Helmet>
           <title>Community Forums | FitSphere</title>
         </Helmet>
 
-        <h1 className="text-3xl font-bold text-center text-lime-600 ">
-          Community Forums
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center">
+          <span className="text-gray-800">Community</span> Forums
         </h1>
-        <p className="text-center text-gray-600 mb-8">
-          Welcome to the FitSphere Community Forums — a space where trainers and{" "}
-          <br />
+        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-6">
+          Welcome to the FitSphere Community Forums — a space where trainers and
           admins share insights, tips, and updates related to fitness, wellness,
           and motivation.
         </p>

@@ -29,9 +29,10 @@ const AllTrainers = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+        className="text-2xl mt-10 md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
       >
-        Meet Our <span className="text-lime-600">Professional Trainers</span>
+        <span className="text-gray-800">Meet Our</span>
+        Professional Trainers
       </motion.h2>
 
       {/* Animated Description */}
@@ -40,7 +41,7 @@ const AllTrainers = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+        className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
       >
         Explore our diverse range of certified trainers, each bringing their
         unique expertise to help you reach your fitness goals. Whether you're
