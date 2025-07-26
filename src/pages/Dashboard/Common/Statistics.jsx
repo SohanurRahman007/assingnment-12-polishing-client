@@ -70,10 +70,8 @@ const Statistics = () => {
         </h3>
 
         <p className="text-md text-gray-200 mt-4">
-          Logged in as:{" "}
-          <span className="capitalize font-semibold">
-            {userInfo?.role || "User"}
-          </span>
+          Logged in as:
+          <span className="capitalize font-semibold">{userInfo?.role}</span>
         </p>
       </div>
     </div>
