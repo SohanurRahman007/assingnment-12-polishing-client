@@ -5,7 +5,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative bg-fixed bg-center bg-no-repeat bg-cover min-h-[80vh] flex items-center justify-center"
+      className="relative bg-fixed bg-center bg-no-repeat bg-cover min-h-[80vh] flex items-center justify-center mt-10"
       style={{
         backgroundImage:
           "url('https://i.ibb.co/qF5m4zr7/omar-lopez-rincon-BE181-Raj-rg-unsplash.jpg')",
@@ -21,7 +21,7 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 items-center rounded-xl   py-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-8"
+          className="relative z-10 items-center rounded-xl py-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-8"
         >
           {/* Image */}
           <motion.div
@@ -43,8 +43,8 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-lime-600 mb-4">
-              About FitSphere
+            <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-4">
+              About <span className="text-gray-900">FitSphere</span>
             </h2>
             <p className="text-gray-800 dark:text-gray-300 mb-4 leading-relaxed">
               FitSphere is a revolutionary fitness platform designed to connect

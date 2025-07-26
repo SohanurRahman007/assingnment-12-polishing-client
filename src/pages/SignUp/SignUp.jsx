@@ -28,6 +28,7 @@ const SignUp = () => {
 
   const onSubmit = async (data) => {
     const { name, email, password, photo } = data;
+    console.log(data);
     try {
       let imageURL = "https://i.ibb.co/2kRrTRq/default-avatar.jpg";
 
@@ -51,6 +52,15 @@ const SignUp = () => {
 
       await createUser(email, password);
       await updateUserProfile(name, imageURL);
+
+      // ✅ NEW: Save user to database
+      await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
+        name,
+        email,
+        photo: imageURL,
+        role: "member",
+      });
+
       toast.success("Sign Up Successful!");
       reset();
       navigate("/");

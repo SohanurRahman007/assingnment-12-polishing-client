@@ -11,7 +11,7 @@ import Container from "../Container";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-700 text-gray-300 mt-8 pt-10 pb-6">
+    <footer className="bg-gray-700 text-gray-300 mt-10 pt-10 pb-6">
       <Container>
         <div className=" mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -97,8 +97,8 @@ const Footer = () => {
             {/* Contact & Social */}
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
-              <p className="text-sm">Email: support@fitsphere.com</p>
-              <p className="text-sm mb-4">Phone: +880-1234-567890</p>
+              <p className="text-sm">Email: sohanuractive007@gamil.com</p>
+              <p className="text-sm mb-4">Phone: +880-1731468538</p>
               <div className="flex gap-3 text-lg text-white">
                 <a
                   href="https://facebook.com"

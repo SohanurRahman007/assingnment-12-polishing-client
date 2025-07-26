@@ -37,13 +37,13 @@ const TeamSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        className=""
+        className="mt-10"
       >
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-2xl md:text-4xl font-bold text-lime-600 mb-2 text-center"
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
         >
           <span className="text-gray-800">Meet Our </span>
           Expert Trainers
@@ -53,10 +53,11 @@ const TeamSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-center text-gray-600 mb-10 max-w-2xl mx-auto"
+          className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
         >
-          Our certified trainers are passionate about helping you reach your
-          goals.
+          Our certified trainers are dedicated to helping you reach your full
+          potential — with expert guidance, encouragement, and a plan built just
+          for you.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

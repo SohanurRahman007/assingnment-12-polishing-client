@@ -46,10 +46,10 @@ const cardVariants = {
 const FeaturedSection = () => {
   return (
     <Container>
-      <section className="py-8 " id="features">
-        <div className=" mx-auto text-center">
+      <section className="mt-10 " id="features">
+        <div className=" text-center">
           <motion.h2
-            className="text-2xl md:text-4xl font-bold text-lime-600 mb-2 text-center"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -58,7 +58,7 @@ const FeaturedSection = () => {
             <span className="text-gray-800"> Why</span> Choose FitSphere?
           </motion.h2>
           <motion.p
-            className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+            className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

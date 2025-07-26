@@ -20,16 +20,16 @@ const FeaturedClasses = () => {
 
   return (
     <Container>
-      <section className="mt-12">
-        <div className="text-center mb-10">
+      <section className="mt-10">
+        <div className="text-center mb-6">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-3xl md:text-5xl font-bold text-gray-800"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
           >
-            Featured <span className="text-lime-600">Classes</span>
+            Featured <span className="text-gray-800">Classes</span>
           </motion.h2>
 
           <motion.p
@@ -37,10 +37,11 @@ const FeaturedClasses = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="max-w-2xl mx-auto mt-4 text-gray-600 text-md md:text-lg"
+            className="text-center text-gray-600 max-w-2xl mx-auto"
           >
-            Discover our most popular fitness classes, trusted and booked by
-            hundreds of members.
+            Discover our top-rated fitness classes — trusted by hundreds,
+            designed to energize, and built to transform your body and mind.
+            Your fitness journey starts here!
           </motion.p>
         </div>
 

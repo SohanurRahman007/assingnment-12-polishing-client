@@ -22,12 +22,14 @@ const AddSlot = () => {
   } = useForm();
 
   const { data: classes = [] } = useQuery({
-    queryKey: ["classes"],
+    queryKey: ["allFitnessClasses"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/classes");
+      const res = await axiosSecure.get("/classes/trainer/all");
       return res.data.classes;
     },
   });
+
+  console.log(classes);
 
   const daysOptions = [
     { value: "Monday", label: "Monday" },

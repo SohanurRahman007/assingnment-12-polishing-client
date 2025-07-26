@@ -28,17 +28,30 @@ const TestimonialsSection = () => {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white py-6 rounded-lg shadow-inner"
+        className="bg-white mt-10"
       >
-        <div className="container px-6 mx-auto">
-          <h2 className="text-2xl md:text-4xl font-bold text-lime-600 mb-2 text-center">
-            <span className="text-gray-800">What</span> Our Members Say
-          </h2>
-          <div className="flex justify-center mb-10">
-            <span className="inline-block w-40 h-1 bg-gray-600 rounded-full"></span>
-            <span className="inline-block w-3 h-1 mx-1 bg-lime-500 rounded-full"></span>
-            <span className="inline-block w-1 h-1 bg-lime-500 rounded-full"></span>
-          </div>
+        <div className="container mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
+          >
+            What <span className="text-gray-800">Our Members Say</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
+          >
+            Our members love the results they’re seeing — and they’re not shy
+            about sharing! Check out their honest reviews and inspiring success
+            stories.
+          </motion.p>
 
           <div className="relative max-w-4xl mx-auto">
             {/* Navigation Buttons */}

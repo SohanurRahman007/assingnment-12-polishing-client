@@ -8,10 +8,12 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 
 const PaymentPage = () => {
   const [params] = useSearchParams();
-  const trainerId = params.get("trainer");
+  const trainerId = params.get("trainerId");
   const slot = params.get("slot");
   const pack = params.get("package");
   const price = parseFloat(params.get("price")) || 0;
+
+  console.log("Trainer ID from URL:", trainerId);
 
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -19,11 +21,15 @@ const PaymentPage = () => {
   const { data: trainer = {}, isLoading } = useQuery({
     queryKey: ["trainerPayment", trainerId],
     queryFn: async () => {
+      if (!trainerId) return {};
       const res = await axiosSecure.get(`/confirmed-trainers/${trainerId}`);
       return res.data;
     },
     enabled: !!trainerId,
   });
+
+  console.log("Trainer data from API:", trainer);
+
   if (!user) return <LoadingSpinner />;
   if (isLoading) {
     return <LoadingSpinner />;
@@ -35,7 +41,7 @@ const PaymentPage = () => {
         <title>Payment | FitSphere</title>
       </Helmet>
 
-      <div className="bg-gray-50  rounded-xl shadow-lg p-4 md:p-6">
+      <div className="bg-gray-50 rounded-xl shadow-lg p-4 md:p-6">
         <h2 className="text-2xl font-bold text-lime-600 text-center ">
           Complete Your Payment
         </h2>
@@ -51,7 +57,8 @@ const PaymentPage = () => {
               Trainer Info
             </h4>
             <p>
-              <strong>Name:</strong> {trainer.name}
+              <strong>Name:</strong>{" "}
+              {trainer.name || "Trainer info not available"}
             </p>
             <p>
               <strong>Slot:</strong> {slot}
@@ -70,10 +77,10 @@ const PaymentPage = () => {
               Your Info
             </h4>
             <p>
-              <strong>Name:</strong> {user?.displayName}
+              <strong>Name:</strong> {user?.displayName || "No name"}
             </p>
             <p>
-              <strong>Email:</strong> {user?.email}
+              <strong>Email:</strong> {user?.email || "No email"}
             </p>
           </div>
         </div>

@@ -85,7 +85,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight drop-shadow-xl"
+            className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-xl"
           >
             Welcome to <span className="text-lime-400">{displayedText}</span>
           </motion.h2>
@@ -103,7 +103,7 @@ const Banner = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate("/classes")}
-            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition"
+            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition cursor-pointer"
           >
             Explore Now
           </motion.button>

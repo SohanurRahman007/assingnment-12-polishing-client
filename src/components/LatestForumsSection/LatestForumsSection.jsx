@@ -37,9 +37,9 @@ const LatestForumsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 text-center"
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
         >
-          Latest <span className="text-lime-600">Community Posts</span>
+          Latest <span className="text-gray-800">Community Posts</span>
         </motion.h2>
 
         <motion.p
@@ -47,10 +47,10 @@ const LatestForumsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="max-w-4xl text-center mx-auto text-gray-600 text-sm md:text-md px-4 leading-relaxed mb-6"
+          className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
         >
           Discover the latest tips and topics from our fitness community. Join
-          the conversation, stay inspired, <br /> and keep moving!
+          the conversation, stay inspired, and keep moving!
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

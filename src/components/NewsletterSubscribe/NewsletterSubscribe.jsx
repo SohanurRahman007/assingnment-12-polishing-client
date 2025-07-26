@@ -31,11 +31,11 @@ const NewsletterSubscribe = () => {
   return (
     <div
       data-aos="fade-up"
-      className="bg-white py-10 px-6 rounded-2xl shadow-xl max-w-3xl mx-auto mt-6 border border-gray-200 mb-2"
+      className="bg-white  py-10 px-6 rounded-2xl shadow-xl max-w-3xl mx-auto mt-10 border border-gray-200 mb-2"
     >
       <div className="text-center mb-6" data-aos="fade-down">
         <FaEnvelopeOpenText className="text-5xl text-lime-500 mx-auto mb-3" />
-        <h2 className="text-3xl font-extrabold text-slate-800">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800">
           Subscribe to our Newsletter
         </h2>
         <p className="text-slate-500 text-sm mt-1">

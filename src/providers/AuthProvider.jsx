@@ -61,16 +61,16 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         setUser(currentUser);
 
-        const userInfo = {
-          name: currentUser.displayName,
-          email: currentUser.email,
-          photo: currentUser.photoURL,
-          role: "member",
-        };
+        // const userInfo = {
+        //   name: currentUser.displayName,
+        //   email: currentUser.email,
+        //   photo: currentUser.photoURL,
+        //   role: "member",
+        // };
 
         try {
           // ✅ Save user info to DB
-          await axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo);
+          // await axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo);
 
           // ✅ Get JWT token and store in localStorage
           const res = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {

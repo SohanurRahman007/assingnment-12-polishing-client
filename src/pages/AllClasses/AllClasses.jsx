@@ -1,9 +1,10 @@
+// src/pages/AllClasses.jsx
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-import ClassCard from "../../components/ClassCard/ClassCard";
-import ClassDetailsModal from "../../components/Modal/ClassDetailsModal";
+import ClassCard from "../../components/ClassCard/ClassCard"; // Make sure this component exists
+import ClassDetailsModal from "../../components/Modal/ClassDetailsModal"; // Make sure this component exists
 import Container from "../../components/Shared/Container";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
@@ -43,6 +44,7 @@ const AllClasses = () => {
   const openModal = (cls) => {
     setSelectedClass(cls);
     setIsModalOpen(true);
+    // console.log("AllClasses: Opening modal for class:", cls); // Add this for debugging
   };
 
   const closeModal = () => {
@@ -54,7 +56,6 @@ const AllClasses = () => {
 
   const totalPages = data ? Math.ceil(data.total / limit) : 0;
 
-  // ✅ Filter cards based on search input
   const filteredClasses = data?.classes?.filter((cls) => {
     const lower = search.toLowerCase();
     return (
@@ -122,6 +123,7 @@ const AllClasses = () => {
         >
           {filteredClasses.map((cls) => (
             <motion.div key={cls._id} variants={cardVariants}>
+              {/* This is where ClassCard receives 'cls' */}
               <ClassCard cls={cls} onViewDetails={() => openModal(cls)} />
             </motion.div>
           ))}
@@ -157,7 +159,7 @@ const AllClasses = () => {
       <ClassDetailsModal
         isOpen={isModalOpen}
         onClose={closeModal}
-        selectedClass={selectedClass}
+        selectedClass={selectedClass} // This passes the selected class object
       />
     </Container>
   );

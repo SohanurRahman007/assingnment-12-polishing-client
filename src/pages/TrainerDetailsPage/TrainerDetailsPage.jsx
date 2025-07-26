@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom"; // ⭐ Added useSearchParams ⭐
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import {
@@ -10,7 +10,6 @@ import {
   User,
   BadgeCheck,
   Mail,
-  SeparatorVertical,
   Contact,
 } from "lucide-react";
 import { Disclosure } from "@headlessui/react";
@@ -21,32 +20,51 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 
 const TrainerDetailsPage = () => {
-  const { id } = useParams();
+  const { id: trainerId } = useParams();
+  const [searchParams] = useSearchParams();
+  const classId = searchParams.get("classId");
+
   const axiosSecure = useAxiosSecure();
 
   const {
     data: trainer = {},
     isLoading,
     isError,
+    error,
   } = useQuery({
-    queryKey: ["trainerDetails", id],
+    queryKey: ["trainerDetails", trainerId],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/confirmed-trainers/${id}`);
+      const res = await axiosSecure.get(`/confirmed-trainers/${trainerId}`);
       return res.data;
     },
+    enabled: !!trainerId,
   });
-
-  console.log(trainer);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError)
-    return <p className="text-center text-red-500 mt-10">Trainer not found.</p>;
+    return (
+      <p className="text-center text-red-500 mt-10">
+        Error fetching trainer: {error?.message || "Trainer not found."}
+      </p>
+    );
+
+  // Fallback if trainer data is empty after loading
+  if (!trainer || Object.keys(trainer).length === 0) {
+    return (
+      <Container>
+        <div className="text-center text-gray-700 mt-10">
+          No trainer details found for this ID.
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <div className="py-6">
         <Helmet>
-          <title>Trainer Details | FitSphere</title>
+          <title>{trainer.name} Details | FitSphere</title>{" "}
+          {/* Dynamic title */}
         </Helmet>
         <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-center justify-center">
           {/* Left Side: Trainer Info */}
@@ -56,9 +74,12 @@ const TrainerDetailsPage = () => {
             transition={{ duration: 0.6 }}
             className="space-y-2 shadow-md rounded-xl"
           >
-            <div className="overflow-hidden  rounded-t-xl  group">
+            <div className="overflow-hidden rounded-t-xl group">
               <img
-                src={trainer.profileImage}
+                src={
+                  trainer.profileImage ||
+                  "https://via.placeholder.com/400x300?text=Trainer+Image"
+                }
                 alt={trainer.name}
                 className="w-full h-[300px] object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -72,7 +93,8 @@ const TrainerDetailsPage = () => {
               <div className="flex flex-wrap gap-6 text-sm">
                 <p className="flex items-center gap-1">
                   <User className="w-4 h-4 text-lime-500" />
-                  Age: <span className="font-medium">{trainer.age}</span>
+                  Age:{" "}
+                  <span className="font-medium">{trainer.age || "N/A"}</span>
                 </p>
                 <p className="flex items-center gap-1">
                   <BadgeCheck className="w-4 h-4 text-lime-500" />
@@ -107,7 +129,7 @@ const TrainerDetailsPage = () => {
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Mail className="w-4 h-4 text-lime-500" />
                   <span className="font-medium">Email:</span>
-                  <span>{trainer.email}</span>
+                  <span>{trainer.email || "N/A"}</span>
                 </div>
 
                 {/* Divider for small screens */}
@@ -138,6 +160,10 @@ const TrainerDetailsPage = () => {
                     >
                       <Linkedin className="w-4 h-4" />
                     </a>
+                  )}
+                  {/* Optionally, if you have other social links */}
+                  {!trainer.facebook && !trainer.linkedin && (
+                    <span className="text-gray-400">N/A</span>
                   )}
                 </div>
               </div>
@@ -179,7 +205,11 @@ const TrainerDetailsPage = () => {
                         {trainer.availableDays.map((day, i) => (
                           <Link
                             key={i}
-                            to={`/book-trainer/${trainer._id}/${day}`}
+                            // ⭐ THE CRITICAL FIX IS HERE ⭐
+                            // Pass trainer._id and day as path params, and classId as a query param
+                            to={`/book-trainer/${trainer._id}/${day}${
+                              classId ? `?classId=${classId}` : ""
+                            }`}
                             className="px-4 py-2 text-sm bg-lime-600 text-white rounded hover:bg-lime-700 transition"
                           >
                             {day}
