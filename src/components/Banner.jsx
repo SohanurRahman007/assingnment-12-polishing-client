@@ -7,25 +7,29 @@ const slides = [
   {
     id: 1,
     title: "Track Your Progress",
-    description: "Monitor workouts, goals, and body stats in one place.",
+    description:
+      "Monitor workouts, goals, and body stats in one place, Stay on top of your fitness with real-time insights and tracking tools.",
     image: "https://i.ibb.co/35VKtbyS/fit-slider-6.jpg",
   },
   {
     id: 2,
     title: "Stay Motivated",
-    description: "Get daily tips and reminders to stay on track.",
+    description:
+      "Get daily tips and reminders to stay on track, Build lasting habits and crush your fitness goals with confidence.",
     image: "https://i.ibb.co/21CD3r4M/fit-slider-4.jpg",
   },
   {
     id: 3,
     title: "Join the Community",
-    description: "Connect with trainers and friends who inspire you.",
+    description:
+      "Connect with trainers and friends who inspire you, Stay motivated through shared goals and real-time support.",
     image: "https://i.ibb.co/YFVK7PQM/fit-slider-2.jpg",
   },
   {
     id: 4,
     title: "Set Real Goals",
-    description: "Custom goal tracking made simple and powerful.",
+    description:
+      "Custom goal tracking made simple and powerful, Visualize your progress and crush milestones with ease..",
     image: "https://i.ibb.co/KpV1tv7b/fit-slider-5.webp",
   },
 ];
@@ -46,7 +50,6 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Typing animation
   useEffect(() => {
     const timeout = setTimeout(() => {
       const fullText = typingTexts[typedIndex];
@@ -64,36 +67,44 @@ const Banner = () => {
   }, [charIndex, typedIndex]);
 
   return (
-    <Container>
-      <div className="relative w-full h-[80vh] overflow-hidden rounded-xl shadow-xl ">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={slides[currentIndex].id}
-            src={slides[currentIndex].image}
-            alt="Slide Image"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-        </AnimatePresence>
-
-        {/* TEXT SECTION */}
-        <div className="relative  h-full flex flex-col justify-center items-start px-6 md:px-20 text-white bg-black/40">
+    <div className="w-full h-[80vh] overflow-hidden relative -mt-10">
+      {" "}
+      {/* Changed -top-10 to -mt-10 */}
+      {/* Background Image */}
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={slides[currentIndex].id}
+          src={slides[currentIndex].image}
+          alt="Banner Background"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.03 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0 w-full h-full object-cover object-center z-0 overflow-hidden"
+        />
+      </AnimatePresence>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50 z-10" />
+      {/* Content */}
+      <Container>
+        <div className="relative z-10 h-[70vh] flex flex-col justify-center items-start px-6 text-white">
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-xl"
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-xl"
           >
-            Welcome to <span className="text-lime-400">{displayedText}</span>
+            Welcome to{" "}
+            <span className="text-lime-500">
+              {displayedText}
+              <span className="animate-pulse text-gray-900">|</span>
+            </span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-4 max-w-2xl text-base md:text-xl text-gray-200"
           >
             {slides[currentIndex].description}
@@ -103,13 +114,13 @@ const Banner = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate("/classes")}
-            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition cursor-pointer"
+            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition"
           >
             Explore Now
           </motion.button>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

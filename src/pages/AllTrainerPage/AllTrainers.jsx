@@ -29,7 +29,7 @@ const AllTrainers = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-2xl mt-10 md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
+        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
       >
         <span className="text-gray-800">Meet Our</span>
         Professional Trainers

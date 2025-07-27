@@ -52,7 +52,7 @@ const ForumsPage = () => {
 
   return (
     <Container>
-      <div className="mt-10">
+      <div className="">
         <Helmet>
           <title>Community Forums | FitSphere</title>
         </Helmet>

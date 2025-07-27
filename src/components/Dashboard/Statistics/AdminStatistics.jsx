@@ -5,6 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,7 +30,7 @@ const AdminStatistics = () => {
 
     fetchBalanceOverview();
   }, [axiosSecure]);
-
+  if (!data) return <LoadingSpinner />;
   const chartData = {
     labels: ["Subscribers", "Paid Members"],
     datasets: [
@@ -61,28 +62,28 @@ const AdminStatistics = () => {
 
   const statCards = [
     {
-      icon: <FaDollarSign className="w-6 h-6 text-white" />,
+      icon: <FaDollarSign className=" h-6 text-white" />,
       title: "Total Revenue",
       value: `$${data.totalBalance}`,
       from: "from-orange-500",
       to: "to-orange-300",
     },
+    // {
+    //   icon: <BsFillCartPlusFill className="w-6 h-6 text-white" />,
+    //   title: "Total Orders",
+    //   value: data.lastSixPayments.length,
+    //   from: "from-indigo-500",
+    //   to: "to-indigo-300",
+    // },
     {
-      icon: <BsFillCartPlusFill className="w-6 h-6 text-white" />,
-      title: "Total Orders",
-      value: data.lastSixPayments.length,
-      from: "from-indigo-500",
-      to: "to-indigo-300",
-    },
-    {
-      icon: <BsFillHouseDoorFill className="w-6 h-6 text-white" />,
+      icon: <BsFillHouseDoorFill className=" h-6 text-white" />,
       title: "Total Members",
       value: data.totalPaidMembers,
       from: "from-pink-500",
       to: "to-pink-300",
     },
     {
-      icon: <FaUserAlt className="w-6 h-6 text-white" />,
+      icon: <FaUserAlt className=" h-6 text-white" />,
       title: "Subscribers",
       value: data.totalSubscribers,
       from: "from-emerald-500",
@@ -97,7 +98,7 @@ const AdminStatistics = () => {
       </h1>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
         {statCards.map((card, idx) => (
           <div
             key={idx}
