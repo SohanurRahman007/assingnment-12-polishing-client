@@ -23,14 +23,15 @@ const slides = [
     title: "Join the Community",
     description:
       "Connect with trainers and friends who inspire you, Stay motivated through shared goals and real-time support.",
-    image: "https://i.ibb.co/YFVK7PQM/fit-slider-2.jpg",
+    image:
+      "https://i.ibb.co/Mym2zWgx/anastase-maragos-4dlhin0gh-Ok-unsplash.jpg",
   },
   {
     id: 4,
     title: "Set Real Goals",
     description:
       "Custom goal tracking made simple and powerful, Visualize your progress and crush milestones with ease..",
-    image: "https://i.ibb.co/KpV1tv7b/fit-slider-5.webp",
+    image: "https://i.ibb.co/HDmr4SWd/scott-webb-U5k-Qvb-QWo-G0-unsplash.jpg",
   },
 ];
 
