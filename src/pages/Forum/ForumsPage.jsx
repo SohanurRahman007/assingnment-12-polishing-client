@@ -8,7 +8,6 @@ import ForumCard from "../../components/ForumCard/ForumCard";
 import Container from "../../components/Shared/Container";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-// import ForumCard from "../../components/Forum/ForumCard";
 
 const ForumsPage = () => {
   const axiosSecure = useAxiosSecure();
@@ -74,18 +73,23 @@ const ForumsPage = () => {
 
         {/* Pagination */}
         <div className="flex justify-center items-center gap-4 mt-10">
+          {/* Previous */}
           <button
             onClick={() => setPage((prev) => Math.max(1, prev - 1))}
             disabled={page === 1}
-            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50"
+            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition"
           >
             <FaChevronLeft />
           </button>
-          <span className="font-semibold">Page {page}</span>
+
+          {/* Current Page */}
+          <span className="font-semibold text-gray-700">Page {page}</span>
+
+          {/* Next */}
           <button
             onClick={() => setPage((prev) => prev + 1)}
             disabled={data?.forums?.length < limit}
-            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50"
+            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition"
           >
             <FaChevronRight />
           </button>

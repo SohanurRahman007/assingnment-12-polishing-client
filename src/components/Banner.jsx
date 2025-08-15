@@ -115,7 +115,7 @@ const Banner = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate("/classes")}
-            className="mt-6 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition"
+            className="mt-6 px-4 py-2 md:px-6 md:py-3 bg-lime-500 cursor-pointer hover:bg-lime-600 text-white font-semibold rounded-lg shadow-md transition"
           >
             Explore Now
           </motion.button>

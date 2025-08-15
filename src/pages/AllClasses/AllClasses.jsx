@@ -8,6 +8,7 @@ import ClassDetailsModal from "../../components/Modal/ClassDetailsModal"; // Mak
 import Container from "../../components/Shared/Container";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -77,7 +78,7 @@ const AllClasses = () => {
         transition={{ duration: 0.6 }}
         className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center "
       >
-        <span className="text-gray-800">Explore All</span>
+        <span className="text-gray-800">Explore All </span>
         Fitness Classes
       </motion.h2>
 
@@ -137,25 +138,47 @@ const AllClasses = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-10 space-x-2">
+        <div className="flex justify-center items-center gap-3 mt-10">
+          {/* Previous */}
+          <motion.button
+            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+            disabled={page === 1}
+            whileHover={{ scale: page === 1 ? 1 : 1.05 }}
+            whileTap={{ scale: page === 1 ? 1 : 0.95 }}
+            className="px-2 py-1 bg-lime-200 rounded-lg hover:bg-lime-300 disabled:opacity-50 transition"
+          >
+            <FaChevronLeft />
+          </motion.button>
+
+          {/* Page Buttons */}
           {[...Array(totalPages).keys()].map((pg) => (
             <motion.button
               key={pg}
               onClick={() => setPage(pg + 1)}
-              className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-colors duration-200 ${
-                page === pg + 1
-                  ? "bg-lime-500 text-white"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-lime-100"
-              }`}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className={`px-2 py-1 rounded-lg font-semibold transition-colors ${
+                page === pg + 1
+                  ? "bg-lime-500 text-white shadow-lg"
+                  : "bg-lime-100 text-gray-700 hover:bg-lime-200"
+              }`}
             >
-              {pg + 1}
+              Page {pg + 1}
             </motion.button>
           ))}
+
+          {/* Next */}
+          <motion.button
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+            disabled={page === totalPages}
+            whileHover={{ scale: page === totalPages ? 1 : 1.05 }}
+            whileTap={{ scale: page === totalPages ? 1 : 0.95 }}
+            className="px-3 py-2 bg-lime-200 rounded-lg hover:bg-lime-300 disabled:opacity-50 transition"
+          >
+            <FaChevronRight />
+          </motion.button>
         </div>
       )}
-
       {/* Modal */}
       <ClassDetailsModal
         isOpen={isModalOpen}

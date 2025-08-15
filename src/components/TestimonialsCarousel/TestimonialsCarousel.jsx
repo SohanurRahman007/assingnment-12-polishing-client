@@ -6,9 +6,9 @@ import "swiper/css/navigation";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useRef } from "react";
-import Container from "../Shared/Container";
 import { motion } from "framer-motion";
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Container from "../Shared/Container";
 
 const TestimonialsSection = () => {
   const swiperRef = useRef();
@@ -23,24 +23,26 @@ const TestimonialsSection = () => {
   });
 
   return (
-    <Container>
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white mt-10"
-      >
-        <div className="container mx-auto">
+    <section className="bg-white mt-10 w-full">
+      <Container fluid className="overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full"
+        >
+          {/* Heading */}
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-2 text-center"
           >
             What <span className="text-gray-800">Our Members Say</span>
           </motion.h2>
 
+          {/* Subtext */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -53,32 +55,43 @@ const TestimonialsSection = () => {
             stories.
           </motion.p>
 
-          <div className="relative max-w-4xl mx-auto">
-            {/* Navigation Buttons */}
+          {/* Swiper Wrapper */}
+          <div className="relative w-full">
+            {/* Prev Button */}
             <button
               onClick={() => swiperRef.current?.slidePrev()}
-              className="absolute -left-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
               title="Previous"
             >
               <FaChevronLeft className="text-lime-600" />
             </button>
 
+            {/* Swiper */}
             <Swiper
               modules={[Navigation]}
               slidesPerView={1}
+              spaceBetween={20}
+              breakpoints={{
+                640: { slidesPerView: 1 }, // small tablets
+                768: { slidesPerView: 2 }, // tablets
+                1024: { slidesPerView: 3 }, // desktops
+              }}
               onSwiper={(swiper) => (swiperRef.current = swiper)}
-              className="w-full"
+              className="!w-full !overflow-hidden pb-10"
             >
               {reviews.map((review, index) => (
-                <SwiperSlide key={review._id}>
+                <SwiperSlide key={review._id} className="!h-auto flex">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white rounded-xl shadow-xl border border-gray-200 p-10 text-center relative"
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 md:p-8 text-center flex flex-col justify-between h-full min-h-[400px] w-full hover:shadow-2xl transition-all duration-300"
                   >
                     <FaQuoteLeft className="text-lime-500 text-4xl absolute left-6 top-6 opacity-10" />
-                    <p className="text-gray-700 text-lg italic mb-4">
+
+                    {/* Review Text */}
+                    <p className="text-gray-700 text-lg italic mb-4 line-clamp-5">
                       "{review.feedback}"
                     </p>
 
@@ -129,15 +142,15 @@ const TestimonialsSection = () => {
             {/* Next Button */}
             <button
               onClick={() => swiperRef.current?.slideNext()}
-              className="absolute -right-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border border-gray-300 rounded-full shadow hover:bg-lime-100 transition"
               title="Next"
             >
               <FaChevronRight className="text-lime-600" />
             </button>
           </div>
-        </div>
-      </motion.section>
-    </Container>
+        </motion.div>
+      </Container>
+    </section>
   );
 };
 

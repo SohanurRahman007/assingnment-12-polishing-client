@@ -120,14 +120,14 @@ const CheckoutForm = ({ user }) => {
         email: user?.email,
         name: user?.displayName,
         paidAt: new Date(),
-        classId: classIdFromUrl, // ⭐ Now correctly included from URL ⭐
+        classId: classIdFromUrl, //  Now correctly included from URL
         transactionId: paymentIntent.id,
       };
 
       try {
         await axiosSecure.post("/save-payment", paymentInfo);
         toast.success("Payment successful and recorded!");
-        // ⭐ Important: Clear cart, redirect user, or show success message ⭐
+        //  Important: Clear cart, redirect user, or show success message
         // Example: navigate('/payment-success');
       } catch (saveError) {
         console.error("Error saving payment info to backend:", saveError);

@@ -57,7 +57,7 @@ const ClassCard = ({ cls, onViewDetails }) => {
           {/* View Details Button */}
           <button
             onClick={onViewDetails}
-            className="text-sm font-semibold text-lime-600 hover:text-lime-700 hover:underline transition"
+            className="text-sm font-semibold cursor-pointer text-lime-600 hover:text-lime-700 hover:underline transition"
           >
             View Details →
           </button>

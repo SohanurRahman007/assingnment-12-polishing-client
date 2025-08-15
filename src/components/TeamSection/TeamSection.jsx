@@ -4,6 +4,7 @@ import Container from "../Shared/Container";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { motion } from "framer-motion";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -29,7 +30,7 @@ const TeamSection = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center">Loading trainers...</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <Container>

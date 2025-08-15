@@ -5,7 +5,7 @@ import Badge from "../Badge/Badge";
 const ForumCard = ({ forum, handleVote }) => {
   return (
     <motion.div
-      className="max-w-2xl px-8 py-6 bg-gray-50  text-gray-800 dark:text-gray-200 rounded-xl shadow-md border border-lime-200 mx-auto w-full flex flex-col justify-between hover:shadow-xl"
+      className="max-w-2xl px-8 py-6   text-gray-800 dark:text-gray-200 rounded-xl shadow-md border border-lime-200 mx-auto w-full flex flex-col justify-between hover:shadow-xl"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}

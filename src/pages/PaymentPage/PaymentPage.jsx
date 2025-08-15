@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import CheckoutForm from "./CheckoutForm";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import Container from "../../components/Shared/Container";
 
 const PaymentPage = () => {
   const [params] = useSearchParams();
@@ -36,70 +37,72 @@ const PaymentPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto ">
-      <Helmet>
-        <title>Payment | FitSphere</title>
-      </Helmet>
+    <Container>
+      <div className=" mx-auto ">
+        <Helmet>
+          <title>Payment | FitSphere</title>
+        </Helmet>
 
-      <div className="bg-gray-50 rounded-xl shadow-lg p-4 md:p-6">
-        <h2 className="text-2xl font-bold text-lime-600 text-center ">
-          Complete Your Payment
-        </h2>
-        <p className="text-center max-w-xl mx-auto text-gray-600 mt-2 mb-6">
-          Review your selected package and complete your secure payment to
-          confirm your session with the trainer.
-        </p>
+        <div className=" rounded-xl shadow-lg ">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center ">
+            <span className="text-gray-800">Complete</span> Your Payment
+          </h2>
+          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-6">
+            Review your selected package and complete your secure payment to
+            confirm your session with the trainer.
+          </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-          {/* Trainer Info */}
-          <div className="space-y-2 text-gray-700">
-            <h4 className="text-lg font-semibold text-gray-800 border-b border-lime-400 pb-1">
-              Trainer Info
-            </h4>
-            <p>
-              <strong>Name:</strong>{" "}
-              {trainer.name || "Trainer info not available"}
-            </p>
-            <p>
-              <strong>Slot:</strong> {slot}
-            </p>
-            <p>
-              <strong>Package:</strong> {pack}
-            </p>
-            <p>
-              <strong>Price:</strong> ${price}
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            {/* Trainer Info */}
+            <div className="space-y-2 text-gray-700 p-4 md:p-6">
+              <h4 className="text-lg font-semibold text-gray-800 border-b border-lime-400 pb-1">
+                Trainer Info
+              </h4>
+              <p>
+                <strong>Name:</strong>{" "}
+                {trainer.name || "Trainer info not available"}
+              </p>
+              <p>
+                <strong>Slot:</strong> {slot}
+              </p>
+              <p>
+                <strong>Package:</strong> {pack}
+              </p>
+              <p>
+                <strong>Price:</strong> ${price}
+              </p>
+            </div>
+
+            {/* User Info */}
+            <div className="space-y-2 text-gray-700 p-4 md:p-6">
+              <h4 className="text-lg font-semibold text-gray-800 border-b pb-1 border-lime-400">
+                Your Info
+              </h4>
+              <p>
+                <strong>Name:</strong> {user?.displayName || "No name"}
+              </p>
+              <p>
+                <strong>Email:</strong> {user?.email || "No email"}
+              </p>
+            </div>
           </div>
 
-          {/* User Info */}
-          <div className="space-y-2 text-gray-700">
-            <h4 className="text-lg font-semibold text-gray-800 border-b pb-1 border-lime-400">
-              Your Info
-            </h4>
-            <p>
-              <strong>Name:</strong> {user?.displayName || "No name"}
-            </p>
-            <p>
-              <strong>Email:</strong> {user?.email || "No email"}
-            </p>
+          {/* Payment Form */}
+          <div className="border-t border-lime-400 pt-4 p-4 md:p-6">
+            <h3 className="text-lg font-semibold mb-3 text-gray-800">
+              Payment Method
+            </h3>
+            <CheckoutForm
+              trainer={trainer}
+              slot={slot}
+              pack={pack}
+              price={price}
+              user={user}
+            />
           </div>
-        </div>
-
-        {/* Payment Form */}
-        <div className="border-t border-lime-400 pt-4">
-          <h3 className="text-lg font-semibold mb-3 text-gray-800">
-            Payment Method
-          </h3>
-          <CheckoutForm
-            trainer={trainer}
-            slot={slot}
-            pack={pack}
-            price={price}
-            user={user}
-          />
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
