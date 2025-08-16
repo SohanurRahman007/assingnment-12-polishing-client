@@ -3,8 +3,8 @@ import TrainerCard from "../../components/TrainerCard/TrainerCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Shared/Container";
 import { motion } from "framer-motion";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
+import SkeletonAllTrainers from "../../components/SkeletonLoader/SkeletonAllTrainers";
 
 const AllTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,7 +16,7 @@ const AllTrainers = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <SkeletonAllTrainers />;
 
   return (
     <Container>
@@ -48,7 +48,7 @@ const AllTrainers = () => {
         into yoga, strength training, or dance workouts — we have the right
         coach for you!
       </motion.p>
-      <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6  mx-auto">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  mx-auto">
         {trainers.map((trainer) => (
           <TrainerCard key={trainer._id} trainer={trainer} />
         ))}

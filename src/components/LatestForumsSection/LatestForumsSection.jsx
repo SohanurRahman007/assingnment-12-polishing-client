@@ -5,13 +5,14 @@ import ForumModal from "../Modal/ForumModal";
 import Container from "../Shared/Container";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import SkeletonLatestForums from "../SkeletonLoader/SkeletonLatestForums";
 
 const LatestForumsSection = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedForum, setSelectedForum] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: forums = [] } = useQuery({
+  const { data: forums = [], isLoading } = useQuery({
     queryKey: ["latestForums"],
     queryFn: async () => {
       const res = await axiosSecure.get("/forums/latest");
@@ -28,7 +29,7 @@ const LatestForumsSection = () => {
     setIsModalOpen(false);
     setSelectedForum(null);
   };
-
+  if (isLoading) return <SkeletonLatestForums />;
   return (
     <Container>
       <section className=" mt-10">

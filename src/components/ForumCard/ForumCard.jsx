@@ -41,7 +41,7 @@ const ForumCard = ({ forum, handleVote }) => {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => handleVote(forum._id, "upvote")}
-            className="flex items-center gap-1 text-lime-600 hover:text-lime-700 font-medium"
+            className="flex items-center gap-1 text-lime-600 hover:text-lime-700 font-medium cursor-pointer"
           >
             <FaThumbsUp /> {forum.upvotes}
           </motion.button>
@@ -49,7 +49,7 @@ const ForumCard = ({ forum, handleVote }) => {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => handleVote(forum._id, "downvote")}
-            className="flex items-center gap-1 text-red-500 hover:text-red-600 font-medium"
+            className="flex items-center gap-1 text-red-500 hover:text-red-600 font-medium cursor-pointer"
           >
             <FaThumbsDown /> {forum.downvotes}
           </motion.button>

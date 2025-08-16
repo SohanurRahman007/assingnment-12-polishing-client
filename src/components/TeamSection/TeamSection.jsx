@@ -4,7 +4,7 @@ import Container from "../Shared/Container";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { motion } from "framer-motion";
-import LoadingSpinner from "../Shared/LoadingSpinner";
+import SkeletonTeamSection from "../SkeletonLoader/SkeletonTeamSection";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -30,7 +30,7 @@ const TeamSection = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <SkeletonTeamSection />;
 
   return (
     <Container>

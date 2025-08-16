@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../Shared/Container";
+import SkeletonFeaturedClasses from "../SkeletonLoader/SkeletonFeaturedClasses";
 
 const FeaturedClasses = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,7 +17,7 @@ const FeaturedClasses = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <SkeletonFeaturedClasses />;
 
   return (
     <Container>

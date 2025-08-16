@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import ForumCard from "../../components/ForumCard/ForumCard";
 import Container from "../../components/Shared/Container";
 import { Helmet } from "react-helmet-async";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import SkeletonLatestForums from "../../components/SkeletonLoader/SkeletonLatestForums";
 
 const ForumsPage = () => {
   const axiosSecure = useAxiosSecure();
@@ -28,7 +28,7 @@ const ForumsPage = () => {
   });
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <SkeletonLatestForums />;
   }
 
   const handleVote = async (id, type) => {
@@ -65,7 +65,7 @@ const ForumsPage = () => {
           and motivation.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data?.forums?.map((forum) => (
             <ForumCard key={forum._id} forum={forum} handleVote={handleVote} />
           ))}
@@ -77,7 +77,7 @@ const ForumsPage = () => {
           <button
             onClick={() => setPage((prev) => Math.max(1, prev - 1))}
             disabled={page === 1}
-            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition"
+            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition cursor-pointer"
           >
             <FaChevronLeft />
           </button>
@@ -89,7 +89,7 @@ const ForumsPage = () => {
           <button
             onClick={() => setPage((prev) => prev + 1)}
             disabled={data?.forums?.length < limit}
-            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition"
+            className="px-3 py-1 bg-lime-200 rounded hover:bg-lime-300 disabled:opacity-50 transition cursor-pointer"
           >
             <FaChevronRight />
           </button>

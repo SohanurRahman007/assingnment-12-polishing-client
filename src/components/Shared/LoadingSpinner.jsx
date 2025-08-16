@@ -13,7 +13,7 @@ const LoadingSpinner = ({ smallHeight }) => {
         height={100}
         width={100}
         radius={5}
-        color="#84cc16" // lime-500 hex color
+        color="#84cc16"
         ariaLabel="ball-triangle-loading"
         wrapperStyle={{}}
         wrapperClass=""
