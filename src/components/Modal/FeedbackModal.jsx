@@ -5,22 +5,22 @@ const FeedbackModal = ({ isOpen, onClose, message }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-opacity-40 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.9 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-gray-100 p-6 rounded-lg  shadow-xl max-w-md w-full"
+            className="bg-white p-6 rounded-2xl shadow-xl max-w-md w-full"
           >
             <h2 className="text-lg font-semibold text-red-500 mb-3">
               Admin Feedback
             </h2>
-            <p className="text-sm text-gray-700  whitespace-pre-wrap mb-4">
+            <p className="text-sm text-gray-700 whitespace-pre-wrap mb-4">
               {message || "No feedback provided."}
             </p>
             <div className="flex justify-end">

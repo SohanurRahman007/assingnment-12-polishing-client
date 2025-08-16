@@ -41,12 +41,17 @@ const ReviewModal = ({ isOpen, trainerData, onClose }) => {
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0">
-      <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
+    <Dialog open={isOpen} onClose={onClose} className="fixed inset-0 z-50">
+      {/* Blurred Background */}
+      <div
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        aria-hidden="true"
+      />
+
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-md rounded-lg bg-white  p-6 shadow-lg border border-lime-200 dark:border-lime-600">
+        <Dialog.Panel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl border border-lime-200 dark:border-lime-600 animate-fadeIn">
           <Dialog.Title className="text-xl font-semibold mb-4 text-lime-600 dark:text-lime-400">
-            Review {trainerData.name}
+            <span className="text-gray-800">Review</span> {trainerData.name}
           </Dialog.Title>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -80,12 +85,12 @@ const ReviewModal = ({ isOpen, trainerData, onClose }) => {
 
             {/* Feedback Textarea */}
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700 ">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
                 Feedback
               </label>
               <textarea
                 rows="4"
-                className="w-full px-3 py-2 border rounded-md focus:ring-lime-400 focus:border-lime-500 bg-white "
+                className="w-full px-3 py-2 border rounded-md focus:ring-lime-400 focus:border-lime-500 bg-white"
                 placeholder="Write your feedback..."
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
@@ -98,7 +103,7 @@ const ReviewModal = ({ isOpen, trainerData, onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? "Submitting..." : "Submit Review"}
               </button>

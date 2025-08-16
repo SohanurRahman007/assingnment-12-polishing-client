@@ -23,58 +23,65 @@ const Statistics = () => {
     switch (role) {
       case "trainer":
         return [
-          "Guide members with confidence",
-          "Plan and manage your training slots",
-          "Lead by example!",
+          "members with confidence",
+          "your training slots",
+          "by example!",
         ];
       case "member":
         return [
-          "Track your fitness journey",
-          "Join classes and book trainers",
-          "Stay consistent, stay fit!",
+          "your fitness journey",
+          "classes and book trainers",
+          "consistent, stay fit!",
         ];
       default:
-        return ["Explore the FitSphere dashboard"];
+        return ["FitSphere dashboard"];
     }
   };
 
   const typedTexts = getTypedText(userInfo?.role);
 
   return (
-    <div className="relative min-h-[60vh] flex items-center justify-center px-4">
-      {/* Background image */}
+    <section className="relative min-h-[70vh] flex items-center justify-center mt-16">
+      {/* Background image with gradient overlay */}
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-[.6]"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80)",
         }}
-      />
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+      </div>
 
-      {/* Overlay text */}
-      <div className="relative z-10 text-center text-white max-w-3xl px-4">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+      {/* Content box */}
+      <div className="relative z-10 text-center text-white px-6 py-10 max-w-2xl rounded-2xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg animate-fadeIn">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
           Welcome to <span className="text-lime-500">FitSphere</span>
         </h2>
 
-        <h3 className="text-2xl md:text-3xl font-medium text-lime-500">
-          <Typewriter
-            words={typedTexts}
-            loop={true}
-            cursor
-            cursorStyle="|"
-            typeSpeed={60}
-            deleteSpeed={40}
-            delaySpeed={1800}
-          />
+        <h3 className="text-xl md:text-2xl font-semibold mb-3 h-[40px]">
+          <span className="text-white">Explore the </span>
+          <span className="text-lime-500">
+            <Typewriter
+              words={typedTexts}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={60}
+              deleteSpeed={40}
+              delaySpeed={1800}
+            />
+          </span>
         </h3>
 
         <p className="text-md text-gray-200 mt-4">
-          Logged in as:
-          <span className="capitalize font-semibold">{userInfo?.role}</span>
+          Logged in as:{" "}
+          <span className="capitalize font-semibold text-lime-400">
+            {userInfo?.role}
+          </span>
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

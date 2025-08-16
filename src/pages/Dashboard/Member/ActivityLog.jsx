@@ -37,7 +37,7 @@ const ActivityLog = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="mt-6 mx-auto p-6">
       <h2 className="text-2xl font-semibold mb-6 text-red-500">
         ❌ Rejected Trainer Applications
       </h2>
