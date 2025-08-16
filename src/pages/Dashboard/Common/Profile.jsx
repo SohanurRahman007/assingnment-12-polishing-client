@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UpdateProfileModal from "../../../components/Modal/UpdateProfileModal";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -30,11 +31,7 @@ const Profile = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="text-center py-20 text-gray-500 text-lg">
-        Loading profile...
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   const profile = {
@@ -96,9 +93,6 @@ const Profile = () => {
               className="btn btn-outline outline-lime-500 hover:bg-lime-500 hover:text-white text-lime-500 border-lime-500 w-full sm:w-auto"
             >
               Update Profile
-            </button>
-            <button className="btn btn-success bg-lime-500 text-white border-none w-full sm:w-auto">
-              Change Password
             </button>
           </div>
         </div>

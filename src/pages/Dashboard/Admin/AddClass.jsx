@@ -11,7 +11,7 @@ const AddClass = () => {
 
   const imageFile = watch("image")?.[0];
 
-  // Set preview when image is selected
+  // Generate preview when file selected
   if (imageFile && !previewUrl) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -34,7 +34,6 @@ const AddClass = () => {
         method: "POST",
         body: formData,
       });
-
       const imgResult = await imageRes.json();
       if (!imgResult.success) throw new Error("Image upload failed");
 
@@ -59,26 +58,29 @@ const AddClass = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="max-w-4xl mx-auto mt-10 bg-gray-100 p-6 rounded-lg shadow-md"
-    >
-      <fieldset className="grid grid-cols-4 bg-white gap-6 p-6 rounded-md shadow-sm">
+    <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
+      <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
+        {/* Left Info Column */}
         <div className="space-y-2 col-span-full lg:col-span-1">
-          <p className="text-xl md:text-2xl font-semibold text-lime-600">
-            Add New Class
+          <p className="text-xl font-semibold text-lime-600">Add New Class</p>
+          <p className="text-xs text-gray-600">
+            Provide details for the new class, including description and an
+            image.
           </p>
-          <p className="text-sm text-gray-500">Enter details for your class</p>
         </div>
 
-        <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        {/* Right Form Column */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3"
+        >
           {/* Class Name */}
           <div className="col-span-full sm:col-span-3">
-            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="text-sm font-medium">
               Class Name
             </label>
             <input
-              {...register("name", { required: true })}
+              {...register("name", { required: "Class name is required" })}
               id="name"
               type="text"
               placeholder="e.g. Cardio Boost"
@@ -88,10 +90,7 @@ const AddClass = () => {
 
           {/* Extra Info */}
           <div className="col-span-full sm:col-span-3">
-            <label
-              htmlFor="extraInfo"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="extraInfo" className="text-sm font-medium">
               Extra Info
             </label>
             <input
@@ -103,26 +102,23 @@ const AddClass = () => {
             />
           </div>
 
-          {/* Details */}
+          {/* Class Description */}
           <div className="col-span-full">
-            <label
-              htmlFor="details"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="details" className="text-sm font-medium">
               Class Description
             </label>
             <textarea
-              {...register("details", { required: true })}
+              {...register("details", { required: "Description is required" })}
               id="details"
-              rows="4"
+              rows={5}
               placeholder="Write a short description about the class..."
-              className="textarea textarea-bordered w-full block px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
             />
           </div>
 
           {/* Image Upload & Preview */}
           <div className="col-span-full">
-            <label className="text-sm font-medium text-gray-700 block mb-2">
+            <label className="text-sm font-medium block mb-2">
               Class Image
             </label>
             <div className="flex items-center gap-4">
@@ -132,26 +128,27 @@ const AddClass = () => {
                 className="w-16 h-16 rounded-xl border-lime-500 object-cover border shadow-sm"
               />
               <input
-                {...register("image", { required: true })}
+                {...register("image", { required: "Image is required" })}
                 type="file"
                 accept="image/*"
-                className="file-input file-input-bordered block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 max-w-xs"
+                className="block w-full  px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
               />
             </div>
           </div>
-        </div>
-      </fieldset>
 
-      <div className="mt-6 text-center">
-        <button
-          type="submit"
-          className="px-6 py-2 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer sm:w-1/2"
-          disabled={uploading}
-        >
-          {uploading ? "Uploading..." : "Add Class"}
-        </button>
-      </div>
-    </form>
+          {/* Submit Button */}
+          <div className="col-span-full text-right">
+            <button
+              type="submit"
+              disabled={uploading}
+              className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-md transition cursor-pointer"
+            >
+              {uploading ? "Uploading..." : "Add Class"}
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
   );
 };
 

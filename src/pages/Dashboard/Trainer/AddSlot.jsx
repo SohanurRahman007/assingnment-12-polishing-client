@@ -21,6 +21,7 @@ const AddSlot = () => {
     formState: { errors },
   } = useForm();
 
+  // ✅ Fetch all classes for trainer
   const { data: classes = [] } = useQuery({
     queryKey: ["allFitnessClasses"],
     queryFn: async () => {
@@ -28,8 +29,6 @@ const AddSlot = () => {
       return res.data.classes;
     },
   });
-
-  console.log(classes);
 
   const daysOptions = [
     { value: "Monday", label: "Monday" },
@@ -56,114 +55,115 @@ const AddSlot = () => {
       otherInfo: data.otherInfo || "",
     };
 
-    const res = await axiosSecure.post("/slots", slotData);
-    if (res.data.insertedId) {
-      toast.success("✅ Slot added successfully!");
-      reset();
-      setTime("10:00");
+    try {
+      const res = await axiosSecure.post("/slots", slotData);
+      if (res.data.insertedId) {
+        toast.success("✅ Slot added successfully!");
+        reset();
+        setTime("10:00");
+      }
+    } catch (error) {
+      toast.error("Failed to add slot.");
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="max-w-4xl mx-auto mt-10 bg-gray-100 p-6 rounded-lg shadow-md"
-    >
-      <fieldset className="grid grid-cols-4 bg-white gap-6 p-6 rounded-md shadow-sm">
+    <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
+      <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
+        {/* Left info column */}
         <div className="space-y-2 col-span-full lg:col-span-1">
-          <p className="text-xl md:text-2xl font-semibold text-lime-600">
-            Add New Slot
-          </p>
-          <p className="text-sm text-gray-500">
-            Fill out the details for your training slot
+          <p className="text-xl font-semibold text-lime-600">Add New Slot</p>
+          <p className="text-xs text-gray-600">
+            Fill out the details for your training slot. Members will see
+            available slots under their selected class.
           </p>
         </div>
 
-        <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        {/* Right form inputs */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3"
+        >
           {/* Trainer Name */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Trainer Name
-            </label>
+            <label className="text-sm font-medium">Trainer Name</label>
             <input
+              type="text"
               readOnly
-              value={user.displayName || ""}
-              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+              value={user?.displayName || ""}
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 cursor-not-allowed"
             />
           </div>
 
           {/* Trainer Email */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Trainer Email
-            </label>
+            <label className="text-sm font-medium">Trainer Email</label>
             <input
+              type="email"
               readOnly
-              value={user.email}
-              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+              value={user?.email || ""}
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500 cursor-not-allowed"
             />
           </div>
 
           {/* Slot Name */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Slot Name
-            </label>
+            <label className="text-sm font-medium">Slot Name</label>
             <input
-              {...register("slotName", { required: true })}
+              {...register("slotName", { required: "Slot name is required" })}
               placeholder="e.g. Morning Slot"
-              className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
+              className={`block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md focus:outline-lime-500 ${
+                errors.slotName ? "border-red-500" : "border-gray-300"
+              }`}
             />
             {errors.slotName && (
-              <p className="text-sm text-red-500">Slot name is required</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.slotName.message}
+              </p>
             )}
           </div>
 
           {/* Slot Time */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Slot Time
-            </label>
-            <div className="w-full px-4 py-2 mt-1 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500">
+            <label className="text-sm font-medium">Slot Time</label>
+            <div className="block w-full px-2 py-1 bg-gray-200 border rounded-md border-gray-300">
               <TimePicker
                 onChange={setTime}
                 value={time}
                 disableClock
                 format="h:mm a"
                 clearIcon={null}
-                className="w-full"
+                className="w-full bg-transparent"
               />
             </div>
           </div>
 
-          {/* Days */}
+          {/* Select Days */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Select Days
-            </label>
-            <div className="border border-gray-300 rounded-md bg-white px-2 py-1">
+            <label className="text-sm font-medium">Select Days</label>
+            <div className="border border-gray-300 rounded-md bg-white px-2 py-1 mt-1">
               <Controller
                 name="days"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: "Please select at least one day" }}
                 render={({ field }) => (
                   <Select {...field} options={daysOptions} isMulti />
                 )}
               />
             </div>
             {errors.days && (
-              <p className="text-sm text-red-500 mt-1">Please select days</p>
+              <p className="text-red-500 text-xs mt-1">{errors.days.message}</p>
             )}
           </div>
 
-          {/* Class Selection */}
+          {/* Select Class */}
           <div className="col-span-full sm:col-span-3">
-            <label className="text-sm font-medium text-gray-700">
-              Select Class
-            </label>
+            <label className="text-sm font-medium">Select Class</label>
             <select
-              {...register("classId", { required: true })}
-              className="block w-full px-4 py-2 mt-1 bg-gray-200 text-gray-700 border border-gray-300 rounded-md focus:outline-lime-500"
+              {...register("classId", { required: "Class is required" })}
+              className={`block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md focus:outline-lime-500 ${
+                errors.classId ? "border-red-500" : "border-gray-300"
+              }`}
             >
               <option value="">-- Choose a class --</option>
               {classes.map((c) => (
@@ -173,34 +173,35 @@ const AddSlot = () => {
               ))}
             </select>
             {errors.classId && (
-              <p className="text-sm text-red-500 mt-1">Class is required</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.classId.message}
+              </p>
             )}
           </div>
 
           {/* Other Info */}
           <div className="col-span-full">
-            <label className="text-sm font-medium text-gray-700">
-              Other Info
-            </label>
+            <label className="text-sm font-medium">Other Info</label>
             <textarea
               {...register("otherInfo")}
-              placeholder="Optional notes"
-              className="w-full px-4 py-2 mt-1 bg-gray-200 text-gray-700 border border-gray-300 rounded-md focus:outline-lime-500"
+              placeholder="Optional notes..."
               rows={3}
+              className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded-md border-gray-300 focus:outline-lime-500"
             />
           </div>
-        </div>
-      </fieldset>
 
-      <div className="mt-6 text-center">
-        <button
-          type="submit"
-          className="px-6 py-2 bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer sm:w-1/2"
-        >
-          Add Slot
-        </button>
-      </div>
-    </form>
+          {/* Submit Button */}
+          <div className="col-span-full text-right">
+            <button
+              type="submit"
+              className="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-8 rounded-md transition cursor-pointer"
+            >
+              Add Slot
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
   );
 };
 

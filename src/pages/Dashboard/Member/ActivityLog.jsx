@@ -6,6 +6,7 @@ import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import FeedbackModal from "../../../components/Modal/FeedbackModal";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const ActivityLog = () => {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ const ActivityLog = () => {
     enabled: !!user?.email,
   });
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -67,7 +68,7 @@ const ActivityLog = () => {
               </p>
               <button
                 onClick={() => openModal(trainer.feedback)}
-                className="text-sm text-lime-600 underline hover:text-lime-800"
+                className="text-sm text-lime-500 underline hover:text-lime-600 cursor-pointer"
               >
                 View Feedback
               </button>

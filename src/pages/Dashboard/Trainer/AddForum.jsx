@@ -132,7 +132,7 @@ const AddForum = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-md transition"
+              className="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-md transition"
             >
               {submitting ? "Submitting..." : "Add Forum Post"}
             </button>
