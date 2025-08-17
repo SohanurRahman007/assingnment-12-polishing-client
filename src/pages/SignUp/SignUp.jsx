@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import { FaHome } from "react-icons/fa"; // Imported FaHome icon
 
 const SignUp = () => {
   const {
@@ -87,12 +88,17 @@ const SignUp = () => {
     }
   };
 
+  // New function to handle navigation to the home page
+  const handleGoHome = () => {
+    navigate("/");
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       <Helmet>
         <title>Register | FitSphere</title>
       </Helmet>
-      <div className="w-full max-w-sm mx-auto overflow-hidden bg-white  rounded-lg shadow-md">
+      <div className="w-full max-w-sm mx-auto overflow-hidden bg-white  rounded-lg shadow-md">
         <div className="px-6 py-4 bg-white">
           <div className="flex justify-center mx-auto">
             <img
@@ -153,8 +159,8 @@ const SignUp = () => {
                 accept="image/*"
                 onChange={handlePreview}
                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0 file:text-sm file:font-semibold
-              file:bg-lime-100 file:text-lime-700 hover:file:bg-lime-200"
+                file:rounded-full file:border-0 file:text-sm file:font-semibold
+                file:bg-lime-100 file:text-lime-700 hover:file:bg-lime-200"
               />
               {preview && (
                 <img
@@ -189,6 +195,15 @@ const SignUp = () => {
           >
             <FcGoogle size={20} />
             <span className="text-sm text-gray-600">Continue with Google</span>
+          </button>
+
+          {/* Go Home Button */}
+          <button
+            onClick={handleGoHome}
+            className="flex items-center justify-center gap-2 border border-gray-300 w-full py-2 rounded-md hover:bg-gray-100 transition cursor-pointer mt-4"
+          >
+            <FaHome size={20} />
+            <span className="text-sm text-gray-600">Go Home</span>
           </button>
         </div>
 

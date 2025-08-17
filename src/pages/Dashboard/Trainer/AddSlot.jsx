@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
+import { Helmet } from "react-helmet-async";
 
 const AddSlot = () => {
   const { user } = useAuth();
@@ -69,6 +70,13 @@ const AddSlot = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
+      <Helmet>
+        <title>Add New Slot | FitSphere</title>
+        <meta
+          name="description"
+          content="Trainer page to add a new training slot in FitSphere."
+        />
+      </Helmet>
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left info column */}
         <div className="space-y-2 col-span-full lg:col-span-1">

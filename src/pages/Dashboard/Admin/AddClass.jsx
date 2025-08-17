@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AddClass = () => {
   const { register, handleSubmit, reset, watch } = useForm();
@@ -59,6 +60,13 @@ const AddClass = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
+      <Helmet>
+        <title>Add Class | FitSphere Dashboard</title>
+        <meta
+          name="description"
+          content="Admin dashboard page to add new classes in FitSphere."
+        />
+      </Helmet>
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left Info Column */}
         <div className="space-y-2 col-span-full lg:col-span-1">

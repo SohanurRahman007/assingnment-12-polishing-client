@@ -3,6 +3,7 @@ import { Pie } from "react-chartjs-2";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -44,6 +45,14 @@ const AdminBalance = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Helmet>
+        <title>Admin Dashboard | FitSphere</title>
+        <meta
+          name="description"
+          content="Admin dashboard of FitSphere to manage users, newsletters, classes, forums, and trainers."
+        />
+      </Helmet>
+
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-12">
         💼 Admin Balance Dashboard
       </h1>

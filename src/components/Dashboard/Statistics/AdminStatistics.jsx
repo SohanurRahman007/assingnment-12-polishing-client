@@ -16,7 +16,9 @@ const AdminStatistics = () => {
     lastSixPayments: [],
     totalSubscribers: 0,
     totalPaidMembers: 0,
+    totalOrders: 0, // Assuming your API now provides this count
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBalanceOverview = async () => {
@@ -25,12 +27,16 @@ const AdminStatistics = () => {
         setData(res.data);
       } catch (error) {
         toast.error("Failed to load dashboard data");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchBalanceOverview();
   }, [axiosSecure]);
-  if (!data) return <LoadingSpinner />;
+
+  if (loading) return <LoadingSpinner />;
+
   const chartData = {
     labels: ["Subscribers", "Paid Members"],
     datasets: [
@@ -65,29 +71,29 @@ const AdminStatistics = () => {
       icon: <FaDollarSign className=" h-6 text-white" />,
       title: "Total Revenue",
       value: `$${data.totalBalance}`,
-      from: "from-orange-500",
-      to: "to-orange-300",
+      from: "from-lime-600",
+      to: "to-lime-400",
     },
     // {
     //   icon: <BsFillCartPlusFill className="w-6 h-6 text-white" />,
     //   title: "Total Orders",
-    //   value: data.lastSixPayments.length,
-    //   from: "from-indigo-500",
-    //   to: "to-indigo-300",
+    //   value: data.totalOrders, // Using the totalOrders value
+    //   from: "from-green-600",
+    //   to: "to-green-400",
     // },
     {
       icon: <BsFillHouseDoorFill className=" h-6 text-white" />,
       title: "Total Members",
       value: data.totalPaidMembers,
-      from: "from-pink-500",
-      to: "to-pink-300",
+      from: "from-emerald-600",
+      to: "to-emerald-400",
     },
     {
       icon: <FaUserAlt className=" h-6 text-white" />,
       title: "Subscribers",
       value: data.totalSubscribers,
-      from: "from-emerald-500",
-      to: "to-emerald-300",
+      from: "from-teal-600",
+      to: "to-teal-400",
     },
   ];
 

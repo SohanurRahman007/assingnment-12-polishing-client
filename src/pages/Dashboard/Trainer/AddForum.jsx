@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AddForum = () => {
   const { user } = useAuth();
@@ -43,6 +44,14 @@ const AddForum = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-10 p-6 bg-gray-100 rounded-md shadow-md">
+      <Helmet>
+        <title>Add New Forum | FitSphere Dashboard</title>
+        <meta
+          name="description"
+          content="Admin or Trainer dashboard page to create a new forum in FitSphere."
+        />
+      </Helmet>
+
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left info column */}
         <div className="space-y-2 col-span-full lg:col-span-1">

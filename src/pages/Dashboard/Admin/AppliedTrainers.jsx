@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const AppliedTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,6 +27,13 @@ const AppliedTrainers = () => {
 
   return (
     <section className="mx-auto mt-6 p-6">
+      <Helmet>
+        <title>Applied Trainers | FitSphere Dashboard</title>
+        <meta
+          name="description"
+          content="Admin dashboard page to view and manage all applied trainers in FitSphere."
+        />
+      </Helmet>
       <div className="container mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-lime-500 mb-2">
           <span className="text-gray-800">Applied</span> Trainers

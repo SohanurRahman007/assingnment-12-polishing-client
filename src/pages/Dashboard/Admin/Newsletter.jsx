@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Container from "../../../components/Shared/Container";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
-
+import { Helmet } from "react-helmet-async";
 const Newsletter = () => {
   const axiosSecure = useAxiosSecure();
 
@@ -18,6 +18,13 @@ const Newsletter = () => {
 
   return (
     <div className=" mx-auto mt-6 p-6">
+      <Helmet>
+        <title>Newsletter | FitSphere Dashboard</title>
+        <meta
+          name="description"
+          content="Admin dashboard page to manage newsletters in FitSphere."
+        />
+      </Helmet>
       {/* Title & Description */}
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-lime-600 text-left">

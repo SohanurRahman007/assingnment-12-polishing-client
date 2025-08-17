@@ -5,6 +5,7 @@ import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import RemoveConfirmationModal from "../../../components/Modal/RemoveConfirmationModal";
+import { Helmet } from "react-helmet-async";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -48,6 +49,13 @@ const ManageUsers = () => {
 
   return (
     <div className=" mx-auto mt-6 p-6">
+      <Helmet>
+        <title>Manage Users | FitSphere Dashboard</title>
+        <meta
+          name="description"
+          content="Admin dashboard page to manage all users in FitSphere."
+        />
+      </Helmet>
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-lime-500">
           {" "}

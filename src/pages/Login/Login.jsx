@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
-
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -8,6 +7,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { useState } from "react";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
+import { FaUserShield, FaUser, FaHome } from "react-icons/fa";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth();
@@ -20,6 +20,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm();
 
@@ -33,6 +34,20 @@ const Login = () => {
       toast.error("Invalid email or password");
       setLoading(false);
     }
+  };
+
+  const handleAdminLogin = () => {
+    setValue("email", "sohanurrahman@gamil.com");
+    setValue("password", "123456");
+  };
+
+  const handleMemberLogin = () => {
+    setValue("email", "juyel@gmail.com");
+    setValue("password", "123456");
+  };
+
+  const handleGoHome = () => {
+    navigate("/");
   };
 
   if (user) return <Navigate to={from} replace />;
@@ -96,7 +111,7 @@ const Login = () => {
               )}
             </div>
 
-            {/* Forgot Password + Submit */}
+            {/* Submit */}
             <div className="flex items-center justify-between">
               <button
                 type="submit"
@@ -126,6 +141,28 @@ const Login = () => {
             <FcGoogle size={22} />
             <span>Continue with Google</span>
           </button>
+
+          {/* New buttons for easy login/navigation */}
+          <div className="flex justify-between gap-2 mt-4">
+            <button
+              onClick={handleAdminLogin}
+              className="flex-1 flex items-center cursor-pointer border border-lime-500 justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
+            >
+              <FaUserShield size={14} /> Admin
+            </button>
+            <button
+              onClick={handleMemberLogin}
+              className="flex-1 flex cursor-pointer border border-lime-500 items-center justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
+            >
+              <FaUser size={14} /> Member
+            </button>
+            <button
+              onClick={handleGoHome}
+              className="flex-1 flex cursor-pointer border border-lime-500 items-center justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
+            >
+              <FaHome size={14} /> Home
+            </button>
+          </div>
 
           <p className="mt-4 text-center text-sm text-gray-600 mb-4">
             Don’t have an account?{" "}
