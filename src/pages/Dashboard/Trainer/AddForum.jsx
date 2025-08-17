@@ -46,7 +46,9 @@ const AddForum = () => {
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left info column */}
         <div className="space-y-2 col-span-full lg:col-span-1">
-          <p className="text-xl font-semibold text-lime-600">Add New Forum</p>
+          <p className="text-xl font-semibold text-lime-600">
+            <span className="text-gray-800">Add</span> New Forum
+          </p>
           <p className="text-xs text-gray-600">
             Write your forum post details here. Admin and Trainer posts will be
             tagged accordingly.
@@ -132,7 +134,7 @@ const AddForum = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-md transition"
+              className="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-md transition cursor-pointer"
             >
               {submitting ? "Submitting..." : "Add Forum Post"}
             </button>

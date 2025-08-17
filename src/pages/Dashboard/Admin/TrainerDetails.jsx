@@ -6,7 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import RejectionModal from "../../../components/Modal/RejectionModal";
-// import RejectionModal from "../../../components/Shared/RejectionModal";
+import { Helmet } from "react-helmet-async";
 
 const TrainerDetails = () => {
   const { id } = useParams();
@@ -57,6 +57,14 @@ const TrainerDetails = () => {
 
   return (
     <div className="max-w-6xl bg-gray-100 mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <Helmet>
+        <title>Admin | Trainer Application - {trainer?.name}</title>
+        <meta
+          name="description"
+          content={`Review application of ${trainer?.name}, applied for trainer role.`}
+        />
+      </Helmet>
+
       {/* Left Sidebar */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
@@ -64,7 +72,9 @@ const TrainerDetails = () => {
         transition={{ duration: 0.5 }}
         className="bg-white rounded-lg p-6 shadow col-span-full lg:col-span-1"
       >
-        <h2 className="text-2xl font-bold text-lime-600 mb-2">Trainer Info</h2>
+        <h2 className="text-2xl font-bold text-lime-500 mb-2">
+          <span className="text-gray-800">Trainer</span> Info
+        </h2>
         <p className="text-sm text-gray-600">
           Review and manage the trainer’s application. You can confirm or reject
           based on the provided information.
@@ -83,7 +93,7 @@ const TrainerDetails = () => {
           src={trainer.profileImage}
           alt={trainer.name}
         />
-        <div className="flex items-center px-6 py-4 bg-lime-700">
+        <div className="flex items-center px-6 py-4 bg-lime-500">
           <svg
             className="w-6 h-6 text-white fill-current"
             viewBox="0 0 24 24"
@@ -130,13 +140,13 @@ const TrainerDetails = () => {
         <div className="px-6 py-4 flex justify-center gap-4 border-t border-gray-200">
           <button
             onClick={handleConfirm}
-            className="bg-lime-600 text-sm hover:bg-lime-700 text-white px-4 py-2 rounded-md font-medium transition"
+            className="bg-lime-500 text-sm cursor-pointer hover:bg-lime-600 text-white px-4 py-2 rounded-md font-medium transition"
           >
             ✅ Confirm
           </button>
           <button
             onClick={() => setRejectModalOpen(true)}
-            className="border text-sm border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition"
+            className="border text-sm cursor-pointer border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-md font-medium transition"
           >
             ❌ Reject
           </button>

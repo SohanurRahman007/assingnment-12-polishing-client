@@ -56,7 +56,7 @@ const Sidebar = () => {
         </div>
 
         {/* Nav Items */}
-        <div className="flex-1 px-4 py-6 overflow-y-auto">
+        <div className="flex-1 px-4 py-2 overflow-y-auto">
           <nav className="flex flex-col">
             {role === "admin" && (
               <>
@@ -141,7 +141,7 @@ const Sidebar = () => {
         </div>
 
         {/* Logout */}
-        <div className="px-4 py-5 border-t border-gray-200">
+        <div className="px-4 py-3 border-t border-gray-200">
           <button
             onClick={logOut}
             className="flex items-center gap-3 px-4 py-2 w-full text-gray-600 hover:bg-red-100 cursor-pointer hover:text-red-600 rounded-lg transition"

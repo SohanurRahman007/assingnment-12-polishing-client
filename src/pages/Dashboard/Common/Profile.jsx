@@ -43,7 +43,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center py-10 px-4">
-      <div className="w-full max-w-3xl bg-white shadow-xl rounded-xl overflow-hidden">
+      <div className="w-full  bg-white shadow-xl rounded-xl overflow-hidden">
         {/* Cover */}
         <div
           className="h-48 w-full bg-cover bg-center relative"
@@ -68,8 +68,8 @@ const Profile = () => {
               />
             </div>
 
-            <div className="text-center md:text-left flex-1 space-y-1">
-              <h2 className="text-2xl font-bold text-lime-500">
+            <div className="text-center md:text-left flex-1 space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-lime-500">
                 {profile.name}
               </h2>
               <span className="text-sm bg-lime-500 py-1 px-2 rounded-xl text-white font-medium uppercase tracking-wide">

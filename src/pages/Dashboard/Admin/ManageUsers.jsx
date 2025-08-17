@@ -20,8 +20,6 @@ const ManageUsers = () => {
     },
   });
 
-  console.log(trainers);
-
   const removeTrainerMutation = useMutation({
     mutationFn: async (email) => {
       const res = await axiosSecure.patch(`/trainers/remove-role/${email}`);
@@ -42,33 +40,33 @@ const ManageUsers = () => {
   };
 
   const confirmRemoveTrainer = () => {
-    if (selectedTrainer) {
-      removeTrainerMutation.mutate(selectedTrainer.email);
-    }
+    if (selectedTrainer) removeTrainerMutation.mutate(selectedTrainer.email);
     setIsModalOpen(false);
   };
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className=" mx-auto mt-6 p-6">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-lime-700">Manage Trainers</h2>
-        <p className="text-gray-600 mt-1">
-          View, manage, or remove trainer roles from your platform with one
-          click.
+        <h2 className="text-2xl md:text-3xl font-bold text-lime-500">
+          {" "}
+          <span className="text-gray-800">Manage</span> Trainers
+        </h2>
+        <p className="text-gray-600 mt-2">
+          View, manage, or remove trainer roles in your platform easily.
         </p>
       </div>
 
       {trainers.length === 0 ? (
-        <div className="flex items-center gap-2 text-gray-600 bg-yellow-50 border border-yellow-300 px-4 py-3 rounded-md">
-          <AlertTriangle className="text-yellow-600" />
-          <span>No trainers found at this time.</span>
+        <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-300 text-yellow-700 px-5 py-4 rounded-lg shadow-sm">
+          <AlertTriangle className="w-5 h-5" />
+          <span>No trainers found.</span>
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white shadow rounded-lg border border-gray-200">
+        <div className="overflow-x-auto rounded-2xl shadow-lg border border-gray-200 bg-white">
           <table className="min-w-full divide-y divide-gray-200 text-sm">
-            <thead className="bg-lime-100 text-lime-900 uppercase tracking-wider text-xs font-semibold">
+            <thead className="bg-lime-50 text-lime-900 text-xs uppercase font-semibold tracking-wide">
               <tr>
                 <th className="px-6 py-3 text-left">#</th>
                 <th className="px-6 py-3 text-left">Photo</th>
@@ -78,33 +76,38 @@ const ManageUsers = () => {
                 <th className="px-6 py-3 text-left">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="bg-white divide-y divide-gray-100">
               {trainers.map((trainer, index) => (
                 <tr
                   key={trainer._id}
-                  className="hover:bg-lime-50/50 transition duration-200"
+                  className="hover:bg-lime-50 transition duration-200 "
                 >
                   <td className="px-6 py-3 font-medium text-gray-700">
                     {index + 1}
                   </td>
                   <td className="px-6 py-3">
                     <img
-                      src={trainer.photo}
-                      alt={trainer.name + "'s profile"}
-                      title={trainer.name}
-                      className="w-10 h-10 rounded-full object-cover border"
+                      src={
+                        trainer.photo ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          trainer.name
+                        )}&background=lime&color=fff`
+                      }
+                      alt={trainer.name}
+                      className="w-10 h-10 rounded-full border border-lime-200 shadow-sm"
                     />
                   </td>
-                  <td className="px-6 py-3">{trainer.name}</td>
-                  <td className="px-6 py-3">{trainer.email}</td>
-                  <td className="px-6 py-3 capitalize text-green-700 font-semibold">
+                  <td className="px-6 py-3 font-medium text-gray-800">
+                    {trainer.name}
+                  </td>
+                  <td className="px-6 py-3 text-gray-600">{trainer.email}</td>
+                  <td className="px-6 py-3 text-green-700 font-semibold capitalize">
                     {trainer.role}
                   </td>
                   <td className="px-6 py-3">
                     <button
                       onClick={() => openModal(trainer)}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition focus:outline-none focus:ring-2 focus:ring-red-300"
-                      title="Remove Trainer Role"
+                      className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition shadow-sm cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
                       Remove
@@ -117,7 +120,7 @@ const ManageUsers = () => {
         </div>
       )}
 
-      {/* Confirmation Modal */}
+      {/* Remove Confirmation Modal */}
       <RemoveConfirmationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

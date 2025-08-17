@@ -78,7 +78,7 @@ const BeATrainer = () => {
         <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-50 bg-white">
           <div className="space-y-2 col-span-full lg:col-span-1">
             <h3 className="font-medium text-lime-500 text-xl md:text-2xl">
-              Trainer Information
+              <span className="text-gray-800">Trainer</span> Information
             </h3>
             <p className="text-xs text-gray-500">
               Please fill out all the necessary details to become a certified
@@ -235,7 +235,7 @@ const BeATrainer = () => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-6 py-2 bg-lime-600 hover:bg-lime-700 text-white rounded-md transition cursor-pointer"
+            className="px-6 py-2 bg-lime-500 hover:bg-lime-600 text-white rounded-md transition cursor-pointer"
           >
             Submit Application
           </button>

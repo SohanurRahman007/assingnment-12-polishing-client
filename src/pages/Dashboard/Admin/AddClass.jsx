@@ -62,7 +62,9 @@ const AddClass = () => {
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left Info Column */}
         <div className="space-y-2 col-span-full lg:col-span-1">
-          <p className="text-xl font-semibold text-lime-600">Add New Class</p>
+          <p className="text-xl font-semibold text-lime-600">
+            <span className="text-gray-800">Add</span> New Class
+          </p>
           <p className="text-xs text-gray-600">
             Provide details for the new class, including description and an
             image.
@@ -141,7 +143,7 @@ const AddClass = () => {
             <button
               type="submit"
               disabled={uploading}
-              className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-md transition cursor-pointer"
+              className="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-md transition cursor-pointer"
             >
               {uploading ? "Uploading..." : "Add Class"}
             </button>

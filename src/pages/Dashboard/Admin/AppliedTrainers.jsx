@@ -25,62 +25,72 @@ const AppliedTrainers = () => {
   }
 
   return (
-    <section className="">
-      <form className="container mx-auto space-y-6">
-        <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-md bg-gray-100 min-h-7/12">
-          {/* Left Sidebar */}
-          <div className="space-y-2 bg-white  p-4 col-span-full lg:col-span-1 rounded-md">
-            <p className="text-xl md:text-2xl font-semibold text-lime-500">
-              Trainer Applications
-            </p>
-            <p className="text-sm text-gray-500">
-              Review all applications and manage them from this panel.
-            </p>
-          </div>
+    <section className="mx-auto mt-6 p-6">
+      <div className="container mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-lime-500 mb-2">
+          <span className="text-gray-800">Applied</span> Trainers
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Review all trainer applications from this panel.
+        </p>
 
-          {/* Right Table Section */}
-          <div className="col-span-full lg:col-span-3 overflow-x-auto">
-            <table className="min-w-full text-sm rounded-xl text-gray-800">
-              <thead className=" text-gray-700 bg-lime-200">
-                <tr>
-                  <th className="text-left px-2 py-2">#</th>
-                  <th className="text-left px-2 py-2">Name</th>
-                  <th className="text-left px-2 py-2">Skills</th>
-                  <th className="text-left px-2 py-2">Available Days</th>
-                  <th className="text-left px-2 py-2">Status</th>
-                  <th className="text-left px-2 py-2">Action</th>
+        <div className="overflow-x-auto rounded-xl shadow-lg border border-gray-200">
+          <table className="min-w-full text-sm text-gray-800">
+            <thead className="bg-lime-100 text-lime-900 uppercase text-xs font-semibold">
+              <tr>
+                <th className="px-4 py-3 align-middle text-left">#</th>
+                <th className="px-4 py-3 align-middle text-left">Name</th>
+                <th className="px-4 py-3 align-middle text-left">Skills</th>
+                <th className="px-4 py-3 align-middle text-left">
+                  Available Days
+                </th>
+                <th className="px-4 py-3 align-middle text-left">Status</th>
+                <th className="px-4 py-3 align-middle text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {trainers.map((trainer, index) => (
+                <tr
+                  key={trainer._id}
+                  className="hover:bg-lime-50 transition duration-200"
+                >
+                  <td className="px-4 py-3 align-middle font-medium">
+                    {index + 1}
+                  </td>
+                  <td className="px-4 py-3 align-middle">{trainer.name}</td>
+                  <td className="px-4 py-3 align-middle">
+                    {(trainer.skills || []).join(", ")}
+                  </td>
+                  <td className="px-4 py-3 align-middle">
+                    {(trainer.availableDays || []).join(", ")}
+                  </td>
+                  <td className="px-4 py-3 align-middle">
+                    <span
+                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        trainer.status === "approved"
+                          ? "bg-lime-100 text-lime-600"
+                          : trainer.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {trainer.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 align-middle">
+                    <Link
+                      to={`/dashboard/applied-trainer-details/${trainer._id}`}
+                      className="text-sm bg-lime-500 hover:bg-lime-600 text-white px-3 py-1 rounded-md transition"
+                    >
+                      Details
+                    </Link>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {trainers.map((t, index) => (
-                  <tr
-                    key={t._id}
-                    className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                  >
-                    <td className="px-2 py-2">{index + 1}</td>
-                    <td className="px-2 py-2">{t.name}</td>
-                    <td className="px-2 py-2">{(t.skills || []).join(", ")}</td>
-                    <td className="px-2 py-2">
-                      {(t.availableDays || []).join(", ")}
-                    </td>
-                    <td className="px-2 py-2 capitalize text-lime-600">
-                      {t.status}
-                    </td>
-                    <td className="px-2 py-2">
-                      <Link
-                        to={`/dashboard/applied-trainer-details/${t._id}`}
-                        className="text-sm bg-lime-600 hover:bg-lime-700 text-white px-1 md:px-3 md:py-1 rounded-md"
-                      >
-                        Details
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </fieldset>
-      </form>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
   );
 };

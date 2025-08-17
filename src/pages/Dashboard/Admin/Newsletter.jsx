@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
-// import Container from "../Shared/Container";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Container from "../../../components/Shared/Container";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const Newsletter = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,32 +14,51 @@ const Newsletter = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center">Loading subscribers...</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <Container>
-      <div className="my-10">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-lime-600">
-          All Newsletter Subscribers
+    <div className=" mx-auto mt-6 p-6">
+      {/* Title & Description */}
+      <div className="mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-lime-600 text-left">
+          <span className="text-gray-800">Newsletter</span> Subscribers
         </h2>
+        <p className="text-gray-600 mt-2 text-left max-w-xl">
+          View all users who have subscribed to our newsletter. Keep track of
+          their details and subscription date.
+        </p>
+      </div>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-left text-gray-700 border border-gray-200">
-            <thead className="bg-lime-100 text-lime-800 uppercase text-xs">
+      {/* Table */}
+      {subscribers.length === 0 ? (
+        <p className="text-gray-500 py-10 text-left">
+          No subscribers found yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto shadow-lg rounded-2xl border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 bg-white text-sm">
+            <thead className="bg-lime-50 text-lime-800 uppercase text-xs font-semibold">
               <tr>
-                <th className="py-3 px-4 border">#</th>
-                <th className="py-3 px-4 border">Name</th>
-                <th className="py-3 px-4 border">Email</th>
-                <th className="py-3 px-4 border">Subscribed At</th>
+                <th className="py-3 px-4 text-left">#</th>
+                <th className="py-3 px-4 text-left">Name</th>
+                <th className="py-3 px-4 text-left">Email</th>
+                <th className="py-3 px-4 text-left">Subscribed At</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {subscribers.map((subscriber, index) => (
-                <tr key={subscriber._id} className="hover:bg-gray-50">
-                  <td className="py-2 px-4 border">{index + 1}</td>
-                  <td className="py-2 px-4 border">{subscriber.name}</td>
-                  <td className="py-2 px-4 border">{subscriber.email}</td>
-                  <td className="py-2 px-4 border">
+                <tr
+                  key={subscriber._id}
+                  className="hover:bg-lime-50 transition duration-150"
+                >
+                  <td className="py-2 px-4">{index + 1}</td>
+                  <td className="py-2 px-4 font-medium text-gray-800">
+                    {subscriber.name}
+                  </td>
+                  <td className="py-2 px-4 text-gray-600">
+                    {subscriber.email}
+                  </td>
+                  <td className="py-2 px-4 text-gray-500 text-sm">
                     {new Date(subscriber.subscribedAt).toLocaleString()}
                   </td>
                 </tr>
@@ -48,8 +66,8 @@ const Newsletter = () => {
             </tbody>
           </table>
         </div>
-      </div>
-    </Container>
+      )}
+    </div>
   );
 };
 

@@ -72,7 +72,9 @@ const AddSlot = () => {
       <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-white">
         {/* Left info column */}
         <div className="space-y-2 col-span-full lg:col-span-1">
-          <p className="text-xl font-semibold text-lime-600">Add New Slot</p>
+          <p className="text-xl font-semibold text-lime-600">
+            <span className="text-gray-800">Add</span> New Slot
+          </p>
           <p className="text-xs text-gray-600">
             Fill out the details for your training slot. Members will see
             available slots under their selected class.
