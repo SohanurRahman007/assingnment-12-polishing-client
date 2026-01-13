@@ -32,7 +32,7 @@ const LatestForumsSection = () => {
   if (isLoading) return <SkeletonLatestForums />;
   return (
     <Container>
-      <section className=" mt-10">
+      <section className=" mt-20">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
