@@ -21,7 +21,7 @@ const FeaturedClasses = () => {
 
   return (
     <Container>
-      <section className="mt-10">
+      <section className="mt-20">
         <div className="text-center mb-6">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
