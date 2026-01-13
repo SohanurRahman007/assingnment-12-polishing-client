@@ -46,7 +46,7 @@ const cardVariants = {
 const FeaturedSection = () => {
   return (
     <Container>
-      <section className="mt-10 " id="features">
+      <section className="mt-20 " id="features">
         <div className=" text-center">
           <motion.h2
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
