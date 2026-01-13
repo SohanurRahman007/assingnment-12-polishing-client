@@ -56,7 +56,7 @@ const ForumsPage = () => {
           <title>Community Forums | FitSphere</title>
         </Helmet>
 
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center mt-10">
           <span className="text-gray-800">Community</span> Forums
         </h1>
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-6">
@@ -72,7 +72,7 @@ const ForumsPage = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center items-center gap-4 mt-10">
+        <div className="flex justify-center items-center gap-4 mt-10 mb-10">
           {/* Previous */}
           <button
             onClick={() => setPage((prev) => Math.max(1, prev - 1))}
