@@ -11,7 +11,7 @@ import Container from "../Container";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-700 text-gray-300 mt-10 pt-10 pb-6">
+    <footer className="bg-gray-700 text-gray-300 pt-10 pb-6">
       <Container>
         <div className=" mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -136,7 +136,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
+          <div className="mt-10 border-t border-gray-200 pt-4 text-center text-sm text-gray-200">
             &copy; {new Date().getFullYear()} FitSphere. All rights reserved.
           </div>
         </div>

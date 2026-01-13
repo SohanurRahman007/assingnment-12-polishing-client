@@ -5,7 +5,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative bg-center bg-no-repeat bg-cover py-20 mt-10 overflow-hidden"
+      className="relative bg-center bg-no-repeat bg-cover py-20 mt-20 overflow-hidden"
       style={{
         backgroundImage:
           "url('https://i.ibb.co/qF5m4zr7/omar-lopez-rincon-BE181-Raj-rg-unsplash.jpg')",
@@ -43,8 +43,8 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
             className="text-center md:text-left flex flex-col justify-center px-2 sm:px-4"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-lime-600 mb-4">
-              About <span className="text-gray-900">FitSphere</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-lime-400 mb-4">
+              About <span className="text-white">FitSphere</span>
             </h2>
             <p className="text-gray-100 mb-4 leading-relaxed">
               FitSphere is a revolutionary fitness platform designed to connect

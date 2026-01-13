@@ -33,7 +33,7 @@ const NewsletterSubscribe = () => {
     <Container>
       <div
         data-aos="fade-up"
-        className="bg-white  py-10 px-6 rounded-xl shadow   mx-auto mt-10 border border-gray-200 mb-2"
+        className="bg-white  py-10 px-6 rounded-xl shadow   mx-auto mt-20 border border-gray-200 mb-2"
       >
         <div className="text-center mb-6" data-aos="fade-down">
           <FaEnvelopeOpenText className="text-5xl text-lime-500 mx-auto mb-3" />
