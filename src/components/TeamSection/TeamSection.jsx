@@ -38,7 +38,7 @@ const TeamSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        className="mt-10"
+        className="mt-20"
       >
         <motion.h2
           initial={{ opacity: 0, y: -20 }}

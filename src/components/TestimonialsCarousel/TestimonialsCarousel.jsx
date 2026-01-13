@@ -23,7 +23,7 @@ const TestimonialsSection = () => {
   });
 
   return (
-    <section className="bg-white mt-10 w-full">
+    <section className="bg-white mt-20 w-full">
       <Container fluid className="overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
