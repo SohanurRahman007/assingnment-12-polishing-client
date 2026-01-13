@@ -25,7 +25,7 @@ const AllClasses = () => {
   const [search, setSearch] = useState("");
   const [selectedClass, setSelectedClass] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState("asc"); // "asc" or "desc"
+  const [sortOrder, setSortOrder] = useState("asc");
   const limit = 6;
 
   const { data, isLoading } = useQuery({
@@ -78,7 +78,7 @@ const AllClasses = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center"
+        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center mt-10"
       >
         <span className="text-gray-800">Explore All </span>
         Fitness Classes
@@ -91,13 +91,11 @@ const AllClasses = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="text-center text-gray-600 max-w-2xl mx-auto mb-6"
       >
-        Explore our wide variety of fitness classes at FitSphere, designed for
-        every fitness level and goal. From strength training to yoga, browse
-        detailed class information, connect with certified trainers, and find
-        the perfect session for your journey.
+        Explore FitSphere’s wide range of fitness classes and connect with
+        certified trainers to find the perfect session for your goals.
       </motion.p>
 
-      {/* 🔍 Search & 🔀 Sort */}
+      {/*  Search &  Sort */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         {/* Search */}
         <div className="flex items-center border rounded-lg shadow-md w-full sm:max-w-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-lime-400">
@@ -148,7 +146,7 @@ const AllClasses = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-3 mt-10">
+        <div className="flex justify-center items-center gap-3 mt-10 mb-10">
           <motion.button
             onClick={() => setPage((prev) => Math.max(1, prev - 1))}
             disabled={page === 1}
