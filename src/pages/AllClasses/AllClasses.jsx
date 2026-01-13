@@ -78,7 +78,7 @@ const AllClasses = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center mt-10"
+        className="text-2xl md:text-3xl lg:text-4xl font-bold text-lime-600 mb-1 text-center "
       >
         <span className="text-gray-800">Explore All </span>
         Fitness Classes
