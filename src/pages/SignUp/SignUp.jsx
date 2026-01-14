@@ -54,7 +54,7 @@ const SignUp = () => {
       await createUser(email, password);
       await updateUserProfile(name, imageURL);
 
-      // ✅ NEW: Save user to database
+      //  NEW: Save user to database
       await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
         name,
         email,

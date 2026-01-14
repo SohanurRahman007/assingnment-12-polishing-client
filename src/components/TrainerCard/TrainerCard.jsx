@@ -12,15 +12,24 @@ const TrainerCard = ({ trainer }) => {
   return (
     <div
       data-aos="fade-up"
-      className="flex flex-col h-full  bg-white shadow-md rounded-lg overflow-hidden group"
+      className="flex flex-col h-full bg-white shadow-md rounded-lg overflow-hidden group"
     >
-      {/* Image */}
-      <div className="overflow-hidden">
+      {/* Fixed Image Container */}
+      <div className="relative w-full h-48 overflow-hidden bg-gray-100">
         <img
-          className="w-full h-40 object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110"
-          src={trainer.profileImage || "https://via.placeholder.com/300x200"}
+          className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          src={
+            trainer.profileImage ||
+            "https://images.unsplash.com/photo-1534367507877-0edd93bd013b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80"
+          }
           alt={trainer.name}
+          onError={(e) => {
+            e.target.src =
+              "https://images.unsplash.com/photo-1534367507877-0edd93bd013b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80";
+          }}
         />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
 
       {/* Badge */}
@@ -45,7 +54,7 @@ const TrainerCard = ({ trainer }) => {
 
         {/* Social icons */}
         {(trainer.facebook || trainer.linkedin) && (
-          <div className="flex items-center gap-3 text-gray-700">
+          <div className="flex items-center gap-3 text-gray-700 mt-2">
             <span className="text-sm font-semibold">Social:</span>
             {trainer.facebook && (
               <a
