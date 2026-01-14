@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   const handleMemberLogin = () => {
-    setValue("email", "juyel@gmail.com");
+    setValue("email", "jonh@gmail.com");
     setValue("password", "123456");
   };
 
@@ -65,7 +65,7 @@ const Login = () => {
     setValue("password", "123456");
   };
 
-  // user থাকলে সরাসরি dashboard-এ পাঠান
+  // user redirect dashboard
   if (user) {
     return <Navigate to="/dashboard" replace />;
   }
