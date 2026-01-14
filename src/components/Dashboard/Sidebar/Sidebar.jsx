@@ -65,11 +65,11 @@ const Sidebar = () => {
                   address="/dashboard/balance"
                   icon={HiOutlineChartBar}
                 />
-                <MenuItem
+                {/* <MenuItem
                   label="Dashboard"
                   address="/dashboard"
                   icon={BsSpeedometer2}
-                />
+                /> */}
                 <MenuItem
                   label="Manage Users"
                   address="/dashboard/manage-users"

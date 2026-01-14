@@ -7,14 +7,14 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { useState } from "react";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
-import { FaUserShield, FaUser, FaHome } from "react-icons/fa";
+import { FaUserShield, FaUser, FaChalkboardTeacher } from "react-icons/fa";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  const from = location?.state?.from?.pathname || "/dashboard";
 
   const {
     register,
@@ -28,11 +28,25 @@ const Login = () => {
     try {
       await signIn(data.email, data.password);
       toast.success("Login successful");
-      navigate(from, { replace: true });
+
+      // সরাসরি Statistics রুটে পাঠান (Statistics কম্পোনেন্ট নিজেই রিডাইরেক্ট করবে)
+      navigate("/dashboard", { replace: true });
       reset();
     } catch (err) {
       toast.error("Invalid email or password");
       setLoading(false);
+      console.log(err);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      toast.success("Login successful");
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      toast.error("Google login failed");
+      console.log(err);
     }
   };
 
@@ -46,11 +60,16 @@ const Login = () => {
     setValue("password", "123456");
   };
 
-  const handleGoHome = () => {
-    navigate("/");
+  const handleTrainerLogin = () => {
+    setValue("email", "sohanuractive007@gmail.com");
+    setValue("password", "123456");
   };
 
-  if (user) return <Navigate to={from} replace />;
+  // user থাকলে সরাসরি dashboard-এ পাঠান
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -75,7 +94,6 @@ const Login = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5">
-            {/* Email */}
             <div>
               <input
                 type="email"
@@ -90,7 +108,6 @@ const Login = () => {
               )}
             </div>
 
-            {/* Password */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -111,11 +128,11 @@ const Login = () => {
               )}
             </div>
 
-            {/* Submit */}
             <div className="flex items-center justify-between">
               <button
                 type="submit"
                 className="px-6 py-2 w-full bg-lime-500 text-white rounded-lg hover:bg-lime-600 transition cursor-pointer"
+                disabled={loading}
               >
                 {loading ? (
                   <TbFidgetSpinner className="animate-spin m-auto" />
@@ -132,17 +149,16 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="px-6 bg-gray-50">
           <button
-            onClick={signInWithGoogle}
-            className="flex justify-center items-center gap-3 border w-full py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            className="flex justify-center items-center gap-3 border w-full py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer disabled:opacity-50"
           >
             <FcGoogle size={22} />
             <span>Continue with Google</span>
           </button>
 
-          {/* New buttons for easy login/navigation */}
           <div className="flex justify-between gap-2 mt-4">
             <button
               onClick={handleAdminLogin}
@@ -151,21 +167,21 @@ const Login = () => {
               <FaUserShield size={14} /> Admin
             </button>
             <button
+              onClick={handleTrainerLogin}
+              className="flex-1 flex cursor-pointer border border-lime-500 items-center justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
+            >
+              <FaChalkboardTeacher size={14} /> Trainer
+            </button>
+            <button
               onClick={handleMemberLogin}
               className="flex-1 flex cursor-pointer border border-lime-500 items-center justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
             >
               <FaUser size={14} /> Member
             </button>
-            <button
-              onClick={handleGoHome}
-              className="flex-1 flex cursor-pointer border border-lime-500 items-center justify-center gap-1 py-2 px-1 bg-gray-200 text-gray-800 rounded-lg text-xs font-medium hover:bg-gray-300 transition"
-            >
-              <FaHome size={14} /> Home
-            </button>
           </div>
 
           <p className="mt-4 text-center text-sm text-gray-600 mb-4">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <Link
               to="/signup"
               className="text-lime-500 hover:underline font-medium"
