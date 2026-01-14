@@ -7,7 +7,7 @@ const RoleRoute = ({ children, allowedRoles }) => {
 
   if (loading) return <LoadingSpinner />;
 
-  // ✅ Check if user's role is in allowedRoles array
+  // Check if user's role is in allowedRoles array
   if (!allowedRoles.includes(role)) return <Navigate to="/" replace />;
 
   return children;

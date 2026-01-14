@@ -61,6 +61,11 @@ const Sidebar = () => {
             {role === "admin" && (
               <>
                 <MenuItem
+                  label="Balance & Chart"
+                  address="/dashboard/balance"
+                  icon={HiOutlineChartBar}
+                />
+                <MenuItem
                   label="Dashboard"
                   address="/dashboard"
                   icon={BsSpeedometer2}
@@ -89,11 +94,6 @@ const Sidebar = () => {
                   label="Applied Trainers"
                   address="/dashboard/applied-trainers"
                   icon={RiUserStarLine}
-                />
-                <MenuItem
-                  label="Balance & Chart"
-                  address="/dashboard/balance"
-                  icon={HiOutlineChartBar}
                 />
               </>
             )}
